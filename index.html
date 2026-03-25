@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline';">
+  <title>Escalas — Improvisación</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Unbounded:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080808;
+      --s1: #111111;
+      --s2: #1a1a1a;
+      --s3: #242424;
+      --border: rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.13);
+      --text: #ede8e0;
+      --muted: #7a756e;
+      --hint: #3a3632;
+      --accent: #ff6b35;
+      --accent2: #ffb347;
+      --green: #5bffa0;
+      --blue: #5ba8ff;
+      --purple: #b388ff;
+      --mono: 'Space Mono', monospace;
+      --display: 'Unbounded', sans-serif;
+    }
+
+    html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--mono); overflow: hidden; }
+
+    /* ── LAYOUT ── */
+    .app { display: grid; grid-template-rows: auto 1fr auto; height: 100vh; }
+
+    /* ── HEADER ── */
+    header {
+      display: flex; align-items: center; gap: 20px;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--s1);
+      -webkit-app-region: drag;
+    }
+    .logo { font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: 0.05em; color: var(--accent); -webkit-app-region: no-drag; }
+    .logo span { color: var(--muted); font-weight: 300; }
+
+    .header-controls { display: flex; gap: 10px; align-items: center; -webkit-app-region: no-drag; margin-left: auto; }
+
+    select, button {
+      background: var(--s2);
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 7px 12px;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
+      appearance: none; -webkit-appearance: none;
+    }
+    select { padding-right: 28px; background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%237a756e' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
+    select:focus, button:hover { border-color: var(--accent); }
+    .btn-accent { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 700; }
+    .btn-accent:hover { background: var(--accent2); border-color: var(--accent2); }
+
+    .label-sm { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* ── BODY ── */
+    .body { display: grid; grid-template-columns: 260px 1fr; overflow: hidden; }
+
+    /* ── SIDEBAR ── */
+    .sidebar { background: var(--s1); border-right: 1px solid var(--border); overflow-y: auto; padding: 20px 16px; display: flex; flex-direction: column; gap: 20px; }
+    .sidebar::-webkit-scrollbar { width: 3px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--hint); border-radius: 2px; }
+
+    .section-title { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--hint); margin-bottom: 8px; font-family: var(--mono); }
+
+    /* Root selector */
+    .root-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; }
+    .root-btn {
+      background: var(--s2); border: 1px solid var(--border); border-radius: 5px;
+      color: var(--text); font-family: var(--mono); font-size: 11px; padding: 7px 4px;
+      cursor: pointer; text-align: center; transition: all 0.12s;
+    }
+    .root-btn:hover { border-color: var(--border2); background: var(--s3); }
+    .root-btn.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 700; }
+
+    /* Scale list */
+    .scale-list { display: flex; flex-direction: column; gap: 3px; }
+    .scale-item {
+      background: var(--s2); border: 1px solid var(--border); border-radius: 6px;
+      padding: 8px 10px; cursor: pointer; transition: all 0.12s;
+    }
+    .scale-item:hover { border-color: var(--border2); background: var(--s3); }
+    .scale-item.active { border-color: var(--accent); background: rgba(255,107,53,0.1); }
+    .scale-name { font-size: 12px; color: var(--text); }
+    .scale-cat { font-size: 9px; color: var(--muted); margin-top: 2px; letter-spacing: 0.08em; }
+
+    /* ── MAIN ── */
+    .main { display: flex; flex-direction: column; overflow: hidden; }
+
+    /* Scale info bar */
+    .scale-info-bar {
+      padding: 14px 24px; border-bottom: 1px solid var(--border); background: var(--s1);
+      display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap;
+    }
+    .scale-full-name { font-family: var(--display); font-size: 20px; font-weight: 700; color: var(--text); }
+    .scale-full-name em { color: var(--accent); font-style: normal; }
+    .scale-intervals { font-size: 11px; color: var(--muted); font-family: var(--mono); }
+    .scale-formula { font-size: 11px; color: var(--blue); font-family: var(--mono); margin-left: auto; }
+
+    /* Main content scroll */
+    .main-scroll { flex: 1; overflow-y: auto; padding: 20px 24px 24px; display: flex; flex-direction: column; gap: 20px; }
+    .main-scroll::-webkit-scrollbar { width: 3px; }
+    .main-scroll::-webkit-scrollbar-thumb { background: var(--hint); border-radius: 2px; }
+
+    /* ── PIANO ── */
+    .piano-wrap { background: var(--s2); border: 1px solid var(--border); border-radius: 10px; padding: 20px; overflow-x: auto; }
+    .piano { position: relative; display: flex; height: 110px; width: max-content; margin: 0 auto; }
+
+    .wkey {
+      position: relative; width: 36px; height: 110px;
+      background: #f0ede8; border: 1px solid #ccc; border-top: none;
+      border-radius: 0 0 5px 5px; margin-right: 1px; cursor: pointer;
+      display: flex; align-items: flex-end; justify-content: center; padding-bottom: 6px;
+      transition: background 0.12s;
+      z-index: 1;
+    }
+    .wkey.active { background: var(--accent); }
+    .wkey.root { background: var(--accent2); }
+    .wkey .note-label { font-size: 9px; font-family: var(--mono); color: #333; pointer-events: none; font-weight: 700; }
+    .wkey.active .note-label, .wkey.root .note-label { color: #000; }
+
+    .bkey {
+      position: absolute; width: 22px; height: 68px;
+      background: #1a1a1a; border: 1px solid #000;
+      border-radius: 0 0 4px 4px; cursor: pointer; z-index: 2;
+      display: flex; align-items: flex-end; justify-content: center; padding-bottom: 4px;
+      transition: background 0.12s;
+    }
+    .bkey.active { background: var(--accent); }
+    .bkey.root { background: var(--accent2); }
+    .bkey .note-label { font-size: 8px; font-family: var(--mono); color: #aaa; pointer-events: none; }
+    .bkey.active .note-label, .bkey.root .note-label { color: #000; }
+
+    /* ── DEGREES ── */
+    .degrees-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .degree-pill {
+      display: flex; flex-direction: column; align-items: center;
+      background: var(--s2); border: 1px solid var(--border); border-radius: 8px;
+      padding: 10px 14px; min-width: 56px;
+    }
+    .degree-num { font-size: 10px; color: var(--muted); font-family: var(--mono); }
+    .degree-note { font-size: 18px; font-family: var(--display); font-weight: 700; color: var(--text); margin: 3px 0; }
+    .degree-note.root-note { color: var(--accent2); }
+    .degree-interval { font-size: 9px; color: var(--blue); font-family: var(--mono); }
+
+    /* ── CHORDS ── */
+    .chords-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
+    .chord-card {
+      background: var(--s2); border: 1px solid var(--border); border-radius: 8px; padding: 12px;
+      transition: border-color 0.12s;
+    }
+    .chord-card:hover { border-color: var(--border2); }
+    .chord-degree { font-size: 10px; color: var(--muted); font-family: var(--mono); }
+    .chord-name { font-size: 14px; font-family: var(--display); font-weight: 700; color: var(--text); margin: 4px 0; }
+    .chord-quality { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-family: var(--mono); display: inline-block; }
+    .q-maj { background: rgba(91,255,160,0.15); color: var(--green); }
+    .q-min { background: rgba(91,168,255,0.15); color: var(--blue); }
+    .q-dim { background: rgba(255,107,53,0.15); color: var(--accent); }
+    .q-aug { background: rgba(179,136,255,0.15); color: var(--purple); }
+    .q-dom { background: rgba(255,179,71,0.15); color: var(--accent2); }
+    .q-hdim { background: rgba(255,107,53,0.1); color: var(--accent); }
+
+    /* ── MODES ── */
+    .modes-list { display: flex; flex-direction: column; gap: 6px; }
+    .mode-row {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--s2); border: 1px solid var(--border); border-radius: 7px; padding: 10px 14px;
+    }
+    .mode-degree { font-size: 10px; color: var(--muted); min-width: 18px; font-family: var(--mono); }
+    .mode-name { font-size: 13px; font-weight: 700; color: var(--text); min-width: 110px; }
+    .mode-notes { font-size: 11px; color: var(--muted); font-family: var(--mono); }
+    .mode-feel { font-size: 10px; color: var(--purple); margin-left: auto; font-style: italic; }
+
+    /* ── IMPROV TIPS ── */
+    .tips-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+    .tip-card {
+      background: var(--s2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px;
+    }
+    .tip-icon { font-size: 16px; margin-bottom: 6px; }
+    .tip-title { font-size: 11px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .tip-body { font-size: 10px; color: var(--muted); line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 8px 24px; border-top: 1px solid var(--border); background: var(--s1);
+      font-size: 10px; color: var(--hint); font-family: var(--mono);
+      display: flex; gap: 20px; align-items: center;
+    }
+    .footer-key { color: var(--muted); }
+    .kbd { background: var(--s3); border: 1px solid var(--border2); border-radius: 3px; padding: 1px 5px; font-size: 9px; }
+
+    h3.sec { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--hint); margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">ESCALA<span>IMPROV</span></div>
+    <div class="header-controls">
+      <span class="label-sm">Mostrar:</span>
+      <select id="octavesSel">
+        <option value="1">1 octava</option>
+        <option value="2" selected>2 octavas</option>
+      </select>
+      <select id="notationSel">
+        <option value="sharp">Sostenidos ♯</option>
+        <option value="flat">Bemoles ♭</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div>
+        <div class="section-title">Tónica</div>
+        <div class="root-grid" id="rootGrid"></div>
+      </div>
+
+      <div>
+        <div class="section-title">Escala</div>
+        <div class="scale-list" id="scaleList"></div>
+      </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+      <div class="scale-info-bar">
+        <div class="scale-full-name" id="scaleFullName">—</div>
+        <div class="scale-intervals" id="scaleIntervals"></div>
+        <div class="scale-formula" id="scaleFormula"></div>
+      </div>
+
+      <div class="main-scroll" id="mainScroll">
+
+        <div>
+          <h3 class="sec">Teclado</h3>
+          <div class="piano-wrap">
+            <div class="piano" id="piano"></div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="sec">Grados de la escala</h3>
+          <div class="degrees-row" id="degreesRow"></div>
+        </div>
+
+        <div>
+          <h3 class="sec">Acordes diatónicos</h3>
+          <div class="chords-grid" id="chordsGrid"></div>
+        </div>
+
+        <div id="modesSection">
+          <h3 class="sec">Modos</h3>
+          <div class="modes-list" id="modesList"></div>
+        </div>
+
+        <div>
+          <h3 class="sec">Tips para improvisar</h3>
+          <div class="tips-grid" id="tipsGrid"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-key">Navegar raíz: <span class="kbd">←</span> <span class="kbd">→</span></span>
+    <span class="footer-key">Navegar escala: <span class="kbd">↑</span> <span class="kbd">↓</span></span>
+    <span style="margin-left:auto;" id="footerInfo"></span>
+  </footer>
+
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════
+
+const NOTES_SHARP = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const NOTES_FLAT  = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+
+const SCALES = [
+  {
+    id: 'major', name: 'Mayor', cat: 'Diatónica',
+    intervals: [0,2,4,5,7,9,11],
+    formula: 'T T s T T T s',
+    degrees: ['I','II','III','IV','V','VI','VII'],
+    chordTypes: ['maj','min','min','maj','dom','min','dim'],
+    modes: ['Jónico','Dórico','Frigio','Lidio','Mixolidio','Eólico','Locrio'],
+    tips: [
+      { icon: '🎯', title: 'Notas de reposo', body: 'Las notas del acorde tónico (1-3-5) son puntos de llegada seguros.' },
+      { icon: '🔄', title: 'Tensión-resolución', body: 'La sensible (VII) quiere resolver a la tónica. Usala para crear tensión.' },
+      { icon: '🎸', title: 'Pentatónica interna', body: 'La pentatónica mayor (1-2-3-5-6) vive dentro de esta escala. Ideal para empezar.' },
+      { icon: '🌊', title: 'Movimiento por grados', body: 'Conectá notas con movimiento conjunto (pasos de tono o semitono) para frases fluidas.' },
+    ]
+  },
+  {
+    id: 'natural_minor', name: 'Menor Natural', cat: 'Diatónica',
+    intervals: [0,2,3,5,7,8,10],
+    formula: 'T s T T s T T',
+    degrees: ['I','II','III','IV','V','VI','VII'],
+    chordTypes: ['min','dim','maj','min','min','maj','dom'],
+    modes: ['Eólico','Locrio','Jónico','Dórico','Frigio','Lidio','Mixolidio'],
+    tips: [
+      { icon: '😢', title: 'Carácter oscuro', body: 'El b3 y b6 le dan el color melancólico. Enfatizalos para expresividad.' },
+      { icon: '⚡', title: 'V dominante', body: 'Usá el V7 mayor (prestado de menor armónica) para cadencias con más tensión.' },
+      { icon: '🎷', title: 'Blues connection', body: 'La pentatónica menor (1-b3-4-5-b7) está contenida aquí. Es la base del blues.' },
+      { icon: '🔁', title: 'Progresión im-VII-VI', body: 'Una de las progresiones más usadas en rock y pop. Probala en loop.' },
+    ]
+  },
+  {
+    id: 'harmonic_minor', name: 'Menor Armónica', cat: 'Diatónica',
+    intervals: [0,2,3,5,7,8,11],
+    formula: 'T s T T s A s',
+    degrees: ['I','II','III','IV','V','VI','VII'],
+    chordTypes: ['min','dim','aug','min','dom','maj','dim'],
+    modes: null,
+    tips: [
+      { icon: '🕌', title: 'Sonido oriental', body: 'El intervalo aumentado entre el 6° y 7° grado es el sello de esta escala.' },
+      { icon: '🎻', title: 'V7 natural', body: 'Tiene el 7° mayor, lo que crea un V7 auténtico para cadencias fuertes.' },
+      { icon: '🐉', title: 'Flamenco / metal', body: 'Muy usada en flamenco, metal y música clásica. Ideal para frases dramáticas.' },
+      { icon: '🔀', title: 'Combinar con natural', body: 'Alternala con la menor natural para variar el color sin cambiar de tonalidad.' },
+    ]
+  },
+  {
+    id: 'melodic_minor', name: 'Menor Melódica', cat: 'Diatónica',
+    intervals: [0,2,3,5,7,9,11],
+    formula: 'T s T T T T s',
+    degrees: ['I','II','III','IV','V','VI','VII'],
+    chordTypes: ['min','min','aug','dom','dom','dim','dim'],
+    modes: ['Menor jazz','Dórico b2','Lidio aumentado','Lidio dominante','Mixolidio b6','Locrio #2','Alt/Superlocrio'],
+    tips: [
+      { icon: '🎺', title: 'Escala de jazz', body: 'Subida con #6 y #7, bajada como menor natural. En jazz se usa siempre ascendente.' },
+      { icon: '🌙', title: 'Modos exóticos', body: 'Sus modos (lidio dominante, alterada) son herramientas clave del jazz moderno.' },
+      { icon: '💫', title: 'Sobre Im(maj7)', body: 'La tónica natural es Im(maj7). Muy usada en jazz latino y bossa nova.' },
+      { icon: '🔬', title: 'Modo alterado', body: 'El 7° modo (superlocrio) se usa sobre V7alt para máxima tensión cromática.' },
+    ]
+  },
+  {
+    id: 'dorian', name: 'Dórico', cat: 'Modal',
+    intervals: [0,2,3,5,7,9,10],
+    formula: 'T s T T T s T',
+    degrees: ['I','II','III','IV','V','VI','VII'],
+    chordTypes: ['min','min','maj','dom','min','dim','maj'],
+    modes: null,
+    tips: [
+      { icon: '🌿', title: 'Minor con sabor', body: 'Como la menor natural pero con el 6° mayor. Más brillante y jazzístico.' },
+      { icon: '🎸', title: 'Rock y funk', body: 'Santana, Miles Davis, Pink Floyd. El modo más popular del rock.' },
+      { icon: '📐', title: 'IV mayor', body: 'El IV acorde mayor es lo que diferencia el dórico del eólico. Apoyate en él.' },
+      { icon: '🎵', title: 'i-IV en loop', body: 'La progresión im-IV es el ADN del dórico. Probala: Dm-G en La dórico.' },
+    ]
+  },
+  {
+    id: 'phrygian', name: 'Frigio', cat: 'Modal',
+    intervals: [0,1,3,5,7,8,10],
+    formula: 's T T T s T T',
+    degrees: ['I','II','III','IV','V','VI','VII'],
+    chordTypes: ['min','maj','maj','min','dim','maj','min'],
+    modes: null,
+    tips: [
+      { icon: '🌶️', title: 'Flamenco', body: 'El b2 (semitono desde la tónica) es el sonido más característico del flamenco.' },
+      { icon: '🤘', title: 'Metal oscuro', body: 'Muy usado en metal extremo. El bII "frigio" es el acorde más característico.' },
+      { icon: '🕌', title: 'Color andaluz', body: 'La cadencia andaluza im-VII-VI-V se origina en este modo.' },
+      { icon: '⚠️', title: 'Cuidado con el V', body: 'El acorde de V es disminuido. Evitalo o usalo como tensión extrema.' },
+    ]
+  },
+  {
+    id: 'lydian', name: 'Lidio', cat: 'Modal',
+    intervals: [0,2,4,6,7,9,11],
+    formula: 'T T T s T T s',
+    degrees: ['I','II','III','IV','V','VI','VII'],
+    chordTypes: ['maj','dom','min','dim','maj','min','min'],
+    modes: null,
+    tips: [
+      { icon: '🌈', title: 'Sonido mágico', body: 'El #4 es el color definitorio. Crea una sensación flotante y soñadora.' },
+      { icon: '🎬', title: 'Cine y videojuegos', body: 'John Williams lo usa mucho. Ideal para música épica o fantástica.' },
+      { icon: '✨', title: 'I y II en tensión', body: 'La relación entre el acorde I y el II (un tono arriba, mayor) es única del lidio.' },
+      { icon: '🚀', title: 'Alternativa al mayor', body: 'Cuando el mayor suena "aburrido", el lidio da brillo sin cambiar de tonalidad.' },
+    ]
+  },
+  {
+    id: 'mixolydian', name: 'Mixolidio', cat: 'Modal',
+    intervals: [0,2,4,5,7,9,10],
+    formula: 'T T s T T s T',
+    degrees: ['I','II','III','IV','V','VI','VII'],
+    chordTypes: ['dom','min','dim','maj','min','min','maj'],
+    modes: null,
+    tips: [
+      { icon: '🎸', title: 'Blues-rock', body: 'El b7 sobre acorde mayor es el corazón del blues y rock. Clásico total.' },
+      { icon: '🌊', title: 'Folk y country', body: 'Muy presente en música celta, folk americano y country.' },
+      { icon: '🔄', title: 'I7 como tónica', body: 'El acorde tónico es un dominante 7 que no resuelve. Tensión perpetua y genial.' },
+      { icon: '🎵', title: 'Pentatónica mayor', body: 'Combinalo con la pentatónica mayor para frases más concisas y poderosas.' },
+    ]
+  },
+  {
+    id: 'pentatonic_major', name: 'Pentatónica Mayor', cat: 'Pentatónica',
+    intervals: [0,2,4,7,9],
+    formula: 'T T A T A',
+    degrees: ['1','2','3','5','6'],
+    chordTypes: null,
+    modes: null,
+    tips: [
+      { icon: '🌍', title: 'Universal', body: 'Aparece en todas las culturas del mundo. 5 notas, infinitas posibilidades.' },
+      { icon: '🛡️', title: 'Sin notas malas', body: 'Ninguna nota de la pentatónica choca con un acorde diatónico de su tonalidad.' },
+      { icon: '🎸', title: 'Para empezar', body: 'Si recién empezás a improvisar, dominar esta escala te dará resultados rápidos.' },
+      { icon: '🔢', title: 'Patrones en la guitarra', body: '5 posiciones del modo fijo te cubren todo el diapasón. Aprendalas de memoria.' },
+    ]
+  },
+  {
+    id: 'pentatonic_minor', name: 'Pentatónica Menor', cat: 'Pentatónica',
+    intervals: [0,3,5,7,10],
+    formula: 'A T T A T',
+    degrees: ['1','b3','4','5','b7'],
+    chordTypes: null,
+    modes: null,
+    tips: [
+      { icon: '🔥', title: 'La escala del blues', body: 'La base del rock, blues y R&B. Agrega el b5 (blue note) para sonido blues clásico.' },
+      { icon: '👊', title: 'Agresiva y directa', body: 'Ideal para riffs contundentes y solos de impacto inmediato.' },
+      { icon: '💙', title: 'Blue note', body: 'Agrega el b5 entre el 4 y el 5 para la escala de blues completa.' },
+      { icon: '🎯', title: 'Sobre acordes mayores', body: 'Usala sobre acorde I mayor para el sonido "outside" del blues.' },
+    ]
+  },
+  {
+    id: 'blues', name: 'Blues', cat: 'Blues / Jazz',
+    intervals: [0,3,5,6,7,10],
+    formula: 'A T s s A T',
+    degrees: ['1','b3','4','b5','5','b7'],
+    chordTypes: null,
+    modes: null,
+    tips: [
+      { icon: '😰', title: 'La blue note', body: 'El b5 (tritono) es la "blue note". Usala de paso, nunca te quedes en ella.' },
+      { icon: '🎷', title: 'Expresión máxima', body: 'Los bends y vibratos en las blue notes son la esencia del blues.' },
+      { icon: '🔀', title: 'Mezclar mayor/menor', body: 'Combinar la pentatónica mayor y menor sobre I7 es la técnica blues definitiva.' },
+      { icon: '📻', title: 'Shuffle', body: 'El feeling de la escala de blues se multiplica sobre ritmos de shuffle o swing.' },
+    ]
+  },
+  {
+    id: 'whole_tone', name: 'Tons Enteros', cat: 'Simétricas',
+    intervals: [0,2,4,6,8,10],
+    formula: 'T T T T T T',
+    degrees: ['1','2','3','#4','#5','b7'],
+    chordTypes: null,
+    modes: null,
+    tips: [
+      { icon: '🌊', title: 'Flotante y ambigua', body: 'Sin semitonos ni sensible. Crea una sensación de suspensión total.' },
+      { icon: '🎭', title: 'Debussy', body: 'El compositor impresionista la usó para crear paisajes sonoros etéreos.' },
+      { icon: '⚠️', title: 'Solo 2 escalas', body: 'Solo existen 2 escalas de tonos enteros distintas (empezando en C y C#).' },
+      { icon: '🔄', title: 'Sobre V7+5', body: 'Perfecta sobre el acorde dominante con 5ta aumentada (V7+).' },
+    ]
+  },
+  {
+    id: 'diminished_hw', name: 'Disminuida H-W', cat: 'Simétricas',
+    intervals: [0,1,3,4,6,7,9,10],
+    formula: 's T s T s T s T',
+    degrees: ['1','b2','b3','3','b5','5','6','b7'],
+    chordTypes: null,
+    modes: null,
+    tips: [
+      { icon: '😱', title: 'Máxima tensión', body: 'Perfecta sobre acordes disminuidos y dominantes alterados.' },
+      { icon: '🔢', title: 'Simétrica', body: 'Se repite cada 3 semitonos. Solo 3 escalas distintas cubren todos los tonos.' },
+      { icon: '🎹', title: '8 notas', body: 'Con 8 notas hay más material. Ideal para frases largas y cromáticas.' },
+      { icon: '🌑', title: 'Sonido oscuro', body: 'Muy usada en jazz moderno, metal y música de horror.' },
+    ]
+  },
+  {
+    id: 'chromatic', name: 'Cromática', cat: 'Especiales',
+    intervals: [0,1,2,3,4,5,6,7,8,9,10,11],
+    formula: 's s s s s s s s s s s s',
+    degrees: ['1','b2','2','b3','3','4','b5','5','b6','6','b7','7'],
+    chordTypes: null,
+    modes: null,
+    tips: [
+      { icon: '🌈', title: 'Todas las notas', body: 'Incluye todos los 12 semitonos. Es la "paleta completa" del músico.' },
+      { icon: '🔀', title: 'Notas de paso', body: 'Usala para conectar notas de escalas diatónicas con cromatismo.' },
+      { icon: '🎺', title: 'Jazz bebop', body: 'Charlie Parker usaba el cromatismo para crear tensión y sorpresa.' },
+      { icon: '⚡', title: 'Moderación', body: 'El poder del cromatismo viene de usarlo en contraste con notas diatónicas.' },
+    ]
+  },
+];
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let rootIdx = 0;      // 0=C, 1=C#/Db ...
+let scaleIdx = 0;
+let notation = 'sharp';
+let octaves = 2;
+
+// ══════════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════════
+function notes() { return notation === 'sharp' ? NOTES_SHARP : NOTES_FLAT; }
+function noteName(idx) { return notes()[(idx + 12) % 12]; }
+function scaleNotes(scale, root) {
+  return scale.intervals.map(i => noteName(root + i));
+}
+
+// ══════════════════════════════════════════════
+// BUILD UI
+// ══════════════════════════════════════════════
+function buildRootGrid() {
+  const grid = document.getElementById('rootGrid');
+  grid.innerHTML = '';
+  notes().forEach((n, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'root-btn' + (i === rootIdx ? ' active' : '');
+    btn.textContent = n;
+    btn.addEventListener('click', () => { rootIdx = i; render(); });
+    grid.appendChild(btn);
+  });
+}
+
+function buildScaleList() {
+  const list = document.getElementById('scaleList');
+  list.innerHTML = '';
+  SCALES.forEach((s, i) => {
+    const item = document.createElement('div');
+    item.className = 'scale-item' + (i === scaleIdx ? ' active' : '');
+    item.innerHTML = `<div class="scale-name">${s.name}</div><div class="scale-cat">${s.cat}</div>`;
+    item.addEventListener('click', () => { scaleIdx = i; render(); });
+    list.appendChild(item);
+  });
+}
+
+function renderPiano() {
+  const piano = document.getElementById('piano');
+  const scale = SCALES[scaleIdx];
+  const sNotes = new Set(scaleNotes(scale, rootIdx));
+  const rootNote = noteName(rootIdx);
+
+  // White key layout per octave: C D E F G A B
+  // positions: C=0, D=1, E=2, F=3, G=4, A=5, B=6
+  // Black keys between: C#, D#, F#, G#, A# (positions after W key 0,1,3,4,5)
+  const WHITE_SEMITONES = [0,2,4,5,7,9,11]; // C D E F G A B
+  const BLACK_SEMITONES = [1,3,-1,6,8,10,-1]; // C# D# - F# G# A# -
+
+  const totalOctaves = octaves;
+  const wKeyWidth = 37; // px per white key
+
+  piano.innerHTML = '';
+  piano.style.width = (WHITE_SEMITONES.length * totalOctaves * wKeyWidth) + 'px';
+
+  // Start from C below the root for better context
+  const startNote = 60; // MIDI C4
+
+  for (let oct = 0; oct < totalOctaves; oct++) {
+    WHITE_SEMITONES.forEach((semi, wIdx) => {
+      const midiNote = startNote + oct * 12 + semi;
+      const noteN = noteName(midiNote % 12);
+      const inScale = sNotes.has(noteN);
+      const isRoot = noteN === rootNote;
+
+      const key = document.createElement('div');
+      key.className = 'wkey' + (isRoot ? ' root' : (inScale ? ' active' : ''));
+      key.style.left = ((oct * 7 + wIdx) * wKeyWidth) + 'px';
+      key.style.position = 'absolute';
+      if (inScale || isRoot) {
+        const lbl = document.createElement('div');
+        lbl.className = 'note-label';
+        lbl.textContent = noteN;
+        key.appendChild(lbl);
+      }
+      piano.appendChild(key);
+
+      // Black key
+      const bSemi = BLACK_SEMITONES[wIdx];
+      if (bSemi !== -1) {
+        const bMidi = startNote + oct * 12 + bSemi;
+        const bNote = noteName(bMidi % 12);
+        const bInScale = sNotes.has(bNote);
+        const bIsRoot = bNote === rootNote;
+
+        const bkey = document.createElement('div');
+        bkey.className = 'bkey' + (bIsRoot ? ' root' : (bInScale ? ' active' : ''));
+        bkey.style.left = ((oct * 7 + wIdx) * wKeyWidth + 24) + 'px';
+        if (bInScale || bIsRoot) {
+          const lbl = document.createElement('div');
+          lbl.className = 'note-label';
+          lbl.textContent = bNote;
+          bkey.appendChild(lbl);
+        }
+        piano.appendChild(bkey);
+      }
+    });
+  }
+}
+
+function renderDegrees() {
+  const scale = SCALES[scaleIdx];
+  const sNotes = scaleNotes(scale, rootIdx);
+  const INTERVAL_NAMES = ['1','b2','2','b3','3','4','b5','5','b6','6','b7','7'];
+  const row = document.getElementById('degreesRow');
+  row.innerHTML = sNotes.map((n, i) => {
+    const deg = scale.degrees[i] || (i+1);
+    const interval = INTERVAL_NAMES[scale.intervals[i]] || scale.intervals[i];
+    const isRoot = i === 0;
+    return `<div class="degree-pill">
+      <div class="degree-num">${deg}</div>
+      <div class="degree-note${isRoot ? ' root-note' : ''}">${n}</div>
+      <div class="degree-interval">${interval}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderChords() {
+  const scale = SCALES[scaleIdx];
+  const sNotes = scaleNotes(scale, rootIdx);
+  const grid = document.getElementById('chordsGrid');
+
+  if (!scale.chordTypes) {
+    grid.innerHTML = `<div style="color:var(--muted);font-size:11px;grid-column:1/-1;padding:8px 0;">Esta escala no tiene acordes diatónicos definidos.</div>`;
+    return;
+  }
+
+  const QUALITY_LABEL = {
+    maj: ['Mayor', 'q-maj'],
+    min: ['Menor', 'q-min'],
+    dim: ['Disminuido', 'q-dim'],
+    aug: ['Aumentado', 'q-aug'],
+    dom: ['Dominante 7', 'q-dom'],
+    hdim: ['Semidisminuido', 'q-hdim'],
+  };
+
+  grid.innerHTML = sNotes.map((n, i) => {
+    const type = scale.chordTypes[i];
+    const [label, cls] = QUALITY_LABEL[type] || [type, 'q-maj'];
+    const suffix = type === 'maj' ? '' : type === 'min' ? 'm' : type === 'dim' ? '°' : type === 'aug' ? '+' : type === 'dom' ? '7' : 'ø';
+    return `<div class="chord-card">
+      <div class="chord-degree">${scale.degrees[i] || i+1}</div>
+      <div class="chord-name">${n}${suffix}</div>
+      <span class="chord-quality ${cls}">${label}</span>
+    </div>`;
+  }).join('');
+}
+
+function renderModes() {
+  const scale = SCALES[scaleIdx];
+  const sNotes = scaleNotes(scale, rootIdx);
+  const section = document.getElementById('modesSection');
+
+  if (!scale.modes) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+
+  const FEELS = [
+    'Alegre, luminoso','Melancólico, jazzy','Oscuro, flamenco',
+    'Mágico, flotante','Bluesy, rockero','Melancólico, introspectivo',
+    'Tenso, inestable','Menor jazz, sofisticado',
+  ];
+
+  const list = document.getElementById('modesList');
+  list.innerHTML = scale.modes.map((m, i) => {
+    const modeRoot = sNotes[i] || '';
+    // Build mode notes starting from this degree
+    const modeIntervals = [...scale.intervals.slice(i), ...scale.intervals.slice(0,i)];
+    const baseInterval = scale.intervals[i];
+    const modeNotes = modeIntervals.map(iv => noteName(rootIdx + iv)).join(' ');
+    return `<div class="mode-row">
+      <div class="mode-degree">${scale.degrees[i] || i+1}</div>
+      <div class="mode-name">${modeRoot} ${m}</div>
+      <div class="mode-notes">${modeNotes}</div>
+      <div class="mode-feel">${FEELS[i] || ''}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderTips() {
+  const scale = SCALES[scaleIdx];
+  const grid = document.getElementById('tipsGrid');
+  grid.innerHTML = scale.tips.map(t => `
+    <div class="tip-card">
+      <div class="tip-icon">${t.icon}</div>
+      <div class="tip-title">${t.title}</div>
+      <div class="tip-body">${t.body}</div>
+    </div>
+  `).join('');
+}
+
+function renderInfoBar() {
+  const scale = SCALES[scaleIdx];
+  const root = noteName(rootIdx);
+  document.getElementById('scaleFullName').innerHTML = `<em>${root}</em> ${scale.name}`;
+  document.getElementById('scaleIntervals').textContent = scale.intervals.join(' – ');
+  document.getElementById('scaleFormula').textContent = scale.formula;
+  document.getElementById('footerInfo').textContent = `${root} ${scale.name} · ${scale.intervals.length} notas · ${scale.cat}`;
+}
+
+function render() {
+  buildRootGrid();
+  buildScaleList();
+  renderInfoBar();
+  renderPiano();
+  renderDegrees();
+  renderChords();
+  renderModes();
+  renderTips();
+}
+
+// ══════════════════════════════════════════════
+// CONTROLS
+// ══════════════════════════════════════════════
+document.getElementById('octavesSel').addEventListener('change', e => {
+  octaves = parseInt(e.target.value);
+  renderPiano();
+});
+
+document.getElementById('notationSel').addEventListener('change', e => {
+  notation = e.target.value;
+  render();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') { rootIdx = (rootIdx + 1) % 12; render(); }
+  if (e.key === 'ArrowLeft')  { rootIdx = (rootIdx + 11) % 12; render(); }
+  if (e.key === 'ArrowDown')  { scaleIdx = (scaleIdx + 1) % SCALES.length; render(); }
+  if (e.key === 'ArrowUp')    { scaleIdx = (scaleIdx + SCALES.length - 1) % SCALES.length; render(); }
+});
+
+// INIT
+render();
+</script>
+</body>
+</html>
