@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:47321;">
   <title>Escalas — Improvisación</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Unbounded:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
@@ -96,6 +96,106 @@
     .scale-item.active { border-color: var(--accent); background: rgba(255,107,53,0.1); }
     .scale-name { font-size: 12px; color: var(--text); }
     .scale-cat { font-size: 9px; color: var(--muted); margin-top: 2px; letter-spacing: 0.08em; }
+
+    /* Wishlist */
+    .wishlist-box {
+      background: var(--s2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .wishlist-copy { font-size: 10px; color: var(--muted); line-height: 1.55; }
+    .wishlist-form { display: flex; gap: 6px; }
+    .wishlist-input {
+      flex: 1;
+      min-width: 0;
+      background: var(--s1);
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 7px 8px;
+      outline: none;
+    }
+    .wishlist-input:focus { border-color: var(--accent); }
+    .wishlist-msg { font-size: 10px; min-height: 14px; color: var(--muted); }
+    .wishlist-msg.ok { color: var(--green); }
+
+    /* Feedback modal (5 min) */
+    .feedback-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.62);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 9999;
+    }
+    .feedback-backdrop.open { display: flex; }
+    .feedback-modal {
+      width: min(540px, 100%);
+      background: var(--s1);
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+    }
+    .feedback-title {
+      font-family: var(--display);
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+    .feedback-copy {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    .feedback-textarea {
+      width: 100%;
+      min-height: 95px;
+      resize: vertical;
+      background: var(--s2);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 10px;
+      outline: none;
+    }
+    .feedback-textarea:focus { border-color: var(--accent); }
+    .feedback-email {
+      width: 100%;
+      margin-bottom: 8px;
+      background: var(--s2);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 10px;
+      outline: none;
+    }
+    .feedback-email:focus { border-color: var(--accent); }
+    .feedback-actions {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+    .feedback-status {
+      color: var(--muted);
+      font-size: 10px;
+      min-height: 14px;
+      margin-top: 8px;
+    }
+    .feedback-status.ok { color: var(--green); }
 
     /* ── MAIN ── */
     .main { display: flex; flex-direction: column; overflow: hidden; }
@@ -353,6 +453,28 @@
         <div class="scale-list" id="scaleList"></div>
       </div>
 
+      <div>
+        <div class="section-title">Wishlist producto real</div>
+        <div class="wishlist-box">
+          <div class="wishlist-copy">
+            Salida estimada: <strong>Junio 2026</strong>.<br>
+            Sumate para recibir novedades por correo.
+          </div>
+          <form class="wishlist-form" id="wishlistForm">
+            <input
+              type="email"
+              class="wishlist-input"
+              id="wishlistEmail"
+              placeholder="tu-email@ejemplo.com"
+              required
+            >
+            <button type="submit">Unirme</button>
+          </form>
+          <div class="wishlist-msg" id="wishlistMsg"></div>
+          <div class="label-sm">Suscriptos (local): <span id="wishlistCount">0</span></div>
+        </div>
+      </div>
+
     </aside>
 
     <!-- MAIN -->
@@ -433,6 +555,35 @@
     <span style="margin-left:auto;" id="footerInfo"></span>
   </footer>
 
+</div>
+
+<div class="feedback-backdrop" id="feedbackBackdrop">
+  <div class="feedback-modal" role="dialog" aria-modal="true" aria-labelledby="feedbackTitle">
+    <div class="feedback-title" id="feedbackTitle">¿Qué te está pareciendo la app?</div>
+    <div class="feedback-copy">
+      Llevás 5 minutos de uso. Dejanos un comentario y lo guardamos en servidor junto a tu correo para mejorar la salida del producto.
+    </div>
+    <form id="feedbackForm">
+      <input
+        id="feedbackEmail"
+        class="feedback-email"
+        type="email"
+        required
+        placeholder="tu-email@ejemplo.com"
+      >
+      <textarea
+        id="feedbackComment"
+        class="feedback-textarea"
+        required
+        placeholder="Tu comentario, sugerencia o problema..."
+      ></textarea>
+      <div class="feedback-actions">
+        <button type="button" id="feedbackSkip">Después</button>
+        <button type="submit" class="btn-accent">Enviar feedback</button>
+      </div>
+      <div class="feedback-status" id="feedbackStatus"></div>
+    </form>
+  </div>
 </div>
 
 <script>
@@ -649,6 +800,10 @@ let rootIdx = 0;      // 0=C, 1=C#/Db ...
 let scaleIdx = 0;
 let notation = 'sharp';
 let octaves = 2;
+const WISHLIST_STORAGE_KEY = 'escalaimprov:wishlist';
+const FEEDBACK_API_URL = 'http://127.0.0.1:47321/api/feedback';
+const FEEDBACK_PROMPT_DELAY_MS = 5 * 60 * 1000;
+let feedbackPromptTimer = null;
 
 // ══════════════════════════════════════════════
 // HELPERS
@@ -657,6 +812,81 @@ function notes() { return notation === 'sharp' ? NOTES_SHARP : NOTES_FLAT; }
 function noteName(idx) { return notes()[(idx + 12) % 12]; }
 function scaleNotes(scale, root) {
   return scale.intervals.map(i => noteName(root + i));
+}
+
+function getWishlist() {
+  try {
+    const data = JSON.parse(localStorage.getItem(WISHLIST_STORAGE_KEY) || '[]');
+    return Array.isArray(data) ? data : [];
+  } catch (_) {
+    return [];
+  }
+}
+
+function setWishlist(list) {
+  localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(list));
+}
+
+function renderWishlistCount() {
+  const countEl = document.getElementById('wishlistCount');
+  countEl.textContent = String(getWishlist().length);
+}
+
+function getCurrentUserEmail() {
+  // Prioridad: acceso de landing, luego último de wishlist.
+  try {
+    const access = JSON.parse(localStorage.getItem('escalaimprov:lastAccess') || 'null');
+    if (access && access.email) return String(access.email).trim().toLowerCase();
+  } catch (_) {}
+
+  const list = getWishlist();
+  if (list.length > 0) {
+    const latest = list[list.length - 1];
+    if (latest && latest.email) return String(latest.email).trim().toLowerCase();
+  }
+  return '';
+}
+
+function openFeedbackModal() {
+  const backdrop = document.getElementById('feedbackBackdrop');
+  backdrop.classList.add('open');
+}
+
+function closeFeedbackModal() {
+  const backdrop = document.getElementById('feedbackBackdrop');
+  backdrop.classList.remove('open');
+}
+
+async function submitFeedback(comment) {
+  const emailInputValue = document.getElementById('feedbackEmail').value.trim().toLowerCase();
+  const email = emailInputValue || getCurrentUserEmail();
+  if (!email) throw new Error('Necesitamos un correo para guardar el feedback.');
+
+  const payload = {
+    email,
+    comment,
+    minutesInApp: 5,
+    source: 'app-5min-feedback',
+  };
+
+  const res = await fetch(FEEDBACK_API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    throw new Error('No se pudo guardar en servidor.');
+  }
+}
+
+function scheduleFeedbackPrompt() {
+  clearTimeout(feedbackPromptTimer);
+  feedbackPromptTimer = setTimeout(() => {
+    const emailField = document.getElementById('feedbackEmail');
+    emailField.value = getCurrentUserEmail();
+    openFeedbackModal();
+  }, FEEDBACK_PROMPT_DELAY_MS);
 }
 
 // ══════════════════════════════════════════════
@@ -1317,8 +1547,67 @@ document.getElementById('volSlider').addEventListener('input', e => {
 
 document.getElementById('btnMute').addEventListener('click', toggleMute);
 
+document.getElementById('wishlistForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const emailInput = document.getElementById('wishlistEmail');
+  const msg = document.getElementById('wishlistMsg');
+  const email = emailInput.value.trim().toLowerCase();
+  if (!email) return;
+
+  const list = getWishlist();
+  if (list.some(item => item.email === email)) {
+    msg.textContent = 'Ese correo ya estaba en la wishlist.';
+    msg.classList.remove('ok');
+    return;
+  }
+
+  list.push({ email, at: new Date().toISOString(), source: 'app-wishlist' });
+  setWishlist(list);
+  renderWishlistCount();
+  msg.textContent = 'Listo. Te avisaremos para el lanzamiento de junio 2026.';
+  msg.classList.add('ok');
+  emailInput.value = '';
+});
+
+document.getElementById('feedbackSkip').addEventListener('click', () => {
+  closeFeedbackModal();
+});
+
+document.getElementById('feedbackForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const commentEl = document.getElementById('feedbackComment');
+  const statusEl = document.getElementById('feedbackStatus');
+  const comment = commentEl.value.trim();
+  if (!comment) return;
+
+  statusEl.textContent = 'Guardando en servidor...';
+  statusEl.classList.remove('ok');
+
+  try {
+    await submitFeedback(comment);
+    const sentEmail = document.getElementById('feedbackEmail').value.trim().toLowerCase();
+    if (sentEmail) {
+      const list = getWishlist();
+      if (!list.some(item => item.email === sentEmail)) {
+        list.push({ email: sentEmail, at: new Date().toISOString(), source: 'app-feedback-email' });
+        setWishlist(list);
+        renderWishlistCount();
+      }
+    }
+    statusEl.textContent = 'Gracias. Tu comentario fue guardado en servidor.';
+    statusEl.classList.add('ok');
+    commentEl.value = '';
+    setTimeout(() => closeFeedbackModal(), 900);
+  } catch (err) {
+    statusEl.textContent = err.message || 'No se pudo guardar el comentario.';
+    statusEl.classList.remove('ok');
+  }
+});
+
 // INIT
 render();
+renderWishlistCount();
+scheduleFeedbackPrompt();
 </script>
 </body>
 </html>

@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="EscalaImprov: una app para explorar escalas, acordes diatónicos, modos y tips para improvisar. Demo interactiva incluida." />
+  <title>EscalaImprov — Escalas para improvisar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Unbounded:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 700px at 15% 10%, rgba(255,107,53,0.18), transparent 55%),
+                  radial-gradient(900px 600px at 80% 20%, rgba(91,168,255,0.16), transparent 55%),
+                  radial-gradient(1000px 800px at 55% 95%, rgba(91,255,160,0.12), transparent 55%),
+                  #070707;
+      color: #efeae2;
+      font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      line-height: 1.4;
+    }
+
+    :root {
+      --bg: #070707;
+      --s1: rgba(17,17,17,0.9);
+      --s2: rgba(26,26,26,0.85);
+      --s3: rgba(36,36,36,0.95);
+      --border: rgba(255,255,255,0.08);
+      --border2: rgba(255,255,255,0.13);
+      --muted: rgba(239,234,226,0.68);
+      --hint: rgba(239,234,226,0.36);
+      --accent: #ff6b35;
+      --accent2: #ffb347;
+      --green: #5bffa0;
+      --blue: #5ba8ff;
+      --purple: #b388ff;
+      --display: "Unbounded", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      --shadow: 0 18px 60px rgba(0,0,0,0.55);
+      --radius: 16px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    .container { width: min(1100px, calc(100% - 40px)); margin: 0 auto; }
+
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: linear-gradient(to bottom, rgba(7,7,7,0.92), rgba(7,7,7,0.72));
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0;
+      gap: 18px;
+    }
+    .brand {
+      display: flex; align-items: baseline; gap: 10px;
+      font-family: var(--display);
+      letter-spacing: 0.04em;
+    }
+    .brand .mark {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .brand .sub { color: var(--muted); font-weight: 300; font-size: 12px; }
+
+    .nav-links {
+      display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .nav-links a { padding: 6px 8px; border-radius: 8px; border: 1px solid transparent; }
+    .nav-links a:hover { text-decoration: none; border-color: var(--border); background: rgba(255,255,255,0.03); color: #fff; }
+
+    .cta-row { display: flex; gap: 10px; align-items: center; }
+    .btn {
+      border: 1px solid var(--border2);
+      background: rgba(255,255,255,0.04);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex; align-items: center; gap: 10px;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+    .btn:hover { border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.06); transform: translateY(-1px); text-decoration: none; }
+    .btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #000; border-color: transparent; font-weight: 700; }
+    .btn.primary:hover { transform: translateY(-1px) scale(1.01); }
+    .btn .pill {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.28);
+      border: 1px solid rgba(0,0,0,0.18);
+      color: rgba(0,0,0,0.85);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero { padding: 64px 0 26px; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 11px;
+      width: fit-content;
+    }
+    .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 18px rgba(91,255,160,0.35); }
+    .h-title {
+      font-family: var(--display);
+      margin: 14px 0 10px;
+      font-size: clamp(30px, 3.2vw, 44px);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+    .h-title em { font-style: normal; color: var(--accent2); }
+    .h-lead { color: var(--muted); font-size: 13px; max-width: 62ch; }
+    .h-actions { margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .micro {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .micro .kpi {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      border-radius: var(--radius);
+      padding: 12px 12px;
+      box-shadow: var(--shadow);
+    }
+    .kpi .n { font-family: var(--display); font-weight: 700; font-size: 18px; }
+    .kpi .t { color: var(--muted); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 5px; }
+
+    .mock {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      min-height: 360px;
+    }
+    .mock::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: radial-gradient(600px 380px at 15% 20%, rgba(255,107,53,0.22), transparent 55%),
+                  radial-gradient(560px 420px at 85% 22%, rgba(91,168,255,0.18), transparent 58%),
+                  radial-gradient(600px 520px at 60% 92%, rgba(179,136,255,0.14), transparent 55%);
+      pointer-events: none;
+      opacity: 0.9;
+    }
+    .mock-top {
+      position: relative;
+      padding: 12px 14px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,0.25);
+    }
+    .traffic { display: flex; gap: 8px; }
+    .traffic span { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .traffic .r { background: #ff5f57; }
+    .traffic .y { background: #febc2e; }
+    .traffic .g { background: #28c840; }
+    .mock-top .cap { color: var(--muted); font-size: 11px; }
+    .mock-body { position: relative; padding: 14px; display: grid; gap: 10px; }
+    .mock-row { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 10px; }
+    .panel {
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.25);
+      border-radius: 14px;
+      padding: 12px;
+    }
+    .panel .st { color: var(--hint); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip {
+      border: 1px solid var(--border2);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 11px;
+      cursor: default;
+    }
+    .chip.ac { background: rgba(255,107,53,0.18); border-color: rgba(255,107,53,0.32); color: #fff; }
+    .mini-piano {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .key {
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.10);
+      height: 46px;
+      background: rgba(255,255,255,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+    .key::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 60%, rgba(255,107,53,0.25), transparent 70%);
+      opacity: 0;
+      transition: opacity .12s ease;
+    }
+    .key.on { border-color: rgba(255,179,71,0.42); background: rgba(255,179,71,0.16); }
+    .key.on::after { opacity: 1; }
+    .key.root { border-color: rgba(255,107,53,0.55); background: rgba(255,107,53,0.22); }
+    .key .lab {
+      position: absolute; inset: 0;
+      display: flex; align-items: flex-end; justify-content: center;
+      padding-bottom: 6px;
+      font-size: 10px;
+      color: rgba(239,234,226,0.85);
+    }
+
+    .section { padding: 42px 0; }
+    .section h2 {
+      font-family: var(--display);
+      margin: 0 0 10px;
+      letter-spacing: -0.01em;
+      font-size: 22px;
+    }
+    .section p.lead { margin: 0 0 18px; color: var(--muted); font-size: 12px; max-width: 78ch; }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .card {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      min-height: 120px;
+    }
+    .card .icon { font-size: 16px; margin-bottom: 10px; }
+    .card .title { font-weight: 700; font-size: 12px; margin-bottom: 6px; }
+    .card .body { color: var(--muted); font-size: 11px; line-height: 1.65; }
+
+    .demo {
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.26);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .demo-top {
+      padding: 14px 16px;
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+    .demo-top .tag { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--hint); }
+    .demo-top .controls { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+    select {
+      border: 1px solid var(--border2);
+      background: rgba(255,255,255,0.03);
+      color: #fff;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 12px;
+      outline: none;
+      appearance: none;
+      cursor: pointer;
+    }
+    .demo-body { padding: 16px; display: grid; gap: 14px; }
+    .demo-kpis { display: grid; grid-template-columns: 1.4fr 0.6fr; gap: 12px; align-items: start; }
+    .demo-info { border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; background: rgba(255,255,255,0.02); }
+    .demo-info .name { font-family: var(--display); font-weight: 700; font-size: 18px; margin: 0 0 6px; }
+    .demo-info .line { color: var(--muted); font-size: 11px; }
+    .demo-info .line code { color: #fff; background: rgba(255,255,255,0.06); border: 1px solid var(--border); padding: 1px 6px; border-radius: 999px; }
+    .demo-notes { border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; background: rgba(255,255,255,0.02); }
+    .demo-notes .st { color: var(--hint); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px; }
+    .note-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .note-pill { padding: 7px 10px; border-radius: 999px; border: 1px solid var(--border2); background: rgba(255,255,255,0.03); font-size: 12px; }
+    .note-pill.root { border-color: rgba(255,107,53,0.45); background: rgba(255,107,53,0.18); }
+
+    .pricing { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .price {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .price.featured {
+      border-color: rgba(255,107,53,0.35);
+      background: linear-gradient(180deg, rgba(255,107,53,0.12), rgba(255,255,255,0.02));
+    }
+    .price .plan { color: var(--hint); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; }
+    .price .money { font-family: var(--display); font-size: 30px; font-weight: 700; margin: 10px 0 6px; }
+    .price .money span { color: var(--muted); font-size: 12px; font-family: inherit; font-weight: 400; }
+    .price ul { margin: 12px 0 0; padding: 0 0 0 18px; color: var(--muted); font-size: 11px; line-height: 1.7; }
+    .price .buy { margin-top: 14px; width: 100%; justify-content: center; }
+    .ribbon {
+      position: absolute; top: 12px; right: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(255,179,71,0.18);
+      border: 1px solid rgba(255,179,71,0.30);
+      color: #fff;
+    }
+
+    .faq { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    details {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      border-radius: 16px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+    }
+    summary { cursor: pointer; font-weight: 700; font-size: 12px; }
+    details p { margin: 10px 0 0; color: var(--muted); font-size: 11px; line-height: 1.65; }
+
+    .testimonials { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .quote {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+    .quote .q { color: rgba(239,234,226,0.88); font-size: 12px; line-height: 1.75; }
+    .quote .who { margin-top: 10px; color: var(--muted); font-size: 11px; }
+    .quote .who b { color: #fff; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 22px 0 30px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .foot-grid { display: grid; grid-template-columns: 1.4fr 0.6fr; gap: 12px; align-items: start; }
+    .foot-note { color: var(--hint); font-size: 10px; margin-top: 8px; }
+    .links { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .links a { padding: 8px 10px; border-radius: 12px; border: 1px solid var(--border); background: rgba(255,255,255,0.02); }
+    .links a:hover { text-decoration: none; border-color: rgba(255,255,255,0.22); }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(0,0,0,0.6);
+      z-index: 80;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      width: min(560px, 100%);
+      border-radius: 18px;
+      border: 1px solid var(--border2);
+      background: #0f0f0f;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .modal h3 {
+      margin: 0 0 8px;
+      font-family: var(--display);
+      font-size: 20px;
+      letter-spacing: -0.01em;
+    }
+    .modal .help { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+    .modal form { display: grid; gap: 10px; }
+    .modal input[type="email"] {
+      width: 100%;
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      color: #fff;
+      padding: 12px;
+      font-size: 12px;
+      outline: none;
+    }
+    .modal input[type="email"]:focus { border-color: var(--accent); }
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .cred-box {
+      margin-top: 14px;
+      border: 1px solid rgba(91,255,160,0.35);
+      background: rgba(91,255,160,0.08);
+      border-radius: 12px;
+      padding: 12px;
+      display: none;
+      color: #dbffe9;
+      font-size: 12px;
+      line-height: 1.65;
+    }
+    .cred-box.open { display: block; }
+    .cred-box code {
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 8px;
+      padding: 2px 8px;
+      color: #fff;
+      background: rgba(0,0,0,0.2);
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .micro { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .mock-row { grid-template-columns: 1fr; }
+      .pricing { grid-template-columns: 1fr; }
+      .faq { grid-template-columns: 1fr; }
+      .testimonials { grid-template-columns: 1fr; }
+      .demo-kpis { grid-template-columns: 1fr; }
+      .links { justify-content: flex-start; }
+      .foot-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <div class="brand">
+          <div class="mark">ESCALAIMPROV</div>
+          <div class="sub">escalas · acordes · modos</div>
+        </div>
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#demo">Demo</a>
+          <a href="#pricing">Precios</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <div class="cta-row">
+          <a class="btn" href="index.html">Probar aplicación <span class="pill">app</span></a>
+          <button class="btn primary start-register" id="btnStartNow" type="button">Empezar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="badge"><span class="dot"></span> Nueva landing para presentar EscalaImprov</div>
+          <h1 class="h-title">Improvisá mejor con una <em>vista clara</em> de escalas, acordes y modos.</h1>
+          <p class="h-lead">
+            EscalaImprov es una app pensada para músicos: elegís tónica y escala, y al instante ves notas, grados, acordes diatónicos, modos y tips prácticos.
+            Abajo tenés una demo interactiva y un acceso rápido a la app real.
+          </p>
+          <div class="h-actions">
+            <a class="btn primary" href="index.html">Probar aplicación</a>
+            <a class="btn" href="#features">Ver features</a>
+            <button class="btn start-register" id="btnStartHero" type="button">Empezar con email</button>
+          </div>
+          <div class="micro">
+            <div class="kpi">
+              <div class="n">14+</div>
+              <div class="t">Escalas y modos</div>
+            </div>
+            <div class="kpi">
+              <div class="n">12</div>
+              <div class="t">Tónicas (♯ / ♭)</div>
+            </div>
+            <div class="kpi">
+              <div class="n">1–2</div>
+              <div class="t">Octavas en teclado</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mock" aria-label="Mockup de la app">
+          <div class="mock-top">
+            <div class="traffic" aria-hidden="true">
+              <span class="r"></span><span class="y"></span><span class="g"></span>
+            </div>
+            <div class="cap">Vista rápida: escala → notas → acordes</div>
+          </div>
+          <div class="mock-body">
+            <div class="mock-row">
+              <div class="panel">
+                <div class="st">Escalas</div>
+                <div class="chips">
+                  <span class="chip ac">Mayor</span>
+                  <span class="chip">Menor natural</span>
+                  <span class="chip">Dórico</span>
+                  <span class="chip">Pentatónica</span>
+                  <span class="chip">Blues</span>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="st">Teclado (resaltado)</div>
+                <div class="mini-piano" id="heroMiniPiano"></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="st">Acordes diatónicos (idea)</div>
+              <div class="chips">
+                <span class="chip ac">I: C</span>
+                <span class="chip">ii: Dm</span>
+                <span class="chip">iii: Em</span>
+                <span class="chip">IV: F</span>
+                <span class="chip">V: G7</span>
+                <span class="chip">vi: Am</span>
+                <span class="chip">vii°: B°</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="features" class="section">
+    <div class="container">
+      <h2>Features</h2>
+      <p class="lead">Todo lo esencial para practicar e improvisar, con una interfaz clara y rápida.</p>
+      <div class="grid-3">
+        <div class="card">
+          <div class="icon">🎹</div>
+          <div class="title">Teclado visual</div>
+          <div class="body">Notas de la escala resaltadas y tónica marcada para ubicarte al instante.</div>
+        </div>
+        <div class="card">
+          <div class="icon">🧩</div>
+          <div class="title">Grados + intervalos</div>
+          <div class="body">Lectura rápida de grados (I–VII) y de la fórmula interválica para memorizar patrones.</div>
+        </div>
+        <div class="card">
+          <div class="icon">🎸</div>
+          <div class="title">Acordes diatónicos</div>
+          <div class="body">Calidad de acorde por grado (maj, min, dim, dom) para armonizar sin dudas.</div>
+        </div>
+        <div class="card">
+          <div class="icon">🧠</div>
+          <div class="title">Modos y “feel”</div>
+          <div class="body">Nombres de modos y una guía de carácter para pensar en colores, no en listas.</div>
+        </div>
+        <div class="card">
+          <div class="icon">⚡</div>
+          <div class="title">Rápida y offline</div>
+          <div class="body">Sin cuentas, sin servidor. Pensada para abrir y tocar. Ideal para ensayo y estudio.</div>
+        </div>
+        <div class="card">
+          <div class="icon">⌨️</div>
+          <div class="title">Navegable con teclado</div>
+          <div class="body">Cambiá tónica y escala con flechas para practicar en flow sin usar el mouse.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="demo" class="section">
+    <div class="container">
+      <h2>Demo interactiva</h2>
+      <p class="lead">Elegí una tónica y una escala. La demo te muestra notas y un mini teclado con las notas resaltadas.</p>
+
+      <div class="demo" role="region" aria-label="Demo de escalas">
+        <div class="demo-top">
+          <div class="tag">demo · sin instalación</div>
+          <div class="controls">
+            <select id="notationSel" aria-label="Notación">
+              <option value="sharp" selected>Sostenidos ♯</option>
+              <option value="flat">Bemoles ♭</option>
+            </select>
+            <select id="rootSel" aria-label="Tónica"></select>
+            <select id="scaleSel" aria-label="Escala"></select>
+          </div>
+        </div>
+        <div class="demo-body">
+          <div class="demo-kpis">
+            <div class="demo-info">
+              <div class="name" id="demoName">—</div>
+              <div class="line">Fórmula: <code id="demoFormula">—</code></div>
+              <div class="line" style="margin-top:6px;">Tip: <span id="demoTip">—</span></div>
+            </div>
+            <div class="demo-notes">
+              <div class="st">Notas</div>
+              <div class="note-row" id="demoNotes"></div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin:0;">
+            <div class="st">Mini teclado (12 notas)</div>
+            <div class="mini-piano" id="demoPiano"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="section">
+    <div class="container">
+      <h2>Precios</h2>
+      <p class="lead">Esto es una tabla de marketing (placeholders). Podés adaptarla a tu modelo real (gratuita, donación, pago único, etc.).</p>
+
+      <div class="pricing">
+        <div class="price">
+          <div class="plan">Starter</div>
+          <div class="money">$0 <span>/ siempre</span></div>
+          <div class="body" style="color:var(--muted);font-size:11px;">Para explorar lo esencial y practicar rápido.</div>
+          <ul>
+            <li>Escalas principales</li>
+            <li>Notas y grados</li>
+            <li>Demo incluida</li>
+          </ul>
+          <a class="btn buy" href="#demo">Probar</a>
+        </div>
+
+        <div class="price featured">
+          <div class="ribbon">Recomendado</div>
+          <div class="plan">Pro</div>
+          <div class="money">$9 <span>/ pago único</span></div>
+          <div class="body" style="color:var(--muted);font-size:11px;">Para estudio serio y más herramientas de improvisación.</div>
+          <ul>
+            <li>Acordes diatónicos + calidades</li>
+            <li>Modos y tips avanzados</li>
+            <li>Soporte prioritario</li>
+          </ul>
+          <button class="btn primary buy start-register" type="button">Empezar</button>
+        </div>
+
+        <div class="price">
+          <div class="plan">Studio</div>
+          <div class="money">$29 <span>/ por equipo</span></div>
+          <div class="body" style="color:var(--muted);font-size:11px;">Para docentes, salas o bandas que comparten setup.</div>
+          <ul>
+            <li>Licencia multi-dispositivo</li>
+            <li>Plantillas y progresiones</li>
+            <li>Onboarding rápido</li>
+          </ul>
+          <a class="btn buy" href="#demo">Contactar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Testimonios</h2>
+      <p class="lead">También placeholders: sirven para mostrar el layout y el tono de la landing.</p>
+      <div class="testimonials">
+        <div class="quote">
+          <div class="q">“En 2 minutos paso de ‘¿qué escala uso?’ a tocar con intención. Clarísima.”</div>
+          <div class="who"><b>Guitarrista</b> · rock / blues</div>
+        </div>
+        <div class="quote">
+          <div class="q">“Me ordenó los modos. Ver notas + grados + acordes juntos es lo que faltaba.”</div>
+          <div class="who"><b>Saxofonista</b> · jazz</div>
+        </div>
+        <div class="quote">
+          <div class="q">“La uso en clase para explicar cadencias y colores. Muy práctica.”</div>
+          <div class="who"><b>Docente</b> · armonía</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="section">
+    <div class="container">
+      <h2>FAQ</h2>
+      <p class="lead">Preguntas típicas de una landing, listas para personalizar.</p>
+      <div class="faq">
+        <details>
+          <summary>¿Esto reemplaza a la app de Electron?</summary>
+          <p>Ahora sí: la landing es la pantalla inicial en Electron (`landing.html`) y desde ahí podés entrar a la app (`index.html`).</p>
+        </details>
+        <details>
+          <summary>¿La demo usa servidores o trackers?</summary>
+          <p>No. La demo es JavaScript puro y corre en tu navegador. No envía datos a ningún lado.</p>
+        </details>
+        <details>
+          <summary>¿Se puede usar con ♯ y ♭?</summary>
+          <p>Sí: la demo incluye selector de notación. En la app completa ya existe el selector y el teclado se recalcula.</p>
+        </details>
+        <details>
+          <summary>¿Puedo enlazar “Descargar” a GitHub?</summary>
+          <p>Sí. En el footer dejé links “placeholder” para que pegues GitHub, redes o una página de descargas.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="foot-grid">
+        <div>
+          <div style="font-family:var(--display);font-weight:700;color:#fff;">EscalaImprov</div>
+          <div class="foot-note">Tip: para deploy estático, podés renombrar `landing.html` a `index.html` en un sitio de marketing separado.</div>
+        </div>
+        <div class="links">
+          <a href="#" id="linkGithub" aria-label="GitHub (placeholder)">GitHub</a>
+          <a href="#" id="linkX" aria-label="X/Twitter (placeholder)">X</a>
+          <a href="#" id="linkMail" aria-label="Email (placeholder)">Contacto</a>
+        </div>
+      </div>
+      <div style="margin-top:14px;color:var(--hint);font-size:10px;">
+        © <span id="year"></span> · Hecho para practicar improvisación.
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal-backdrop" id="registerModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="registerTitle">
+      <h3 id="registerTitle">Empezar ahora</h3>
+      <p class="help">Dejá tu email y te creamos acceso demo al instante. Tambien te sumamos a la wishlist del producto real (salida: junio 2026).</p>
+      <form id="registerForm">
+        <input id="registerEmail" type="email" required placeholder="tu-email@ejemplo.com" />
+        <div class="modal-actions">
+          <button class="btn primary" type="submit">Crear acceso y entrar</button>
+          <button class="btn" type="button" id="btnCloseRegister">Cancelar</button>
+        </div>
+      </form>
+      <div class="cred-box" id="credBox">
+        <div>Acceso generado:</div>
+        <div>Usuario: <code id="credUser">-</code></div>
+        <div>Password: <code id="credPass">-</code></div>
+        <div style="margin-top:8px;color:var(--muted);">Estas credenciales son demo y visibles para prueba.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const NOTES_SHARP = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+    const NOTES_FLAT  = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+
+    const SCALES = [
+      { id:'major', name:'Mayor', intervals:[0,2,4,5,7,9,11], formula:'T T s T T T s', tip:'Enfatizá 1–3–5 para resolver; la sensible (7) crea tensión.' },
+      { id:'natural_minor', name:'Menor natural', intervals:[0,2,3,5,7,8,10], formula:'T s T T s T T', tip:'La b3 y b6 definen el color. Probá im–VII–VI–VII.' },
+      { id:'dorian', name:'Dórico', intervals:[0,2,3,5,7,9,10], formula:'T s T T T s T', tip:'Menor con 6 mayor. El loop i–IV es su firma.' },
+      { id:'mixolydian', name:'Mixolidio', intervals:[0,2,4,5,7,9,10], formula:'T T s T T s T', tip:'Mayor con b7. Sonido blues/rock: I7 como tónica.' },
+      { id:'pentatonic_major', name:'Pentatónica mayor', intervals:[0,2,4,7,9], formula:'T T A T A', tip:'“No hay notas malas”. Ideal para frases simples y efectivas.' },
+      { id:'pentatonic_minor', name:'Pentatónica menor', intervals:[0,3,5,7,10], formula:'A T T A T', tip:'Base del blues/rock. Sumá la blue note (b5) para blues completo.' },
+      { id:'blues', name:'Blues', intervals:[0,3,5,6,7,10], formula:'A T s s A T', tip:'Usá la b5 como nota de paso (tensión), no como reposo.' },
+    ];
+
+    function notes(notation) { return notation === 'flat' ? NOTES_FLAT : NOTES_SHARP; }
+    function mod12(n) { return ((n % 12) + 12) % 12; }
+    function scaleNotes(rootIdx, scale, notation) {
+      const n = notes(notation);
+      return scale.intervals.map(iv => n[mod12(rootIdx + iv)]);
+    }
+
+    const $ = (id) => document.getElementById(id);
+    const notationSel = $('notationSel');
+    const rootSel = $('rootSel');
+    const scaleSel = $('scaleSel');
+    const registerModal = $('registerModal');
+    const registerForm = $('registerForm');
+    const registerEmail = $('registerEmail');
+    const credBox = $('credBox');
+    const credUser = $('credUser');
+    const credPass = $('credPass');
+
+    function fillSelects() {
+      const ns = notes(notationSel.value);
+      rootSel.innerHTML = ns.map((n, i) => `<option value="${i}">${n}</option>`).join('');
+      scaleSel.innerHTML = SCALES.map((s, i) => `<option value="${i}">${s.name}</option>`).join('');
+      rootSel.value = '0';
+      scaleSel.value = '0';
+    }
+
+    function renderMiniPiano(el, onSet, rootName, allNames) {
+      el.innerHTML = allNames.map(name => {
+        const cls = (name === rootName) ? 'key root' : (onSet.has(name) ? 'key on' : 'key');
+        return `<div class="${cls}" title="${name}"><div class="lab">${name}</div></div>`;
+      }).join('');
+    }
+
+    function renderDemo() {
+      const rootIdx = parseInt(rootSel.value, 10);
+      const scale = SCALES[parseInt(scaleSel.value, 10)];
+      const notation = notationSel.value;
+      const ns = notes(notation);
+      const rootName = ns[rootIdx];
+      const sNotes = scaleNotes(rootIdx, scale, notation);
+      const set = new Set(sNotes);
+
+      $('demoName').textContent = `${rootName} ${scale.name}`;
+      $('demoFormula').textContent = scale.formula;
+      $('demoTip').textContent = scale.tip;
+      $('demoNotes').innerHTML = sNotes.map((n, i) => {
+        const cls = i === 0 ? 'note-pill root' : 'note-pill';
+        return `<span class="${cls}">${n}</span>`;
+      }).join('');
+
+      renderMiniPiano($('demoPiano'), set, rootName, ns);
+    }
+
+    function renderHeroPiano() {
+      const ns = NOTES_SHARP;
+      const rootName = 'C';
+      const scale = SCALES[0];
+      const sNotes = scaleNotes(0, scale, 'sharp');
+      const set = new Set(sNotes);
+      renderMiniPiano($('heroMiniPiano'), set, rootName, ns);
+    }
+
+    function initFooter() {
+      $('year').textContent = new Date().getFullYear();
+      // Placeholders: dejá # para que el usuario pegue sus links reales.
+      $('linkGithub').setAttribute('href', '#');
+      $('linkX').setAttribute('href', '#');
+      $('linkMail').setAttribute('href', '#');
+    }
+
+    function openRegisterModal() {
+      registerModal.classList.add('open');
+      credBox.classList.remove('open');
+      registerEmail.value = '';
+      setTimeout(() => registerEmail.focus(), 0);
+    }
+
+    function closeRegisterModal() {
+      registerModal.classList.remove('open');
+    }
+
+    function registerDemoAccess(email) {
+      const safePrefix = email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 10) || 'musico';
+      const username = `demo_${safePrefix}`;
+      const password = 'Escala2026!';
+      const payload = {
+        email,
+        username,
+        password,
+        createdAt: new Date().toISOString(),
+      };
+      localStorage.setItem('escalaimprov:lastAccess', JSON.stringify(payload));
+
+      // Se guarda en wishlist local para luego exportar o integrar backend.
+      const key = 'escalaimprov:wishlist';
+      const list = JSON.parse(localStorage.getItem(key) || '[]');
+      if (!list.some(item => item.email === email)) {
+        list.push({ email, source: 'landing-autoregistro', at: payload.createdAt });
+        localStorage.setItem(key, JSON.stringify(list));
+      }
+
+      return payload;
+    }
+
+    notationSel.addEventListener('change', () => { fillSelects(); renderDemo(); });
+    rootSel.addEventListener('change', renderDemo);
+    scaleSel.addEventListener('change', renderDemo);
+    document.querySelectorAll('.start-register').forEach(btn => {
+      btn.addEventListener('click', openRegisterModal);
+    });
+    $('btnCloseRegister').addEventListener('click', closeRegisterModal);
+    registerModal.addEventListener('click', (e) => {
+      if (e.target === registerModal) closeRegisterModal();
+    });
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = registerEmail.value.trim().toLowerCase();
+      if (!email) return;
+      const data = registerDemoAccess(email);
+      credUser.textContent = data.username;
+      credPass.textContent = data.password;
+      credBox.classList.add('open');
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1100);
+    });
+
+    renderHeroPiano();
+    initFooter();
+    fillSelects();
+    renderDemo();
+  </script>
+</body>
+</html>
