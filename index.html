@@ -173,6 +173,92 @@
     .q-dom { background: rgba(255,179,71,0.15); color: var(--accent2); }
     .q-hdim { background: rgba(255,107,53,0.1); color: var(--accent); }
 
+    /* ── CHORD PROGRESSION PLAYER ── */
+    .prog-player {
+      background: var(--s1); border: 1px solid var(--border); border-radius: 12px;
+      padding: 18px 20px; display: flex; flex-direction: column; gap: 14px;
+    }
+    .prog-header { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .prog-selects { display: flex; gap: 8px; flex-wrap: wrap; flex: 1; }
+    .prog-controls { display: flex; gap: 8px; align-items: center; }
+    .prog-bpm-wrap { display: flex; align-items: center; gap: 6px; }
+    .prog-bpm-label { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; white-space: nowrap; }
+    .prog-bpm-val { font-size: 13px; font-family: var(--display); font-weight: 700; color: var(--accent2); min-width: 36px; text-align: center; }
+    input[type=range].bpm-slider {
+      -webkit-appearance: none; appearance: none;
+      width: 90px; height: 4px;
+      background: var(--s3); border-radius: 2px; border: none; padding: 0;
+      cursor: pointer; outline: none;
+    }
+    input[type=range].bpm-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 14px; height: 14px;
+      background: var(--accent); border-radius: 50%; cursor: pointer;
+    }
+    .btn-play {
+      background: var(--accent); color: #000; border-color: var(--accent);
+      font-weight: 700; font-size: 13px; padding: 8px 18px;
+      border-radius: 7px; transition: all 0.15s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .btn-play:hover { background: var(--accent2); border-color: var(--accent2); }
+    .btn-play.playing { background: var(--s3); color: var(--text); border-color: var(--border2); }
+
+    /* Beat grid */
+    .prog-beat-grid {
+      display: flex; gap: 6px; flex-wrap: wrap;
+      align-items: center;
+    }
+    .beat-bar {
+      display: flex; gap: 4px; align-items: center;
+    }
+    .beat-sep { width: 1px; height: 40px; background: var(--border2); margin: 0 4px; }
+    .beat-cell {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      width: 72px; height: 72px; border-radius: 10px;
+      border: 1.5px solid var(--border); background: var(--s2);
+      transition: all 0.08s ease-out;
+      cursor: default; position: relative; overflow: hidden;
+    }
+    .beat-cell::before {
+      content: ''; position: absolute; inset: 0; border-radius: 9px;
+      background: radial-gradient(circle at 50% 60%, rgba(255,107,53,0.25) 0%, transparent 70%);
+      opacity: 0; transition: opacity 0.08s;
+    }
+    .beat-cell.active { border-color: var(--accent); transform: scale(1.06); background: var(--s3); }
+    .beat-cell.active::before { opacity: 1; }
+    .beat-cell.downbeat.active { border-color: var(--accent2); box-shadow: 0 0 16px rgba(255,179,71,0.35); }
+    .beat-cell.downbeat.active::before {
+      background: radial-gradient(circle at 50% 60%, rgba(255,179,71,0.3) 0%, transparent 70%);
+      opacity: 1;
+    }
+    @keyframes beatPulse {
+      0%   { transform: scale(1.06); }
+      40%  { transform: scale(1.10); }
+      100% { transform: scale(1.06); }
+    }
+    .beat-cell.pulse { animation: beatPulse 0.12s ease-out forwards; }
+    .beat-num { font-size: 8px; color: var(--hint); font-family: var(--mono); margin-bottom: 3px; letter-spacing: 0.05em; }
+    .beat-chord-name {
+      font-family: var(--display); font-weight: 700; font-size: 15px;
+      color: var(--text); line-height: 1;
+    }
+    .beat-cell.active .beat-chord-name { color: var(--accent); }
+    .beat-cell.downbeat.active .beat-chord-name { color: var(--accent2); }
+    .beat-chord-quality { font-size: 8px; color: var(--muted); font-family: var(--mono); margin-top: 3px; }
+
+    /* Prog meta */
+    .prog-meta { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .prog-desc { font-size: 10px; color: var(--muted); line-height: 1.6; }
+    .beat-indicator {
+      display: flex; gap: 4px; align-items: center; margin-left: auto;
+    }
+    .beat-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--hint); transition: background 0.08s;
+    }
+    .beat-dot.on { background: var(--accent); }
+    .beat-dot.downon { background: var(--accent2); }
+
     /* ── MODES ── */
     .modes-list { display: flex; flex-direction: column; gap: 6px; }
     .mode-row {
@@ -202,6 +288,29 @@
     .footer-key { color: var(--muted); }
     .kbd { background: var(--s3); border: 1px solid var(--border2); border-radius: 3px; padding: 1px 5px; font-size: 9px; }
 
+    /* ── AUDIO CONTROLS ── */
+    .audio-vol-wrap { display: flex; align-items: center; gap: 6px; -webkit-app-region: no-drag; }
+    .btn-mute {
+      background: var(--s2); border: 1px solid var(--border2); border-radius: 6px;
+      font-size: 14px; padding: 5px 9px; cursor: pointer; line-height: 1;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .btn-mute:hover { border-color: var(--green); background: rgba(91,255,160,0.08); }
+    input[type=range].vol-slider {
+      -webkit-appearance: none; appearance: none;
+      width: 68px; height: 4px;
+      background: var(--s3); border-radius: 2px; border: none; padding: 0;
+      cursor: pointer; outline: none;
+    }
+    input[type=range].vol-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 12px; height: 12px;
+      background: var(--green); border-radius: 50%; cursor: pointer;
+    }
+    .chord-card { cursor: pointer; }
+    .chord-card:active { border-color: var(--accent) !important; transform: scale(0.97); }
+    .wkey { cursor: pointer; }
+    .bkey { cursor: pointer; }
+
     h3.sec { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--hint); margin-bottom: 10px; }
   </style>
 </head>
@@ -221,6 +330,10 @@
         <option value="sharp">Sostenidos ♯</option>
         <option value="flat">Bemoles ♭</option>
       </select>
+    </div>
+    <div class="audio-vol-wrap">
+      <button class="btn-mute" id="btnMute" title="Mute">🔊</button>
+      <input type="range" class="vol-slider" id="volSlider" min="0" max="1" step="0.02" value="0.8">
     </div>
   </header>
 
@@ -267,6 +380,36 @@
         <div>
           <h3 class="sec">Acordes diatónicos</h3>
           <div class="chords-grid" id="chordsGrid"></div>
+        </div>
+
+        <!-- CHORD PROGRESSION PLAYER -->
+        <div id="progSection">
+          <h3 class="sec">Progresión de acordes — Beat player</h3>
+          <div class="prog-player">
+            <div class="prog-header">
+              <div class="prog-selects">
+                <select id="progSel" style="flex:1;min-width:160px;"></select>
+                <select id="timeSigSel">
+                  <option value="4">4/4</option>
+                  <option value="3">3/4</option>
+                  <option value="2">2/2</option>
+                </select>
+              </div>
+              <div class="prog-controls">
+                <div class="prog-bpm-wrap">
+                  <span class="prog-bpm-label">BPM</span>
+                  <input type="range" class="bpm-slider" id="bpmSlider" min="40" max="200" value="80">
+                  <span class="prog-bpm-val" id="bpmVal">80</span>
+                </div>
+                <button class="btn-play" id="btnPlay" onclick="togglePlay()">▶ Play</button>
+              </div>
+            </div>
+            <div class="prog-beat-grid" id="progBeatGrid"></div>
+            <div class="prog-meta">
+              <span class="prog-desc" id="progDesc"></span>
+              <div class="beat-indicator" id="beatIndicator"></div>
+            </div>
+          </div>
         </div>
 
         <div id="modesSection">
@@ -573,6 +716,7 @@ function renderPiano() {
 
       const key = document.createElement('div');
       key.className = 'wkey' + (isRoot ? ' root' : (inScale ? ' active' : ''));
+      key.dataset.midi = midiNote;
       key.style.left = ((oct * 7 + wIdx) * wKeyWidth) + 'px';
       key.style.position = 'absolute';
       if (inScale || isRoot) {
@@ -593,6 +737,7 @@ function renderPiano() {
 
         const bkey = document.createElement('div');
         bkey.className = 'bkey' + (bIsRoot ? ' root' : (bInScale ? ' active' : ''));
+        bkey.dataset.midi = bMidi;
         bkey.style.left = ((oct * 7 + wIdx) * wKeyWidth + 24) + 'px';
         if (bInScale || bIsRoot) {
           const lbl = document.createElement('div');
@@ -646,12 +791,394 @@ function renderChords() {
     const type = scale.chordTypes[i];
     const [label, cls] = QUALITY_LABEL[type] || [type, 'q-maj'];
     const suffix = type === 'maj' ? '' : type === 'min' ? 'm' : type === 'dim' ? '°' : type === 'aug' ? '+' : type === 'dom' ? '7' : 'ø';
-    return `<div class="chord-card">
+    return `<div class="chord-card" data-note="${n}" data-type="${type || ''}">
       <div class="chord-degree">${scale.degrees[i] || i+1}</div>
       <div class="chord-name">${n}${suffix}</div>
       <span class="chord-quality ${cls}">${label}</span>
     </div>`;
   }).join('');
+}
+
+// ══════════════════════════════════════════════
+// CHORD PROGRESSION PLAYER
+// ══════════════════════════════════════════════
+
+// Progression templates — degree indices (0-based) with beats per chord
+// Each prog: { name, desc, pattern: [{deg, beats}] }
+const PROGRESSIONS_BY_SCALE = {
+  major: [
+    { name: 'I – IV – V – I', desc: 'La progresión más icónica del rock y folk. Alegre y conclusiva.', pattern: [{d:0,b:4},{d:3,b:4},{d:4,b:4},{d:0,b:4}] },
+    { name: 'I – V – vi – IV', desc: 'La "progresión pop" moderna. Usada en miles de hits.', pattern: [{d:0,b:4},{d:4,b:4},{d:5,b:4},{d:3,b:4}] },
+    { name: 'I – vi – IV – V', desc: 'Progresión de los años 50. Base del doo-wop y rock & roll.', pattern: [{d:0,b:4},{d:5,b:4},{d:3,b:4},{d:4,b:4}] },
+    { name: 'ii – V – I', desc: 'La progresión fundamental del jazz. Tensión perfecta → resolución.', pattern: [{d:1,b:4},{d:4,b:4},{d:0,b:8}] },
+    { name: 'I – IV – vi – V', desc: 'Variación popular en baladas y pop contemporáneo.', pattern: [{d:0,b:4},{d:3,b:4},{d:5,b:4},{d:4,b:4}] },
+    { name: 'I – iii – IV – V', desc: 'Progresión ascendente con movimiento natural. Épica y dinámica.', pattern: [{d:0,b:4},{d:2,b:4},{d:3,b:4},{d:4,b:4}] },
+  ],
+  natural_minor: [
+    { name: 'i – VII – VI – VII', desc: 'La progresión más oscura del rock. Perfecta para metal y grunge.', pattern: [{d:0,b:4},{d:6,b:4},{d:5,b:4},{d:6,b:4}] },
+    { name: 'i – VI – III – VII', desc: 'Rock alternativo. Usada por Radiohead, Muse y similares.', pattern: [{d:0,b:4},{d:5,b:4},{d:2,b:4},{d:6,b:4}] },
+    { name: 'i – iv – v – i', desc: 'Cadencia menor clásica. Base del flamenco y música española.', pattern: [{d:0,b:4},{d:3,b:4},{d:4,b:4},{d:0,b:4}] },
+    { name: 'i – VII – VI – v', desc: 'Progresión descendente. Cinematográfica y melancólica.', pattern: [{d:0,b:4},{d:6,b:4},{d:5,b:4},{d:4,b:4}] },
+    { name: 'i – VI – VII – i', desc: 'Loop minimalista de synthwave y lo-fi.', pattern: [{d:0,b:4},{d:5,b:4},{d:6,b:4},{d:0,b:4}] },
+  ],
+  harmonic_minor: [
+    { name: 'i – iv – V7 – i', desc: 'Cadencia armónica clásica con dominante real. Muy expresiva.', pattern: [{d:0,b:4},{d:3,b:4},{d:4,b:4},{d:0,b:4}] },
+    { name: 'i – VI – V7 – i', desc: 'Flamenco/Clásico. El V7 crea tensión máxima hacia la tónica.', pattern: [{d:0,b:4},{d:5,b:4},{d:4,b:4},{d:0,b:4}] },
+    { name: 'i – ii° – V7 – i', desc: 'Progresión barroca. Muy usada en música clásica y flamenco.', pattern: [{d:0,b:4},{d:1,b:4},{d:4,b:4},{d:0,b:4}] },
+  ],
+  melodic_minor: [
+    { name: 'i – II – V – i', desc: 'Progresión jazz menor melódica. Sofisticada y colorida.', pattern: [{d:0,b:4},{d:1,b:4},{d:4,b:4},{d:0,b:4}] },
+    { name: 'i – IV – VII – i', desc: 'Bossa nova y jazz latino. Muy fluida y elegante.', pattern: [{d:0,b:4},{d:3,b:4},{d:6,b:4},{d:0,b:4}] },
+  ],
+  dorian: [
+    { name: 'i – IV – i – IV', desc: 'El ADN del dórico. Loop infinito de Santana y funk.', pattern: [{d:0,b:4},{d:3,b:4},{d:0,b:4},{d:3,b:4}] },
+    { name: 'i – II – VII – i', desc: 'Dórico modal. Crea un flujo hipnótico característico.', pattern: [{d:0,b:4},{d:1,b:4},{d:6,b:4},{d:0,b:4}] },
+    { name: 'i – IV – VII – III', desc: 'Progresión jazz-rock. Miles Davis "So What".', pattern: [{d:0,b:4},{d:3,b:4},{d:6,b:4},{d:2,b:4}] },
+  ],
+  phrygian: [
+    { name: 'i – II – i – II', desc: 'Cadencia frigia. El corazón del flamenco y metal.', pattern: [{d:0,b:4},{d:1,b:4},{d:0,b:4},{d:1,b:4}] },
+    { name: 'i – VII – VI – II', desc: 'Cadencia andaluza descendente. Épica y dramática.', pattern: [{d:0,b:4},{d:6,b:4},{d:5,b:4},{d:1,b:4}] },
+  ],
+  lydian: [
+    { name: 'I – II – I – II', desc: 'La tensión única del lidio. Flotante y cinematográfica.', pattern: [{d:0,b:4},{d:1,b:4},{d:0,b:4},{d:1,b:4}] },
+    { name: 'I – II – vii – I', desc: 'Progresión lidio con tensión. Usada en scores de películas.', pattern: [{d:0,b:4},{d:1,b:4},{d:6,b:4},{d:0,b:4}] },
+  ],
+  mixolydian: [
+    { name: 'I7 – VII – IV – I7', desc: 'Blues-rock puro. El sonido de AC/DC y Led Zeppelin.', pattern: [{d:0,b:4},{d:6,b:4},{d:3,b:4},{d:0,b:4}] },
+    { name: 'I – VII – I – VII', desc: 'Loop mixolidio. Folk, country y rock celta.', pattern: [{d:0,b:4},{d:6,b:4},{d:0,b:4},{d:6,b:4}] },
+  ],
+  pentatonic_major: [
+    { name: '1 – 5 – 6 – 5', desc: 'Loop pentatónico mayor. Universal y positivo.', pattern: [{d:0,b:4},{d:3,b:4},{d:4,b:4},{d:3,b:4}] },
+  ],
+  pentatonic_minor: [
+    { name: '1 – ♭7 – ♭3 – 1', desc: 'Loop pentatónico menor. Base del blues y rock.', pattern: [{d:0,b:4},{d:4,b:4},{d:1,b:4},{d:0,b:4}] },
+  ],
+  blues: [
+    { name: 'I7 – IV7 – V7', desc: '12 compases del blues. La progresión más grabada de la historia.', pattern: [{d:0,b:4},{d:0,b:4},{d:0,b:4},{d:0,b:4},{d:3,b:4},{d:3,b:4},{d:0,b:4},{d:0,b:4},{d:5,b:4},{d:3,b:4},{d:0,b:4},{d:5,b:4}] },
+  ],
+  _generic: [
+    { name: '1 – 2 – 3 – 1', desc: 'Exploración libre de los grados de la escala.', pattern: [{d:0,b:4},{d:1,b:4},{d:2,b:4},{d:0,b:4}] },
+  ],
+};
+
+const QUALITY_SUFFIX = { maj:'', min:'m', dim:'°', aug:'+', dom:'7', hdim:'ø' };
+const QUALITY_SHORT  = { maj:'maj', min:'min', dim:'dim', aug:'aug', dom:'dom7', hdim:'ø7' };
+
+// Player state
+let playerInterval = null;
+let playerBeat = 0;       // global beat index (across all cells)
+let playerBpm = 80;
+let playerTimeSig = 4;
+let playerBeats = [];     // flat array of {chordName, chordQuality, measure, beatInMeasure}
+let currentProgIdx = 0;
+
+// ══════════════════════════════════════════════
+// AUDIO ENGINE  (Web Audio API — no deps)
+// ══════════════════════════════════════════════
+let audioCtx    = null;
+let masterGain  = null;
+let isMuted     = false;
+let masterVolume = 0.8;
+
+function initAudio() {
+  if (audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  masterGain = audioCtx.createGain();
+  masterGain.gain.value = masterVolume;
+  masterGain.connect(audioCtx.destination);
+}
+function resumeAudio() {
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+// Note name → semitone offset from C
+const NOTE_SEMI = {
+  'C':0,'C#':1,'Db':1,'D':2,'D#':3,'Eb':3,'E':4,
+  'F':5,'F#':6,'Gb':6,'G':7,'G#':8,'Ab':8,'A':9,'A#':10,'Bb':10,'B':11
+};
+function midiToHz(midi) { return 440 * Math.pow(2, (midi - 69) / 12); }
+function noteNameToMidi(name, octave) {
+  const s = NOTE_SEMI[name]; if (s === undefined) return 60;
+  return (octave + 1) * 12 + s;
+}
+
+// ── Karplus-Strong plucked-string synthesis ────────────────────
+function playPlucked(freq, startTime, duration, vol) {
+  if (!audioCtx || isMuted) return;
+  const sr = audioCtx.sampleRate;
+  const N  = Math.max(2, Math.round(sr / freq));
+  const total = Math.floor(sr * duration);
+  const buf  = audioCtx.createBuffer(1, total, sr);
+  const d    = buf.getChannelData(0);
+  for (let i = 0; i < N; i++) d[i] = Math.random() * 2 - 1;
+  for (let i = N; i < total; i++)
+    d[i] = 0.996 * 0.5 * (d[i - N] + d[i - N - 1 >= 0 ? i - N - 1 : 0]);
+  const src  = audioCtx.createBufferSource();
+  src.buffer = buf;
+  const gain = audioCtx.createGain();
+  gain.gain.setValueAtTime(vol, startTime);
+  gain.gain.setValueAtTime(vol * 0.02, startTime + duration * 0.88);
+  gain.gain.linearRampToValueAtTime(0, startTime + duration);
+  src.connect(gain); gain.connect(masterGain);
+  src.start(startTime); src.stop(startTime + duration + 0.02);
+}
+
+// ── Drum synthesis ─────────────────────────────────────────────
+function playKick(time) {
+  if (!audioCtx || isMuted) return;
+  const t = time ?? audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const og  = audioCtx.createGain();
+  osc.frequency.setValueAtTime(150, t);
+  osc.frequency.exponentialRampToValueAtTime(0.01, t + 0.45);
+  og.gain.setValueAtTime(1.0, t);
+  og.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+  osc.connect(og); og.connect(masterGain);
+  osc.start(t); osc.stop(t + 0.5);
+  // click transient
+  const cs  = Math.floor(audioCtx.sampleRate * 0.015);
+  const cb  = audioCtx.createBuffer(1, cs, audioCtx.sampleRate);
+  const cd  = cb.getChannelData(0);
+  for (let i = 0; i < cs; i++) cd[i] = (Math.random()*2-1)*(1-i/cs);
+  const cn  = audioCtx.createBufferSource(); cn.buffer = cb;
+  const cg  = audioCtx.createGain();
+  cg.gain.setValueAtTime(0.7, t);
+  cg.gain.exponentialRampToValueAtTime(0.001, t + 0.015);
+  cn.connect(cg); cg.connect(masterGain);
+  cn.start(t); cn.stop(t + 0.02);
+}
+
+function playHihat(time, open) {
+  if (!audioCtx || isMuted) return;
+  const t   = time ?? audioCtx.currentTime;
+  const dur = open ? 0.16 : 0.06;
+  const vol = open ? 0.3  : 0.18;
+  const bs  = Math.floor(audioCtx.sampleRate * (dur + 0.02));
+  const bb  = audioCtx.createBuffer(1, bs, audioCtx.sampleRate);
+  const bd  = bb.getChannelData(0);
+  for (let i = 0; i < bs; i++) bd[i] = Math.random()*2-1;
+  const src = audioCtx.createBufferSource(); src.buffer = bb;
+  const hp  = audioCtx.createBiquadFilter();
+  hp.type = 'highpass'; hp.frequency.value = 7500;
+  const g   = audioCtx.createGain();
+  g.gain.setValueAtTime(vol, t);
+  g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+  src.connect(hp); hp.connect(g); g.connect(masterGain);
+  src.start(t); src.stop(t + dur + 0.02);
+}
+
+// ── Guitar chord: arpeggio 6th→1st string ─────────────────────
+function playGuitarChord(rootName, chordType) {
+  if (!audioCtx || isMuted) return;
+  resumeAudio();
+  const IVS = { maj:[0,4,7], min:[0,3,7], dim:[0,3,6], aug:[0,4,8], dom:[0,4,7,10], hdim:[0,3,6,10] };
+  const ivs  = IVS[chordType] || [0,4,7];
+  const root = noteNameToMidi(rootName, 2);
+  // 6 strings low→high: Root2, 5th2, Root3, 3rd3, 5th3, Root4
+  const strings = [
+    root,
+    root + ivs[Math.min(2, ivs.length-1)],
+    root + 12,
+    root + 12 + ivs[Math.min(1, ivs.length-1)],
+    root + 12 + ivs[Math.min(2, ivs.length-1)],
+    root + 24,
+  ];
+  const now = audioCtx.currentTime;
+  strings.forEach((midi, i) => playPlucked(midiToHz(midi), now + i * 0.038, 2.2, 0.27));
+}
+
+// ── Piano single note ──────────────────────────────────────────
+function playPianoNote(midi) {
+  if (!audioCtx || isMuted) return;
+  resumeAudio();
+  playPlucked(midiToHz(midi), audioCtx.currentTime, 1.4, 0.5);
+}
+
+// ── Volume & Mute ──────────────────────────────────────────────
+function setMasterVolume(v) {
+  masterVolume = v;
+  if (masterGain && !isMuted) masterGain.gain.value = v;
+}
+function toggleMute() {
+  isMuted = !isMuted;
+  const btn = document.getElementById('btnMute');
+  if (masterGain) masterGain.gain.value = isMuted ? 0 : masterVolume;
+  btn.textContent = isMuted ? '🔇' : '🔊';
+}
+
+function getProgressions() {
+  const scale = SCALES[scaleIdx];
+  return PROGRESSIONS_BY_SCALE[scale.id] || PROGRESSIONS_BY_SCALE._generic;
+}
+
+function buildPlayerBeats(pattern) {
+  const scale = SCALES[scaleIdx];
+  const sNotes = scaleNotes(scale, rootIdx);
+  const beats = [];
+  let measureCount = 0;
+  let beatInMeasure = 0;
+
+  pattern.forEach(({ d, b }) => {
+    const note = sNotes[d] || sNotes[0];
+    const type = scale.chordTypes ? scale.chordTypes[d] : null;
+    const suffix = type ? (QUALITY_SUFFIX[type] ?? '') : '';
+    const quality = type ? (QUALITY_SHORT[type] ?? '') : '';
+    for (let i = 0; i < b; i++) {
+      if (beatInMeasure >= playerTimeSig) { beatInMeasure = 0; measureCount++; }
+      beats.push({
+        chordName: note + suffix,
+        chordQuality: quality,
+        chordType: type,
+        chordRoot: note,
+        measure: measureCount,
+        beatInMeasure: beatInMeasure,
+        isFirst: i === 0,
+      });
+      beatInMeasure++;
+    }
+    if (beatInMeasure > 0) { measureCount++; beatInMeasure = 0; }
+  });
+  return beats;
+}
+
+function renderProgPlayer() {
+  const scale = SCALES[scaleIdx];
+  const progs = getProgressions();
+  const progSel = document.getElementById('progSel');
+  const section = document.getElementById('progSection');
+
+  // Hide if no chordTypes and not generic
+  if (!scale.chordTypes && !PROGRESSIONS_BY_SCALE[scale.id]) {
+    section.style.display = 'none';
+    return;
+  }
+  section.style.display = 'block';
+
+  // Rebuild prog selector
+  if (currentProgIdx >= progs.length) currentProgIdx = 0;
+  progSel.innerHTML = progs.map((p, i) =>
+    `<option value="${i}"${i===currentProgIdx?' selected':''}>${p.name}</option>`
+  ).join('');
+
+  const prog = progs[currentProgIdx];
+  document.getElementById('progDesc').textContent = prog.desc;
+
+  // Build beat array & grid
+  playerBeats = buildPlayerBeats(prog.pattern);
+  renderBeatGrid();
+  renderBeatIndicator();
+}
+
+function renderBeatGrid() {
+  const grid = document.getElementById('progBeatGrid');
+  if (!playerBeats.length) { grid.innerHTML = ''; return; }
+
+  // Group into measures
+  const measures = {};
+  playerBeats.forEach((b, i) => {
+    if (!measures[b.measure]) measures[b.measure] = [];
+    measures[b.measure].push({ ...b, idx: i });
+  });
+
+  let html = '';
+  Object.values(measures).forEach((mBeats, mIdx) => {
+    if (mIdx > 0) html += '<div class="beat-sep"></div>';
+    html += '<div class="beat-bar">';
+    mBeats.forEach(beat => {
+      const isDown = beat.beatInMeasure === 0;
+      html += `<div class="beat-cell${isDown?' downbeat':''}" data-beat="${beat.idx}" id="beat-cell-${beat.idx}">
+        <div class="beat-num">${beat.beatInMeasure + 1}</div>
+        <div class="beat-chord-name">${beat.chordName}</div>
+        <div class="beat-chord-quality">${beat.chordQuality}</div>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  grid.innerHTML = html;
+}
+
+function renderBeatIndicator() {
+  const ind = document.getElementById('beatIndicator');
+  const total = Math.min(playerBeats.length, 32); // max 32 dots
+  ind.innerHTML = playerBeats.slice(0, total).map((b, i) =>
+    `<div class="beat-dot${b.beatInMeasure===0?' downbeat':''}" id="beat-dot-${i}"></div>`
+  ).join('');
+}
+
+function advancePlayerBeat() {
+  // Clear previous
+  const prevCell = document.getElementById(`beat-cell-${playerBeat}`);
+  const prevDot  = document.getElementById(`beat-dot-${playerBeat}`);
+  if (prevCell) { prevCell.classList.remove('active','pulse'); }
+  if (prevDot)  { prevDot.classList.remove('on','downon'); }
+
+  // Advance
+  playerBeat = (playerBeat + 1) % playerBeats.length;
+
+  const cell = document.getElementById(`beat-cell-${playerBeat}`);
+  const dot  = document.getElementById(`beat-dot-${playerBeat}`);
+  if (cell) {
+    cell.classList.add('active');
+    // Trigger pulse re-animation
+    cell.classList.remove('pulse');
+    void cell.offsetWidth;
+    cell.classList.add('pulse');
+  }
+  const beat = playerBeats[playerBeat];
+  if (dot) { dot.classList.add(beat.beatInMeasure === 0 ? 'downon' : 'on'); }
+
+  // ── AUDIO ────────────────────────────────────
+  if (audioCtx) {
+    const isDown = beat.beatInMeasure === 0;
+    if (isDown) {
+      playKick(audioCtx.currentTime);
+      playHihat(audioCtx.currentTime + 0.01, true);
+    } else {
+      playHihat(audioCtx.currentTime, false);
+    }
+    if (beat.isFirst && beat.chordRoot && beat.chordType) {
+      playGuitarChord(beat.chordRoot, beat.chordType);
+    }
+  }
+}
+
+function startPlayer() {
+  initAudio();
+  resumeAudio();
+  playerBeat = -1;
+  advancePlayerBeat(); // jump to beat 0
+  const intervalMs = (60 / playerBpm) * 1000;
+  playerInterval = setInterval(advancePlayerBeat, intervalMs);
+}
+
+function stopPlayer() {
+  clearInterval(playerInterval);
+  playerInterval = null;
+  // Clear all active states
+  playerBeats.forEach((_, i) => {
+    const c = document.getElementById(`beat-cell-${i}`);
+    const d = document.getElementById(`beat-dot-${i}`);
+    if (c) c.classList.remove('active','pulse');
+    if (d) d.classList.remove('on','downon');
+  });
+  playerBeat = 0;
+}
+
+function togglePlay() {
+  const btn = document.getElementById('btnPlay');
+  if (playerInterval) {
+    stopPlayer();
+    btn.textContent = '▶ Play';
+    btn.classList.remove('playing');
+  } else {
+    startPlayer();
+    btn.innerHTML = '⏹ Stop';
+    btn.classList.add('playing');
+  }
+}
+
+function restartPlayerIfRunning() {
+  if (playerInterval) { stopPlayer(); startPlayer(); }
 }
 
 function renderModes() {
@@ -714,6 +1241,12 @@ function render() {
   renderChords();
   renderModes();
   renderTips();
+  // Stop player and reset progression when scale/root changes
+  stopPlayer();
+  document.getElementById('btnPlay').textContent = '▶ Play';
+  document.getElementById('btnPlay').classList.remove('playing');
+  currentProgIdx = 0;
+  renderProgPlayer();
 }
 
 // ══════════════════════════════════════════════
@@ -729,12 +1262,60 @@ document.getElementById('notationSel').addEventListener('change', e => {
   render();
 });
 
+document.getElementById('bpmSlider').addEventListener('input', e => {
+  playerBpm = parseInt(e.target.value);
+  document.getElementById('bpmVal').textContent = playerBpm;
+  restartPlayerIfRunning();
+});
+
+document.getElementById('timeSigSel').addEventListener('change', e => {
+  playerTimeSig = parseInt(e.target.value);
+  stopPlayer();
+  document.getElementById('btnPlay').textContent = '▶ Play';
+  document.getElementById('btnPlay').classList.remove('playing');
+  currentProgIdx = parseInt(document.getElementById('progSel').value);
+  renderProgPlayer();
+});
+
+document.getElementById('progSel').addEventListener('change', e => {
+  currentProgIdx = parseInt(e.target.value);
+  const progs = getProgressions();
+  document.getElementById('progDesc').textContent = progs[currentProgIdx]?.desc || '';
+  stopPlayer();
+  document.getElementById('btnPlay').textContent = '▶ Play';
+  document.getElementById('btnPlay').classList.remove('playing');
+  playerBeats = buildPlayerBeats(progs[currentProgIdx].pattern);
+  renderBeatGrid();
+  renderBeatIndicator();
+});
+
 document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') { rootIdx = (rootIdx + 1) % 12; render(); }
   if (e.key === 'ArrowLeft')  { rootIdx = (rootIdx + 11) % 12; render(); }
   if (e.key === 'ArrowDown')  { scaleIdx = (scaleIdx + 1) % SCALES.length; render(); }
   if (e.key === 'ArrowUp')    { scaleIdx = (scaleIdx + SCALES.length - 1) % SCALES.length; render(); }
 });
+
+// ── Audio event delegations ────────────────────────────────────
+document.getElementById('piano').addEventListener('click', e => {
+  const key = e.target.closest('[data-midi]');
+  if (!key) return;
+  initAudio();
+  playPianoNote(parseInt(key.dataset.midi));
+});
+
+document.getElementById('chordsGrid').addEventListener('click', e => {
+  const card = e.target.closest('.chord-card');
+  if (!card || !card.dataset.note || !card.dataset.type) return;
+  initAudio();
+  playGuitarChord(card.dataset.note, card.dataset.type);
+});
+
+document.getElementById('volSlider').addEventListener('input', e => {
+  setMasterVolume(parseFloat(e.target.value));
+});
+
+document.getElementById('btnMute').addEventListener('click', toggleMute);
 
 // INIT
 render();
