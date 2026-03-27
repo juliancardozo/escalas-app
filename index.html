@@ -46,12 +46,14 @@
 
     .mode-toggle {
       display: flex; gap: 0;
+      align-items: stretch;
       border: 1px solid var(--border2);
       border-radius: 8px;
       overflow: hidden;
       -webkit-app-region: no-drag;
+      flex-shrink: 0;
     }
-    .mode-toggle button {
+    .mode-toggle .mode-btn {
       border: none;
       border-radius: 0;
       padding: 8px 14px;
@@ -59,11 +61,29 @@
       background: var(--s2);
       color: var(--muted);
     }
-    .mode-toggle button.active {
+    .mode-toggle .mode-btn.active {
       background: var(--accent);
       color: #000;
       font-weight: 700;
     }
+    .mode-toggle--bar {
+      gap: 0;
+      border-width: 2px;
+      border-color: rgba(255,107,53,0.45);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.3);
+    }
+    .mode-toggle--bar .mode-btn {
+      padding: 10px 18px;
+      font-size: 12px;
+      min-width: 88px;
+    }
+    .mode-toggle-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .mode-toggle-wrap .label-sm { margin: 0; white-space: nowrap; }
 
     .header-controls { display: flex; gap: 10px; align-items: center; -webkit-app-region: no-drag; margin-left: auto; }
 
@@ -224,12 +244,17 @@
     /* Scale info bar */
     .scale-info-bar {
       padding: 14px 24px; border-bottom: 1px solid var(--border); background: var(--s1);
+      display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+    }
+    .scale-info-primary {
       display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap;
+      flex: 1;
+      min-width: 0;
     }
     .scale-full-name { font-family: var(--display); font-size: 20px; font-weight: 700; color: var(--text); }
     .scale-full-name em { color: var(--accent); font-style: normal; }
     .scale-intervals { font-size: 11px; color: var(--muted); font-family: var(--mono); }
-    .scale-formula { font-size: 11px; color: var(--blue); font-family: var(--mono); margin-left: auto; }
+    .scale-formula { font-size: 11px; color: var(--blue); font-family: var(--mono); }
 
     /* Main content scroll */
     .main-scroll { flex: 1; overflow-y: auto; padding: 20px 24px 24px; display: flex; flex-direction: column; gap: 20px; }
@@ -577,8 +602,10 @@
         padding: 12px;
       }
       .logo { width: 100%; }
+      .mode-toggle-wrap { width: 100%; flex-wrap: wrap; }
       .mode-toggle { width: 100%; justify-content: stretch; }
-      .mode-toggle button { flex: 1; }
+      .mode-toggle .mode-btn { flex: 1; }
+      .scale-info-bar .mode-toggle-wrap { width: 100%; justify-content: space-between; }
       .header-controls {
         margin-left: 0;
         width: 100%;
@@ -617,9 +644,12 @@
   <!-- HEADER -->
   <header>
     <div class="logo">ESCALA<span>IMPROV</span></div>
-    <div class="mode-toggle" role="group" aria-label="Vista">
-      <button type="button" id="btnModeStudio" class="active">Estudio</button>
-      <button type="button" id="btnModeJam">Jam</button>
+    <div class="mode-toggle-wrap">
+      <span class="label-sm">Vista</span>
+      <div class="mode-toggle" role="group" aria-label="Cambiar entre Estudio y Jam">
+        <button type="button" class="mode-btn active" data-set-mode="studio">Estudio</button>
+        <button type="button" class="mode-btn" data-set-mode="jam">Jam</button>
+      </div>
     </div>
     <div class="header-controls">
       <span class="label-sm">Mostrar:</span>
@@ -681,9 +711,18 @@
     <!-- MAIN -->
     <div class="main">
       <div class="scale-info-bar">
-        <div class="scale-full-name" id="scaleFullName">—</div>
-        <div class="scale-intervals" id="scaleIntervals"></div>
-        <div class="scale-formula" id="scaleFormula"></div>
+        <div class="scale-info-primary">
+          <div class="scale-full-name" id="scaleFullName">—</div>
+          <div class="scale-intervals" id="scaleIntervals"></div>
+          <div class="scale-formula" id="scaleFormula"></div>
+        </div>
+        <div class="mode-toggle-wrap" title="Cambiar vista: Estudio = todo el detalle; Jam = panel rápido al tocar">
+          <span class="label-sm">Vista</span>
+          <div class="mode-toggle mode-toggle--bar" role="group" aria-label="Estudio o Jam">
+            <button type="button" class="mode-btn active" data-set-mode="studio">Estudio</button>
+            <button type="button" class="mode-btn" data-set-mode="jam">Jam</button>
+          </div>
+        </div>
       </div>
 
       <div class="main-scroll" id="mainScroll">
@@ -1182,8 +1221,9 @@ function setUIMode(mode) {
   localStorage.setItem(UI_MODE_STORAGE_KEY, uiMode);
   const app = document.querySelector('.app');
   app.classList.toggle('ui-jam', uiMode === 'jam');
-  document.getElementById('btnModeStudio').classList.toggle('active', uiMode === 'studio');
-  document.getElementById('btnModeJam').classList.toggle('active', uiMode === 'jam');
+  document.querySelectorAll('[data-set-mode]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.setMode === uiMode);
+  });
   if (uiMode === 'jam') {
     stopPlayer();
     const btn = document.getElementById('btnPlay');
@@ -2050,8 +2090,11 @@ document.getElementById('feedbackForm').addEventListener('submit', async e => {
   }
 });
 
-document.getElementById('btnModeStudio').addEventListener('click', () => setUIMode('studio'));
-document.getElementById('btnModeJam').addEventListener('click', () => setUIMode('jam'));
+document.querySelector('.app').addEventListener('click', e => {
+  const btn = e.target.closest('[data-set-mode]');
+  if (!btn) return;
+  setUIMode(btn.dataset.setMode);
+});
 
 document.querySelectorAll('.phrase-btn').forEach(btn => {
   btn.addEventListener('click', () => {
