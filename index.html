@@ -803,6 +803,7 @@ let octaves = 2;
 const WISHLIST_STORAGE_KEY = 'escalaimprov:wishlist';
 const FEEDBACK_API_URL = 'http://127.0.0.1:47321/api/feedback';
 const FEEDBACK_PROMPT_DELAY_MS = 5 * 60 * 1000;
+const FEEDBACK_FALLBACK_STORAGE_KEY = 'escalaimprov:feedback-pending';
 let feedbackPromptTimer = null;
 
 // ══════════════════════════════════════════════
@@ -869,14 +870,19 @@ async function submitFeedback(comment) {
     source: 'app-5min-feedback',
   };
 
-  const res = await fetch(FEEDBACK_API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
-
-  if (!res.ok) {
-    throw new Error('No se pudo guardar en servidor.');
+  try {
+    const res = await fetch(FEEDBACK_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error('server_error');
+    return { mode: 'server' };
+  } catch (_) {
+    const pending = JSON.parse(localStorage.getItem(FEEDBACK_FALLBACK_STORAGE_KEY) || '[]');
+    pending.push({ ...payload, savedAt: new Date().toISOString() });
+    localStorage.setItem(FEEDBACK_FALLBACK_STORAGE_KEY, JSON.stringify(pending));
+    return { mode: 'local' };
   }
 }
 
@@ -1584,7 +1590,7 @@ document.getElementById('feedbackForm').addEventListener('submit', async e => {
   statusEl.classList.remove('ok');
 
   try {
-    await submitFeedback(comment);
+    const result = await submitFeedback(comment);
     const sentEmail = document.getElementById('feedbackEmail').value.trim().toLowerCase();
     if (sentEmail) {
       const list = getWishlist();
@@ -1594,7 +1600,9 @@ document.getElementById('feedbackForm').addEventListener('submit', async e => {
         renderWishlistCount();
       }
     }
-    statusEl.textContent = 'Gracias. Tu comentario fue guardado en servidor.';
+    statusEl.textContent = result.mode === 'server'
+      ? 'Gracias. Tu comentario fue guardado en servidor.'
+      : 'Comentario guardado localmente (modo web).';
     statusEl.classList.add('ok');
     commentEl.value = '';
     setTimeout(() => closeFeedbackModal(), 900);
