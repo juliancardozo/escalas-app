@@ -44,6 +44,27 @@
     .logo { font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: 0.05em; color: var(--accent); -webkit-app-region: no-drag; }
     .logo span { color: var(--muted); font-weight: 300; }
 
+    .mode-toggle {
+      display: flex; gap: 0;
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      overflow: hidden;
+      -webkit-app-region: no-drag;
+    }
+    .mode-toggle button {
+      border: none;
+      border-radius: 0;
+      padding: 8px 14px;
+      font-size: 11px;
+      background: var(--s2);
+      color: var(--muted);
+    }
+    .mode-toggle button.active {
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+    }
+
     .header-controls { display: flex; gap: 10px; align-items: center; -webkit-app-region: no-drag; margin-left: auto; }
 
     select, button {
@@ -243,6 +264,8 @@
     .bkey.root { background: var(--accent2); }
     .bkey .note-label { font-size: 8px; font-family: var(--mono); color: #aaa; pointer-events: none; }
     .bkey.active .note-label, .bkey.root .note-label { color: #000; }
+    .wkey.phrase-off, .bkey.phrase-off { opacity: 0.35; }
+    .wkey.phrase-off .note-label, .bkey.phrase-off .note-label { opacity: 0.7; }
 
     /* ── DEGREES ── */
     .degrees-row { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -413,6 +436,116 @@
 
     h3.sec { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--hint); margin-bottom: 10px; }
 
+    /* ── JAM MODE ── */
+    .jam-only { display: none; }
+    .app.ui-jam .jam-only { display: block; }
+    .app.ui-jam .study-only { display: none !important; }
+    .jam-panel {
+      background: var(--s1);
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .jam-hint {
+      font-size: 12px;
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .jam-hint em { color: var(--accent2); font-style: normal; }
+    .jam-micro {
+      font-size: 10px;
+      color: var(--muted);
+      border-left: 2px solid var(--accent);
+      padding-left: 10px;
+    }
+    .mapa-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-start; }
+    .mapa-label { font-size: 9px; color: var(--hint); width: 100%; letter-spacing: 0.12em; text-transform: uppercase; }
+    .mapa-chip {
+      font-size: 11px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+    }
+    .mapa-chip.anchor { background: rgba(91,255,160,0.12); border-color: rgba(91,255,160,0.35); color: var(--green); }
+    .mapa-chip.tension { background: rgba(255,179,71,0.1); border-color: rgba(255,179,71,0.3); color: var(--accent2); }
+    .mapa-chip.outside { background: rgba(179,136,255,0.08); border-color: rgba(179,136,255,0.25); color: var(--purple); font-size: 10px; }
+    .phrase-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .phrase-row .label-sm { margin-right: 4px; }
+    .phrase-row button { font-size: 10px; padding: 6px 10px; }
+    .phrase-row button.on { border-color: var(--accent); background: rgba(255,107,53,0.15); color: var(--text); }
+    .metro-row {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      align-items: center;
+      padding-top: 4px;
+      border-top: 1px solid var(--border);
+    }
+    .metro-row input[type=range].metro-bpm {
+      -webkit-appearance: none; appearance: none;
+      width: 100px; height: 4px;
+      background: var(--s3); border-radius: 2px;
+    }
+    .metro-row input[type=range].metro-bpm::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 14px; height: 14px;
+      background: var(--blue); border-radius: 50%; cursor: pointer;
+    }
+    .preset-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .preset-row input[type=text] {
+      flex: 1;
+      min-width: 120px;
+      background: var(--s2);
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 6px 8px;
+      outline: none;
+    }
+    .btn-panic {
+      background: rgba(255,107,53,0.2);
+      border-color: var(--accent);
+      color: var(--accent2);
+      font-weight: 700;
+    }
+    .study-drawer { margin-top: 8px; }
+    .study-drawer summary {
+      cursor: pointer;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 0;
+    }
+    .study-drawer[open] summary { color: var(--accent2); }
+
+    .panic-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 10000;
+    }
+    .panic-backdrop.open { display: flex; }
+    .panic-modal {
+      background: var(--s1);
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      padding: 18px;
+      max-width: 420px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .panic-modal h3 { font-family: var(--display); font-size: 18px; margin-bottom: 10px; }
+    .panic-deg { font-size: 11px; color: var(--muted); margin: 8px 0; line-height: 1.6; }
+    .panic-chords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+
     @media (max-width: 980px) {
       html, body { overflow: auto; }
       .app { height: auto; min-height: 100vh; }
@@ -444,6 +577,8 @@
         padding: 12px;
       }
       .logo { width: 100%; }
+      .mode-toggle { width: 100%; justify-content: stretch; }
+      .mode-toggle button { flex: 1; }
       .header-controls {
         margin-left: 0;
         width: 100%;
@@ -482,6 +617,10 @@
   <!-- HEADER -->
   <header>
     <div class="logo">ESCALA<span>IMPROV</span></div>
+    <div class="mode-toggle" role="group" aria-label="Vista">
+      <button type="button" id="btnModeStudio" class="active">Estudio</button>
+      <button type="button" id="btnModeJam">Jam</button>
+    </div>
     <div class="header-controls">
       <span class="label-sm">Mostrar:</span>
       <select id="octavesSel">
@@ -515,7 +654,7 @@
         <div class="scale-list" id="scaleList"></div>
       </div>
 
-      <div>
+      <div class="study-only">
         <div class="section-title">Wishlist producto real</div>
         <div class="wishlist-box">
           <div class="wishlist-copy">
@@ -549,6 +688,42 @@
 
       <div class="main-scroll" id="mainScroll">
 
+        <div class="jam-only jam-panel" id="jamPanel">
+          <div class="jam-hint" id="jamHint">—</div>
+          <div class="jam-micro" id="jamMicroTip"></div>
+          <div>
+            <div class="mapa-label">Mapa rápido</div>
+            <div class="mapa-row" id="jamMapaAnchor"></div>
+            <div class="mapa-row" id="jamMapaTension" style="margin-top:6px;"></div>
+            <div class="mapa-label" style="margin-top:8px;">Fuera de la escala</div>
+            <div class="mapa-row" id="jamMapaOutside"></div>
+          </div>
+          <div class="phrase-row">
+            <span class="label-sm">Fraseo</span>
+            <button type="button" class="phrase-btn" data-phrase="off">Escala completa</button>
+            <button type="button" class="phrase-btn" data-phrase="triad">Solo tríada</button>
+            <button type="button" class="phrase-btn" data-phrase="pent_maj">Penta mayor</button>
+            <button type="button" class="phrase-btn" data-phrase="pent_min">Penta menor</button>
+            <button type="button" class="phrase-btn" data-phrase="four">4 notas</button>
+          </div>
+          <div class="metro-row">
+            <span class="label-sm">Click</span>
+            <button type="button" id="btnMetro">▶</button>
+            <span class="prog-bpm-label">BPM</span>
+            <input type="range" class="metro-bpm" id="metroBpm" min="40" max="200" value="92">
+            <span class="prog-bpm-val" id="metroBpmVal">92</span>
+          </div>
+          <div class="preset-row">
+            <span class="label-sm">Presets</span>
+            <select id="presetSel"></select>
+            <input type="text" id="presetName" placeholder="Nombre del preset" maxlength="40">
+            <button type="button" id="presetSave">Guardar</button>
+            <button type="button" id="presetLoad">Cargar</button>
+            <button type="button" id="presetDelete">Borrar</button>
+          </div>
+          <button type="button" class="btn-panic" id="btnPanic">Me perdí — resumen</button>
+        </div>
+
         <div>
           <h3 class="sec">Teclado</h3>
           <div class="piano-wrap">
@@ -556,18 +731,18 @@
           </div>
         </div>
 
-        <div>
+        <div class="study-only">
           <h3 class="sec">Grados de la escala</h3>
           <div class="degrees-row" id="degreesRow"></div>
         </div>
 
-        <div>
+        <div class="study-only">
           <h3 class="sec">Acordes diatónicos</h3>
           <div class="chords-grid" id="chordsGrid"></div>
         </div>
 
         <!-- CHORD PROGRESSION PLAYER -->
-        <div id="progSection">
+        <div id="progSection" class="study-only">
           <h3 class="sec">Progresión de acordes — Beat player</h3>
           <div class="prog-player">
             <div class="prog-header">
@@ -596,15 +771,23 @@
           </div>
         </div>
 
-        <div id="modesSection">
+        <div id="modesSection" class="study-only">
           <h3 class="sec">Modos</h3>
           <div class="modes-list" id="modesList"></div>
         </div>
 
-        <div>
+        <div class="study-only">
           <h3 class="sec">Tips para improvisar</h3>
           <div class="tips-grid" id="tipsGrid"></div>
         </div>
+
+        <details class="study-drawer study-only">
+          <summary>Teoría y detalle (modos, tips largos)</summary>
+          <p style="font-size:10px;color:var(--muted);margin-top:8px;line-height:1.6;">
+            En vista <strong>Jam</strong> esta información se oculta para que puedas enfocarte en el teclado y el mapa rápido.
+            Usá <strong>Estudio</strong> para ver grados completos, acordes, beat player y tips.
+          </p>
+        </details>
 
       </div>
     </div>
@@ -645,6 +828,16 @@
       </div>
       <div class="feedback-status" id="feedbackStatus"></div>
     </form>
+  </div>
+</div>
+
+<div class="panic-backdrop" id="panicBackdrop" aria-hidden="true">
+  <div class="panic-modal" role="dialog" aria-modal="true" aria-labelledby="panicTitle">
+    <h3 id="panicTitle">Resumen rápido</h3>
+    <div id="panicBody"></div>
+    <div style="margin-top:14px;display:flex;justify-content:flex-end;gap:8px;">
+      <button type="button" id="panicClose">Cerrar</button>
+    </div>
   </div>
 </div>
 
@@ -868,6 +1061,13 @@ const FEEDBACK_PROMPT_DELAY_MS = 5 * 60 * 1000;
 const FEEDBACK_FALLBACK_STORAGE_KEY = 'escalaimprov:feedback-pending';
 let feedbackPromptTimer = null;
 
+const PRESETS_STORAGE_KEY = 'escalaimprov:jam-presets';
+const UI_MODE_STORAGE_KEY = 'escalaimprov:ui-mode';
+let uiMode = 'studio';
+let phraseMode = 'off';
+let metroInterval = null;
+let metroBeat = 0;
+
 // ══════════════════════════════════════════════
 // HELPERS
 // ══════════════════════════════════════════════
@@ -957,6 +1157,178 @@ function scheduleFeedbackPrompt() {
   }, FEEDBACK_PROMPT_DELAY_MS);
 }
 
+function getPresets() {
+  try {
+    const data = JSON.parse(localStorage.getItem(PRESETS_STORAGE_KEY) || '[]');
+    return Array.isArray(data) ? data : [];
+  } catch (_) {
+    return [];
+  }
+}
+
+function setPresets(list) {
+  localStorage.setItem(PRESETS_STORAGE_KEY, JSON.stringify(list));
+}
+
+function renderPresetSelect() {
+  const sel = document.getElementById('presetSel');
+  const list = getPresets();
+  sel.innerHTML = '<option value="">— Elegir preset —</option>' +
+    list.map((p, i) => `<option value="${i}">${p.name.replace(/</g, '')}</option>`).join('');
+}
+
+function setUIMode(mode) {
+  uiMode = mode === 'jam' ? 'jam' : 'studio';
+  localStorage.setItem(UI_MODE_STORAGE_KEY, uiMode);
+  const app = document.querySelector('.app');
+  app.classList.toggle('ui-jam', uiMode === 'jam');
+  document.getElementById('btnModeStudio').classList.toggle('active', uiMode === 'studio');
+  document.getElementById('btnModeJam').classList.toggle('active', uiMode === 'jam');
+  if (uiMode === 'jam') {
+    stopPlayer();
+    const btn = document.getElementById('btnPlay');
+    if (btn) { btn.textContent = '▶ Play'; btn.classList.remove('playing'); }
+  }
+  renderJamPanel();
+}
+
+function getPhraseNoteSet(scale, rootIdx, mode) {
+  if (!mode || mode === 'off') return null;
+  const sNotes = scaleNotes(scale, rootIdx);
+  const n = sNotes.length;
+  if (mode === 'triad') {
+    if (n >= 5) return new Set([sNotes[0], sNotes[2], sNotes[4]]);
+    if (n >= 3) return new Set([sNotes[0], sNotes[Math.floor(n / 2)], sNotes[n - 1]]);
+    return new Set(sNotes);
+  }
+  if (mode === 'pent_maj') {
+    const want = [0, 2, 4, 7, 9];
+    const acc = new Set();
+    want.forEach(iv => acc.add(noteName(rootIdx + iv)));
+    return new Set([...acc].filter(x => sNotes.includes(x)));
+  }
+  if (mode === 'pent_min') {
+    const want = [0, 3, 5, 7, 10];
+    const acc = new Set();
+    want.forEach(iv => acc.add(noteName(rootIdx + iv)));
+    return new Set([...acc].filter(x => sNotes.includes(x)));
+  }
+  if (mode === 'four') {
+    return new Set(sNotes.slice(0, Math.min(4, n)));
+  }
+  return null;
+}
+
+function getJamMap(scale, rootIdx) {
+  const sNotes = scaleNotes(scale, rootIdx);
+  const n = sNotes.length;
+  let anchor = [];
+  let tension = [];
+  if (n >= 5) {
+    anchor = [sNotes[0], sNotes[2], sNotes[4]];
+    tension = sNotes.filter((_, i) => i !== 0 && i !== 2 && i !== 4);
+  } else if (n >= 3) {
+    anchor = [sNotes[0], sNotes[1], sNotes[2]];
+    tension = sNotes.slice(3);
+  } else {
+    anchor = [...sNotes];
+    tension = [];
+  }
+  const allNames = notes();
+  const outside = allNames.filter(nn => !sNotes.includes(nn));
+  return { anchor, tension, outside };
+}
+
+function renderJamPanel() {
+  const scale = SCALES[scaleIdx];
+  const root = noteName(rootIdx);
+  const hint = document.getElementById('jamHint');
+  const micro = document.getElementById('jamMicroTip');
+  const mapA = document.getElementById('jamMapaAnchor');
+  const mapT = document.getElementById('jamMapaTension');
+  const mapO = document.getElementById('jamMapaOutside');
+  if (!hint || !mapA) return;
+
+  const anchorHint = scale.intervals.length >= 5
+    ? `Aterrizá en <em>${root}</em>, 3ª y 5ª como reposo.`
+    : `Usá <em>${root}</em> como ancla; el resto son color.`;
+  hint.innerHTML = `<strong>${root} ${scale.name}</strong> · ${scale.intervals.length} notas — ${anchorHint}`;
+  const tip = scale.tips && scale.tips[0];
+  micro.textContent = tip ? `${tip.icon} ${tip.title}: ${tip.body}` : '';
+
+  const { anchor, tension, outside } = getJamMap(scale, rootIdx);
+  mapA.innerHTML = anchor.map(n => `<span class="mapa-chip anchor">${n}</span>`).join('') || '—';
+  mapT.innerHTML = tension.map(n => `<span class="mapa-chip tension">${n}</span>`).join('') || '—';
+  mapO.innerHTML = outside.map(n => `<span class="mapa-chip outside">${n}</span>`).join('');
+
+  document.querySelectorAll('.phrase-btn').forEach(btn => {
+    btn.classList.toggle('on', btn.dataset.phrase === phraseMode);
+  });
+}
+
+function buildPanicBody() {
+  const scale = SCALES[scaleIdx];
+  const sNotes = scaleNotes(scale, rootIdx);
+  const INTERVAL_NAMES = ['1','b2','2','b3','3','4','b5','5','b6','6','b7','7'];
+  let degHtml = sNotes.map((n, i) => {
+    const deg = scale.degrees[i] || (i + 1);
+    const iv = INTERVAL_NAMES[scale.intervals[i]] ?? scale.intervals[i];
+    return `<div class="panic-deg"><strong>${deg}</strong> → ${n} <span style="color:var(--muted)">(${iv})</span></div>`;
+  }).join('');
+
+  let chordsHtml = '';
+  if (scale.chordTypes) {
+    const QUALITY_SUFFIX = { maj:'', min:'m', dim:'°', aug:'+', dom:'7', hdim:'ø' };
+    chordsHtml = scale.chordTypes.slice(0, 3).map((type, i) => {
+      const n = sNotes[i];
+      const suffix = QUALITY_SUFFIX[type] ?? '';
+      return `<div class="chord-card" style="min-width:72px;padding:10px 12px;"><div class="chord-name">${n}${suffix}</div></div>`;
+    }).join('');
+  }
+
+  return `<p style="font-size:11px;color:var(--muted);margin-bottom:8px;">Grados y notas en ${noteName(rootIdx)} ${scale.name}:</p>${degHtml}
+    ${chordsHtml ? `<div style="margin-top:12px;font-size:10px;color:var(--muted);">Primeros acordes (referencia):</div><div class="panic-chords">${chordsHtml}</div>` : ''}`;
+}
+
+function openPanic() {
+  document.getElementById('panicBody').innerHTML = buildPanicBody();
+  const el = document.getElementById('panicBackdrop');
+  el.classList.add('open');
+  el.setAttribute('aria-hidden', 'false');
+}
+
+function closePanic() {
+  const el = document.getElementById('panicBackdrop');
+  el.classList.remove('open');
+  el.setAttribute('aria-hidden', 'true');
+}
+
+function stopMetro() {
+  if (metroInterval) {
+    clearInterval(metroInterval);
+    metroInterval = null;
+  }
+  metroBeat = 0;
+  const btn = document.getElementById('btnMetro');
+  if (btn) btn.textContent = '▶';
+}
+
+function startMetro() {
+  initAudio();
+  resumeAudio();
+  stopMetro();
+  const bpm = parseInt(document.getElementById('metroBpm').value, 10) || 92;
+  const intervalMs = (60 / bpm) * 1000;
+  document.getElementById('btnMetro').textContent = '⏹';
+  metroInterval = setInterval(() => {
+    if (!audioCtx) return;
+    const isDown = metroBeat % 4 === 0;
+    if (isDown) playKick(audioCtx.currentTime);
+    else playHihat(audioCtx.currentTime, false);
+    metroBeat++;
+  }, intervalMs);
+}
+
 // ══════════════════════════════════════════════
 // BUILD UI
 // ══════════════════════════════════════════════
@@ -989,6 +1361,7 @@ function renderPiano() {
   const scale = SCALES[scaleIdx];
   const sNotes = new Set(scaleNotes(scale, rootIdx));
   const rootNote = noteName(rootIdx);
+  const phraseSet = getPhraseNoteSet(scale, rootIdx, phraseMode);
 
   // White key layout per octave: C D E F G A B
   // positions: C=0, D=1, E=2, F=3, G=4, A=5, B=6
@@ -1011,9 +1384,10 @@ function renderPiano() {
       const noteN = noteName(midiNote % 12);
       const inScale = sNotes.has(noteN);
       const isRoot = noteN === rootNote;
+      const phraseOff = inScale && phraseSet && !phraseSet.has(noteN);
 
       const key = document.createElement('div');
-      key.className = 'wkey' + (isRoot ? ' root' : (inScale ? ' active' : ''));
+      key.className = 'wkey' + (isRoot ? ' root' : (inScale ? ' active' : '')) + (phraseOff ? ' phrase-off' : '');
       key.dataset.midi = midiNote;
       key.style.left = ((oct * 7 + wIdx) * wKeyWidth) + 'px';
       key.style.position = 'absolute';
@@ -1032,9 +1406,10 @@ function renderPiano() {
         const bNote = noteName(bMidi % 12);
         const bInScale = sNotes.has(bNote);
         const bIsRoot = bNote === rootNote;
+        const bPhraseOff = bInScale && phraseSet && !phraseSet.has(bNote);
 
         const bkey = document.createElement('div');
-        bkey.className = 'bkey' + (bIsRoot ? ' root' : (bInScale ? ' active' : ''));
+        bkey.className = 'bkey' + (bIsRoot ? ' root' : (bInScale ? ' active' : '')) + (bPhraseOff ? ' phrase-off' : '');
         bkey.dataset.midi = bMidi;
         bkey.style.left = ((oct * 7 + wIdx) * wKeyWidth + 24) + 'px';
         if (bInScale || bIsRoot) {
@@ -1545,6 +1920,7 @@ function render() {
   document.getElementById('btnPlay').classList.remove('playing');
   currentProgIdx = 0;
   renderProgPlayer();
+  renderJamPanel();
 }
 
 // ══════════════════════════════════════════════
@@ -1674,7 +2050,77 @@ document.getElementById('feedbackForm').addEventListener('submit', async e => {
   }
 });
 
+document.getElementById('btnModeStudio').addEventListener('click', () => setUIMode('studio'));
+document.getElementById('btnModeJam').addEventListener('click', () => setUIMode('jam'));
+
+document.querySelectorAll('.phrase-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    phraseMode = btn.dataset.phrase || 'off';
+    renderPiano();
+    renderJamPanel();
+  });
+});
+
+document.getElementById('btnMetro').addEventListener('click', () => {
+  if (metroInterval) stopMetro();
+  else startMetro();
+});
+
+document.getElementById('metroBpm').addEventListener('input', e => {
+  document.getElementById('metroBpmVal').textContent = e.target.value;
+  if (metroInterval) {
+    stopMetro();
+    startMetro();
+  }
+});
+
+document.getElementById('presetSave').addEventListener('click', () => {
+  const name = document.getElementById('presetName').value.trim();
+  if (!name) return;
+  const list = getPresets();
+  list.push({ name, rootIdx, scaleIdx, at: new Date().toISOString() });
+  setPresets(list);
+  renderPresetSelect();
+  document.getElementById('presetName').value = '';
+});
+
+document.getElementById('presetLoad').addEventListener('click', () => {
+  const i = parseInt(document.getElementById('presetSel').value, 10);
+  if (Number.isNaN(i)) return;
+  const list = getPresets();
+  const p = list[i];
+  if (!p) return;
+  rootIdx = p.rootIdx;
+  scaleIdx = p.scaleIdx;
+  render();
+});
+
+document.getElementById('presetDelete').addEventListener('click', () => {
+  const i = parseInt(document.getElementById('presetSel').value, 10);
+  if (Number.isNaN(i)) return;
+  const list = getPresets();
+  list.splice(i, 1);
+  setPresets(list);
+  renderPresetSelect();
+});
+
+document.getElementById('btnPanic').addEventListener('click', openPanic);
+document.getElementById('panicClose').addEventListener('click', closePanic);
+document.getElementById('panicBackdrop').addEventListener('click', e => {
+  if (e.target.id === 'panicBackdrop') closePanic();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closePanic();
+});
+
 // INIT
+(function initUiMode() {
+  const saved = localStorage.getItem(UI_MODE_STORAGE_KEY);
+  if (saved === 'jam') setUIMode('jam');
+  else setUIMode('studio');
+})();
+renderPresetSelect();
 render();
 renderWishlistCount();
 scheduleFeedbackPrompt();
