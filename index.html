@@ -273,6 +273,90 @@
     .q-dom { background: rgba(255,179,71,0.15); color: var(--accent2); }
     .q-hdim { background: rgba(255,107,53,0.1); color: var(--accent); }
 
+    /* ── CÍRCULO DE QUINTAS ── */
+    .fifths-wrap {
+      background: var(--s1);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .fifths-svg-wrap { width: 100%; }
+    .fifths-svg { width: 100%; height: auto; display: block; }
+    .fifths-ring { transition: transform 0.26s ease; transform-origin: 200px 200px; }
+    .fifths-node { cursor: pointer; transition: opacity 0.16s ease, filter 0.16s ease; }
+    .fifths-node.dimmed { opacity: 0.24; }
+    .fifths-node.active .fifths-major-label { fill: var(--accent2); }
+    .fifths-node.neighbor .fifths-major-label { fill: var(--green); }
+    .fifths-major-label { fill: var(--blue); font-size: 13px; font-weight: 700; font-family: var(--display); text-anchor: middle; dominant-baseline: middle; }
+    .fifths-minor-label { fill: var(--purple); font-size: 10px; font-family: var(--mono); text-anchor: middle; dominant-baseline: middle; opacity: 0.92; }
+    .fifths-sig-label { fill: var(--accent2); font-size: 9px; font-family: var(--mono); text-anchor: middle; dominant-baseline: middle; opacity: 0.95; }
+    .fifths-node.mod-near .fifths-major-label { fill: var(--green); }
+    .fifths-node.mod-mid .fifths-major-label { fill: #f3d36a; }
+    .fifths-node.mod-far .fifths-major-label { fill: #ff8a6d; }
+    .fifths-node.mod-tritone .fifths-major-label { fill: #ff4c4c; }
+    .fifths-link {
+      stroke-width: 2;
+      fill: none;
+      opacity: 0.6;
+      marker-end: url(#fifthsArrow);
+      transition: opacity 0.16s ease;
+    }
+    .fifths-link.near { stroke: var(--green); opacity: 0.9; }
+    .fifths-link.mid { stroke: #f3d36a; }
+    .fifths-link.tritone { stroke: #ff4c4c; opacity: 0.95; stroke-width: 2.4; }
+    .fifths-beat-dot {
+      fill: var(--accent);
+      opacity: 0;
+      transition: opacity 0.08s ease;
+    }
+    .fifths-node.beat-active .fifths-beat-dot { opacity: 0.88; }
+    .fifths-node.beat-pulse .fifths-beat-dot { animation: beatPulse 0.2s ease-out; }
+    .fifths-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 8px;
+    }
+    .fifths-info-card {
+      background: var(--s2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      min-height: 56px;
+    }
+    .fifths-info-label {
+      font-size: 9px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .fifths-info-value { font-size: 11px; color: var(--text); line-height: 1.5; }
+    .fifths-link-btn {
+      border: none;
+      background: transparent;
+      color: var(--purple);
+      text-decoration: underline;
+      font-family: var(--mono);
+      font-size: 11px;
+      cursor: pointer;
+      padding: 0;
+    }
+    .fifths-badge-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .fifths-badge {
+      border-radius: 999px;
+      border: 1px solid var(--border2);
+      padding: 2px 7px;
+      font-size: 9px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .fifths-badge.soft { color: var(--green); border-color: rgba(91,255,160,0.36); }
+    .fifths-badge.medium { color: #f3d36a; border-color: rgba(243,211,106,0.38); }
+    .fifths-badge.dramatic { color: #ff6767; border-color: rgba(255,103,103,0.4); }
+
     /* ── CHORD PROGRESSION PLAYER ── */
     .prog-player {
       background: var(--s1); border: 1px solid var(--border); border-radius: 12px;
@@ -435,6 +519,7 @@
       .tips-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
       .mode-row { flex-wrap: wrap; }
       .mode-feel { margin-left: 0; width: 100%; }
+      .fifths-wrap { padding: 12px; }
     }
 
     @media (max-width: 640px) {
@@ -564,6 +649,16 @@
         <div>
           <h3 class="sec">Acordes diatónicos</h3>
           <div class="chords-grid" id="chordsGrid"></div>
+        </div>
+
+        <div>
+          <h3 class="sec">Círculo de quintas</h3>
+          <div class="fifths-wrap">
+            <div class="fifths-svg-wrap">
+              <svg class="fifths-svg" id="fifthsSvg" viewBox="0 0 400 400" role="img" aria-label="Círculo de quintas interactivo"></svg>
+            </div>
+            <div class="fifths-info" id="fifthsInfoPanel"></div>
+          </div>
         </div>
 
         <!-- CHORD PROGRESSION PLAYER -->
@@ -1097,6 +1192,164 @@ function renderChords() {
   }).join('');
 }
 
+function fifthsOrderIndexFromPitchClass(pc) {
+  return FIFTHS_ORDER.indexOf(((pc % 12) + 12) % 12);
+}
+
+function circleDistanceByOrder(fromPc, toPc) {
+  const a = fifthsOrderIndexFromPitchClass(fromPc);
+  const b = fifthsOrderIndexFromPitchClass(toPc);
+  const raw = Math.abs(a - b);
+  return Math.min(raw, 12 - raw);
+}
+
+function keySignatureText(pc) {
+  const orderIdx = fifthsOrderIndexFromPitchClass(pc);
+  const cw = orderIdx <= 6 ? orderIdx : -(12 - orderIdx);
+  const prefersFlatAtTritone = notation === 'flat' && Math.abs(cw) === 6;
+  if (cw === 0) return 'Sin alteraciones';
+  const useSharps = cw > 0 && !prefersFlatAtTritone;
+  const amount = Math.abs(cw);
+  if (useSharps) return `${amount} sostenido${amount > 1 ? 's' : ''}`;
+  return `${amount} bemol${amount > 1 ? 'es' : ''}`;
+}
+
+function chordLabelFromRootAndType(rootPc, type) {
+  const suffix = type ? (QUALITY_SUFFIX[type] ?? '') : '';
+  return `${noteName(rootPc)}${suffix}`;
+}
+
+function setCircleRootFromPitchClass(pc, nextScaleIdx = scaleIdx) {
+  rootIdx = ((pc % 12) + 12) % 12;
+  scaleIdx = nextScaleIdx;
+  render();
+}
+
+function renderCircleOfFifths() {
+  const svg = document.getElementById('fifthsSvg');
+  const center = 200;
+  const majorR = 150;
+  const minorR = 114;
+  const sigR = 80;
+  const selectedPc = rootIdx;
+  const selectedOrderIdx = fifthsOrderIndexFromPitchClass(selectedPc);
+  const rotateDeg = -selectedOrderIdx * 30;
+
+  const defs = `
+    <defs>
+      <linearGradient id="modPathGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="var(--green)"/>
+        <stop offset="55%" stop-color="#f3d36a"/>
+        <stop offset="100%" stop-color="#ff4c4c"/>
+      </linearGradient>
+      <marker id="fifthsArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L6,3 z" fill="currentColor"></path>
+      </marker>
+    </defs>
+  `;
+
+  let links = '';
+  let nodes = '';
+  for (let i = 0; i < 12; i++) {
+    const pc = FIFTHS_ORDER[i];
+    const angle = (-90 + i * 30) * Math.PI / 180;
+    const nextAngle = (-90 + ((i + 1) % 12) * 30) * Math.PI / 180;
+    const xMajor = center + Math.cos(angle) * majorR;
+    const yMajor = center + Math.sin(angle) * majorR;
+    const xMinor = center + Math.cos(angle) * minorR;
+    const yMinor = center + Math.sin(angle) * minorR;
+    const xSig = center + Math.cos(angle) * sigR;
+    const ySig = center + Math.sin(angle) * sigR;
+    const xNext = center + Math.cos(nextAngle) * majorR;
+    const yNext = center + Math.sin(nextAngle) * majorR;
+    const relativeMinorPc = (pc + 9) % 12;
+    const majorName = noteName(pc);
+    const minorName = `${noteName(relativeMinorPc)}m`;
+    const sig = keySignatureText(pc);
+    const distance = circleDistanceByOrder(selectedPc, pc);
+    const isActive = pc === selectedPc;
+    const isNeighbor = distance === 1;
+    let modClass = 'mod-far';
+    if (distance <= 1) modClass = 'mod-near';
+    else if (distance <= 3) modClass = 'mod-mid';
+    else if (distance === 6) modClass = 'mod-tritone';
+    const dimmed = !isActive && !isNeighbor;
+
+    let linkClass = 'mid';
+    if (distance <= 1) linkClass = 'near';
+    if (distance === 6) linkClass = 'tritone';
+    links += `<path class="fifths-link ${linkClass}" d="M ${xMajor.toFixed(2)} ${yMajor.toFixed(2)} L ${xNext.toFixed(2)} ${yNext.toFixed(2)}"></path>`;
+
+    const modulationLabel = distance <= 1 ? 'modulación suave' : (distance <= 3 ? 'modulación media' : 'modulación dramática');
+    nodes += `
+      <g class="fifths-node ${modClass}${isActive ? ' active' : ''}${isNeighbor ? ' neighbor' : ''}${dimmed ? ' dimmed' : ''}${circleBeatPitchClass === pc ? ' beat-active beat-pulse' : ''}" data-major-pc="${pc}" title="${majorName} mayor: ${modulationLabel}">
+        <circle cx="${xMajor.toFixed(2)}" cy="${yMajor.toFixed(2)}" r="17" fill="rgba(91,168,255,0.08)" stroke="rgba(91,168,255,0.3)"></circle>
+        <text class="fifths-major-label" x="${xMajor.toFixed(2)}" y="${yMajor.toFixed(2)}">${majorName}</text>
+        <text class="fifths-minor-label" x="${xMinor.toFixed(2)}" y="${yMinor.toFixed(2)}">${minorName}</text>
+        <text class="fifths-sig-label" x="${xSig.toFixed(2)}" y="${ySig.toFixed(2)}">${sig.replace(' sostenidos','♯').replace(' sostenido','♯').replace(' bemoles','♭').replace(' bemol','♭').replace('Sin alteraciones','0')}</text>
+        <circle class="fifths-beat-dot" cx="${(xMajor + 20).toFixed(2)}" cy="${(yMajor - 12).toFixed(2)}" r="4"></circle>
+      </g>
+    `;
+  }
+
+  svg.innerHTML = `${defs}<g class="fifths-ring" style="transform: rotate(${rotateDeg}deg);">${links}${nodes}</g><circle cx="200" cy="200" r="42" fill="rgba(255,179,71,0.08)" stroke="rgba(255,179,71,0.24)"></circle><text x="200" y="193" fill="var(--accent2)" text-anchor="middle" font-size="11" font-family="var(--mono)">TONALIDAD</text><text x="200" y="210" fill="var(--text)" text-anchor="middle" font-size="14" font-family="var(--display)">${noteName(selectedPc)} M</text>`;
+
+  svg.querySelectorAll('.fifths-node').forEach(node => {
+    node.addEventListener('click', () => {
+      const pc = parseInt(node.dataset.majorPc, 10);
+      setCircleRootFromPitchClass(pc);
+    });
+  });
+}
+
+function renderFifthsInfoPanel() {
+  const panel = document.getElementById('fifthsInfoPanel');
+  const majorPc = rootIdx;
+  const relMinorPc = (majorPc + 9) % 12;
+  const dominantPc = (majorPc + 7) % 12;
+  const subdominantPc = (majorPc + 5) % 12;
+  const tip = FIFTHS_TIPS[majorPc] || 'Enfocate en 3ra y 7ma de cada acorde para conectar tensión y resolución.';
+
+  panel.innerHTML = `
+    <div class="fifths-info-card">
+      <div class="fifths-info-label">Armadura</div>
+      <div class="fifths-info-value">${keySignatureText(majorPc)}</div>
+    </div>
+    <div class="fifths-info-card">
+      <div class="fifths-info-label">Relativa menor</div>
+      <div class="fifths-info-value"><button class="fifths-link-btn" id="fifthsRelMinorBtn">${noteName(relMinorPc)} menor natural</button></div>
+    </div>
+    <div class="fifths-info-card">
+      <div class="fifths-info-label">Funciones</div>
+      <div class="fifths-info-value">IV: ${chordLabelFromRootAndType(subdominantPc, 'maj')} · V: ${chordLabelFromRootAndType(dominantPc, 'dom')}</div>
+    </div>
+    <div class="fifths-info-card">
+      <div class="fifths-info-label">Progresiones sugeridas</div>
+      <div class="fifths-info-value">I–IV–V · ii–V–I · I–V–vi–IV</div>
+    </div>
+    <div class="fifths-info-card">
+      <div class="fifths-info-label">Tip de improvisación</div>
+      <div class="fifths-info-value">${tip}</div>
+    </div>
+    <div class="fifths-info-card">
+      <div class="fifths-info-label">Distancia tonal</div>
+      <div class="fifths-info-value">
+        <div class="fifths-badge-row">
+          <span class="fifths-badge soft">vecinos = modulación suave</span>
+          <span class="fifths-badge medium">2–3 pasos = media</span>
+          <span class="fifths-badge dramatic">tritono = dramática</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const relBtn = document.getElementById('fifthsRelMinorBtn');
+  relBtn?.addEventListener('click', () => {
+    const minorIdx = SCALES.findIndex(s => s.id === 'natural_minor');
+    setCircleRootFromPitchClass(relMinorPc, minorIdx >= 0 ? minorIdx : scaleIdx);
+  });
+}
+
 // ══════════════════════════════════════════════
 // CHORD PROGRESSION PLAYER
 // ══════════════════════════════════════════════
@@ -1161,6 +1414,21 @@ const PROGRESSIONS_BY_SCALE = {
 
 const QUALITY_SUFFIX = { maj:'', min:'m', dim:'°', aug:'+', dom:'7', hdim:'ø' };
 const QUALITY_SHORT  = { maj:'maj', min:'min', dim:'dim', aug:'aug', dom:'dom7', hdim:'ø7' };
+const FIFTHS_ORDER = [0,7,2,9,4,11,6,1,8,3,10,5]; // C G D A E B F# C# Ab Eb Bb F
+const FIFTHS_TIPS = {
+  0: 'Usá C mayor para practicar targeting de 3ras sobre cada acorde sin alterar.',
+  7: 'En G mayor, remarcá F# en tiempos fuertes para definir el color tonal.',
+  2: 'En D mayor, combiná pentatónica mayor + passing tones en C# para empuje melódico.',
+  9: 'En A mayor, fraseá sobre triadas cerradas y conectá con slides entre C# y D.',
+  4: 'En E mayor, hacé bends hacia G# para generar resolución clara en I.',
+  11: 'En B mayor, alterná motivos cortos y silencios para no saturar la tensión de 5 sostenidos.',
+  6: 'En F#/Gb, pensá en shapes visuales del mástil y resolvé siempre al centro tonal.',
+  1: 'En C#/Db, trabajá frases por cuerdas adyacentes para controlar la digitación compleja.',
+  8: 'En Ab, explotá notas guía (3ra y 7ma) para líneas más cantables.',
+  3: 'En Eb, apoyate en arpegios de I–IV–V y conectalos con cromatismos cortos.',
+  10:'En Bb, usá anticipaciones rítmicas en el V para sensación de empuje.',
+  5: 'En F mayor, destacá Bb como color y resolvé en A sobre el acorde de tónica.',
+};
 
 // Player state
 let playerInterval = null;
@@ -1169,6 +1437,7 @@ let playerBpm = 80;
 let playerTimeSig = 4;
 let playerBeats = [];     // flat array of {chordName, chordQuality, measure, beatInMeasure}
 let currentProgIdx = 0;
+let circleBeatPitchClass = null;
 
 // ══════════════════════════════════════════════
 // AUDIO ENGINE  (Web Audio API — no deps)
@@ -1403,6 +1672,27 @@ function renderBeatIndicator() {
   ).join('');
 }
 
+function updateCircleBeatHighlight(beat) {
+  const prev = document.querySelector('.fifths-node.beat-active');
+  if (prev) prev.classList.remove('beat-active', 'beat-pulse');
+  if (!beat || !beat.chordRoot) {
+    circleBeatPitchClass = null;
+    return;
+  }
+  const pitchClass = NOTE_SEMI[beat.chordRoot];
+  if (pitchClass === undefined) {
+    circleBeatPitchClass = null;
+    return;
+  }
+  circleBeatPitchClass = pitchClass;
+  const current = document.querySelector(`.fifths-node[data-major-pc="${pitchClass}"]`);
+  if (!current) return;
+  current.classList.add('beat-active');
+  current.classList.remove('beat-pulse');
+  void current.offsetWidth;
+  current.classList.add('beat-pulse');
+}
+
 function advancePlayerBeat() {
   // Clear previous
   const prevCell = document.getElementById(`beat-cell-${playerBeat}`);
@@ -1424,6 +1714,7 @@ function advancePlayerBeat() {
   }
   const beat = playerBeats[playerBeat];
   if (dot) { dot.classList.add(beat.beatInMeasure === 0 ? 'downon' : 'on'); }
+  updateCircleBeatHighlight(beat);
 
   // ── AUDIO ────────────────────────────────────
   if (audioCtx) {
@@ -1460,6 +1751,7 @@ function stopPlayer() {
     if (d) d.classList.remove('on','downon');
   });
   playerBeat = 0;
+  updateCircleBeatHighlight(null);
 }
 
 function togglePlay() {
@@ -1537,6 +1829,8 @@ function render() {
   renderPiano();
   renderDegrees();
   renderChords();
+  renderCircleOfFifths();
+  renderFifthsInfoPanel();
   renderModes();
   renderTips();
   // Stop player and reset progression when scale/root changes
