@@ -546,6 +546,101 @@
     }
     .study-drawer[open] summary { color: var(--accent2); }
 
+    /* ── Feature tabs (Teclado / Guitarra / Quintas) ── */
+    .feature-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      padding: 0 16px;
+      background: var(--s1);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .tab-btn {
+      border: none;
+      border-bottom: 2px solid transparent;
+      border-radius: 0;
+      padding: 12px 18px;
+      font-size: 11px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active {
+      color: var(--accent2);
+      border-bottom-color: var(--accent);
+      font-weight: 700;
+    }
+    .tab-panel[hidden] { display: none !important; }
+    .tab-panel { display: flex; flex-direction: column; gap: 20px; }
+
+    /* Guitar fretboard */
+    .guitar-intro {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 72ch;
+    }
+    .guitar-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .guitar-wrap {
+      background: var(--s2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      overflow-x: auto;
+    }
+    .guitar-grid {
+      display: table;
+      border-collapse: collapse;
+      font-size: 9px;
+      min-width: max-content;
+    }
+    .guitar-grid tr { height: 28px; }
+    .guitar-grid th, .guitar-grid td {
+      border: 1px solid var(--border);
+      text-align: center;
+      vertical-align: middle;
+      padding: 4px 5px;
+      min-width: 30px;
+    }
+    .guitar-grid th {
+      background: var(--s3);
+      color: var(--hint);
+      font-weight: 400;
+    }
+    .guitar-grid .g-str {
+      background: var(--s1);
+      color: var(--muted);
+      font-weight: 700;
+      width: 28px;
+    }
+    .guitar-grid .g-cell { cursor: pointer; transition: background 0.1s; }
+    .guitar-grid .g-cell.in-scale { background: rgba(255,107,53,0.18); color: var(--text); }
+    .guitar-grid .g-cell.root { background: var(--accent2); color: #000; font-weight: 700; }
+    .guitar-grid .g-cell.phrase-off { opacity: 0.35; }
+    .guitar-grid .g-cell:not(.in-scale):not(.root) { color: var(--hint); }
+
+    /* Circle of fifths */
+    .circle-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+    }
+    .circle-wrap svg { max-width: 100%; height: auto; }
+    .circle-key {
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .circle-key:hover { opacity: 0.85; }
+    .circle-key.active .maj-text { fill: #ffb347; }
+    .circle-key.active .min-text { fill: #5bffa0; }
+    .circle-hint { font-size: 10px; color: var(--muted); text-align: center; max-width: 48ch; }
+
     .panic-backdrop {
       position: fixed;
       inset: 0;
@@ -606,6 +701,8 @@
       .mode-toggle { width: 100%; justify-content: stretch; }
       .mode-toggle .mode-btn { flex: 1; }
       .scale-info-bar .mode-toggle-wrap { width: 100%; justify-content: space-between; }
+      .feature-tabs { padding: 0 8px; overflow-x: auto; }
+      .tab-btn { padding: 10px 12px; font-size: 10px; }
       .header-controls {
         margin-left: 0;
         width: 100%;
@@ -725,7 +822,15 @@
         </div>
       </div>
 
+      <div class="feature-tabs" id="featureTabs" role="tablist" aria-label="Secciones">
+        <button type="button" class="tab-btn active" role="tab" id="tabBtnRef" data-tab="ref" aria-selected="true">Teclado</button>
+        <button type="button" class="tab-btn" role="tab" id="tabBtnGuitar" data-tab="guitar" aria-selected="false">Guitarra</button>
+        <button type="button" class="tab-btn" role="tab" id="tabBtnCircle" data-tab="circle" aria-selected="false">Quintas</button>
+      </div>
+
       <div class="main-scroll" id="mainScroll">
+
+        <div class="tab-panel" id="tab-panel-ref" data-tab-panel="ref">
 
         <div class="jam-only jam-panel" id="jamPanel">
           <div class="jam-hint" id="jamHint">—</div>
@@ -827,6 +932,33 @@
             Usá <strong>Estudio</strong> para ver grados completos, acordes, beat player y tips.
           </p>
         </details>
+
+        </div>
+
+        <div class="tab-panel" id="tab-panel-guitar" data-tab-panel="guitar" hidden>
+          <h3 class="sec">Diapasón (afinación estándar)</h3>
+          <p class="guitar-intro">
+            Cuerdas de arriba a abajo: <strong>mi–Si–Sol–Re–La–Mi</strong> (aguda → grave). Las notas de la escala resaltan como en el teclado; tocá una celda para reproducir el sonido.
+            La misma tónica y escala del panel lateral aplican aquí.
+          </p>
+          <div class="guitar-controls">
+            <span class="label-sm">Trastes</span>
+            <select id="guitarFretCount">
+              <option value="12" selected>12</option>
+              <option value="15">15</option>
+              <option value="17">17</option>
+            </select>
+          </div>
+          <div class="guitar-wrap">
+            <table class="guitar-grid" id="guitarFretboard" aria-label="Diapasón de guitarra"></table>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-panel-circle" data-tab-panel="circle" hidden>
+          <h3 class="sec">Círculo de quintas</h3>
+          <p class="circle-hint">Click en un tono mayor (anillo exterior): tónica + escala mayor. <strong>Shift+click</strong> (o Alt+click): relativa menor natural. El interior es la relativa menor (…m).</p>
+          <div class="circle-wrap" id="circleOfFifths"></div>
+        </div>
 
       </div>
     </div>
@@ -1102,10 +1234,18 @@ let feedbackPromptTimer = null;
 
 const PRESETS_STORAGE_KEY = 'escalaimprov:jam-presets';
 const UI_MODE_STORAGE_KEY = 'escalaimprov:ui-mode';
+const ACTIVE_TAB_KEY = 'escalaimprov:active-tab';
 let uiMode = 'studio';
 let phraseMode = 'off';
 let metroInterval = null;
 let metroBeat = 0;
+let activeTab = 'ref';
+
+const GUITAR_OPEN_MIDI = [40, 45, 50, 55, 59, 64];
+const GUITAR_STR_LABELS = ['e', 'B', 'G', 'D', 'A', 'E'];
+const GUITAR_STR_ORDER = [5, 4, 3, 2, 1, 0];
+
+const COF_MAJOR_SEMI = [0, 7, 2, 9, 4, 11, 6, 1, 8, 3, 10, 5];
 
 // ══════════════════════════════════════════════
 // HELPERS
@@ -1304,6 +1444,94 @@ function renderJamPanel() {
   document.querySelectorAll('.phrase-btn').forEach(btn => {
     btn.classList.toggle('on', btn.dataset.phrase === phraseMode);
   });
+}
+
+function setTab(tab) {
+  activeTab = tab === 'guitar' || tab === 'circle' ? tab : 'ref';
+  localStorage.setItem(ACTIVE_TAB_KEY, activeTab);
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    const on = b.dataset.tab === activeTab;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-selected', on);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => {
+    p.hidden = p.dataset.tabPanel !== activeTab;
+  });
+  if (activeTab === 'guitar') renderGuitarFretboard();
+  if (activeTab === 'circle') renderCircleOfFifths();
+}
+
+function renderGuitarFretboard() {
+  const table = document.getElementById('guitarFretboard');
+  if (!table) return;
+  const scale = SCALES[scaleIdx];
+  const sNotes = new Set(scaleNotes(scale, rootIdx));
+  const rootNote = noteName(rootIdx);
+  const phraseSet = getPhraseNoteSet(scale, rootIdx, phraseMode);
+  const fretEl = document.getElementById('guitarFretCount');
+  const fretCount = fretEl ? parseInt(fretEl.value, 10) || 12 : 12;
+
+  let html = '<tr><th></th>';
+  for (let f = 0; f <= fretCount; f++) {
+    html += `<th>${f}</th>`;
+  }
+  html += '</tr>';
+
+  GUITAR_STR_ORDER.forEach(s => {
+    const strLabel = GUITAR_STR_LABELS[s];
+    html += `<tr><th class="g-str">${strLabel}</th>`;
+    for (let f = 0; f <= fretCount; f++) {
+      const midi = GUITAR_OPEN_MIDI[s] + f;
+      const noteN = noteName(midi % 12);
+      const inScale = sNotes.has(noteN);
+      const isRoot = noteN === rootNote;
+      const phraseOff = inScale && phraseSet && !phraseSet.has(noteN);
+      let cls = 'g-cell';
+      if (isRoot) cls += ' root';
+      else if (inScale) cls += ' in-scale';
+      if (phraseOff) cls += ' phrase-off';
+      html += `<td class="${cls}" data-midi="${midi}">${noteN}</td>`;
+    }
+    html += '</tr>';
+  });
+
+  table.innerHTML = html;
+}
+
+function renderCircleOfFifths() {
+  const wrap = document.getElementById('circleOfFifths');
+  if (!wrap) return;
+  const cx = 160;
+  const cy = 160;
+  const Rmaj = 108;
+  const Rmin = 76;
+
+  let svg = `<svg viewBox="0 0 320 320" width="320" height="320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">`;
+  svg += `<circle cx="${cx}" cy="${cy}" r="${Rmaj + 10}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>`;
+  svg += `<circle cx="${cx}" cy="${cy}" r="${Rmin - 8}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>`;
+
+  COF_MAJOR_SEMI.forEach((semi, i) => {
+    const theta = ((270 - i * 30) * Math.PI) / 180;
+    const xm = cx + Rmaj * Math.cos(theta);
+    const ym = cy + Rmaj * Math.sin(theta);
+    const xmin = cx + Rmin * Math.cos(theta);
+    const ymin = cy + Rmin * Math.sin(theta);
+    const maj = noteName(semi);
+    const minSemi = (semi + 9) % 12;
+    const minName = noteName(minSemi);
+    const isActive = rootIdx === semi || (semi + 9) % 12 === rootIdx;
+    const activeClass = isActive ? ' active' : '';
+    svg += `<g class="circle-key${activeClass}" data-major-semi="${semi}">`;
+    svg += `<text class="maj-text" x="${xm}" y="${ym}" text-anchor="middle" dominant-baseline="middle" fill="#ede8e0" font-size="12" font-family="Unbounded, system-ui, sans-serif" font-weight="700">${maj}</text>`;
+    svg += `<text class="min-text" x="${xmin}" y="${ymin}" text-anchor="middle" dominant-baseline="middle" fill="#7a756e" font-size="10" font-family='Space Mono, monospace'>${minName}m</text>`;
+    svg += '</g>';
+  });
+
+  svg += `<circle cx="${cx}" cy="${cy}" r="20" fill="#1a1a1a" stroke="rgba(255,255,255,0.13)"/>`;
+  svg += `<text x="${cx}" y="${cy}" text-anchor="middle" dominant-baseline="middle" fill="#7a756e" font-size="9" font-family='Space Mono, monospace'>4ª / 5ª</text>`;
+  svg += '</svg>';
+
+  wrap.innerHTML = svg;
 }
 
 function buildPanicBody() {
@@ -1961,6 +2189,8 @@ function render() {
   currentProgIdx = 0;
   renderProgPlayer();
   renderJamPanel();
+  if (activeTab === 'guitar') renderGuitarFretboard();
+  if (activeTab === 'circle') renderCircleOfFifths();
 }
 
 // ══════════════════════════════════════════════
@@ -2157,11 +2387,48 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closePanic();
 });
 
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => setTab(btn.dataset.tab));
+});
+
+document.getElementById('guitarFretCount').addEventListener('change', () => {
+  if (activeTab === 'guitar') renderGuitarFretboard();
+});
+
+document.getElementById('mainScroll').addEventListener('click', e => {
+  const cell = e.target.closest('.g-cell[data-midi]');
+  if (!cell) return;
+  initAudio();
+  playPianoNote(parseInt(cell.dataset.midi, 10));
+});
+
+document.getElementById('circleOfFifths').addEventListener('click', e => {
+  const g = e.target.closest('.circle-key');
+  if (!g) return;
+  const semi = parseInt(g.dataset.majorSemi, 10);
+  if (Number.isNaN(semi)) return;
+  const majorIdx = SCALES.findIndex(s => s.id === 'major');
+  const natMinIdx = SCALES.findIndex(s => s.id === 'natural_minor');
+  if (e.shiftKey || e.altKey) {
+    rootIdx = (semi + 9) % 12;
+    scaleIdx = natMinIdx >= 0 ? natMinIdx : 0;
+  } else {
+    rootIdx = semi;
+    scaleIdx = majorIdx >= 0 ? majorIdx : 0;
+  }
+  render();
+});
+
 // INIT
 (function initUiMode() {
   const saved = localStorage.getItem(UI_MODE_STORAGE_KEY);
   if (saved === 'jam') setUIMode('jam');
   else setUIMode('studio');
+})();
+(function initTab() {
+  const t = localStorage.getItem(ACTIVE_TAB_KEY);
+  if (t === 'guitar' || t === 'circle' || t === 'ref') setTab(t);
+  else setTab('ref');
 })();
 renderPresetSelect();
 render();
