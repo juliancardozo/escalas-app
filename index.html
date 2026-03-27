@@ -412,6 +412,68 @@
     .bkey { cursor: pointer; }
 
     h3.sec { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--hint); margin-bottom: 10px; }
+
+    @media (max-width: 980px) {
+      html, body { overflow: auto; }
+      .app { height: auto; min-height: 100vh; }
+      .body { grid-template-columns: 1fr; overflow: visible; }
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        max-height: none;
+      }
+      .main { min-height: 0; }
+      .main-scroll { overflow: visible; padding: 16px; }
+      .scale-info-bar { padding: 12px 16px; }
+      footer { flex-wrap: wrap; gap: 8px 14px; padding: 10px 16px; }
+      .scale-formula { margin-left: 0; width: 100%; }
+      .prog-player { padding: 14px; }
+      .prog-controls { width: 100%; justify-content: space-between; }
+      .prog-selects { width: 100%; }
+      .prog-selects select { flex: 1; min-width: 140px; }
+      .chords-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+      .tips-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+      .mode-row { flex-wrap: wrap; }
+      .mode-feel { margin-left: 0; width: 100%; }
+    }
+
+    @media (max-width: 640px) {
+      header {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 12px;
+      }
+      .logo { width: 100%; }
+      .header-controls {
+        margin-left: 0;
+        width: 100%;
+        flex-wrap: wrap;
+      }
+      .audio-vol-wrap {
+        width: 100%;
+        justify-content: flex-end;
+      }
+      select, button { min-height: 40px; }
+      .root-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+      .wishlist-form { flex-direction: column; }
+      .wishlist-form button { width: 100%; }
+      .scale-full-name { font-size: 17px; }
+      .main-scroll { padding: 12px; gap: 14px; }
+      .piano-wrap { padding: 12px; }
+      .degree-pill { min-width: 52px; padding: 8px 10px; }
+      .degree-note { font-size: 16px; }
+      .prog-header { gap: 10px; }
+      .prog-bpm-wrap { width: 100%; justify-content: space-between; }
+      input[type=range].bpm-slider { width: 120px; }
+      .beat-cell { width: 58px; height: 58px; }
+      .beat-chord-name { font-size: 12px; }
+      .beat-sep { height: 30px; }
+      .feedback-modal { padding: 12px; }
+      .feedback-actions { flex-direction: column-reverse; }
+      .feedback-actions button { width: 100%; }
+      .footer-key { width: 100%; }
+      #footerInfo { margin-left: 0 !important; width: 100%; }
+    }
   </style>
 </head>
 <body>
