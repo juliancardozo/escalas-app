@@ -12,15 +12,24 @@
   "build": {
     "appId": "com.escalas.improv",
     "productName": "Escalas para Improvisación",
-    "directories": { "output": "dist" },
-    "win": { "target": "nsis" },
-    "mac": { "target": "dmg" },
-    "linux": { "target": "AppImage" }
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   },
   "author": "Julian Cardozo",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^29.0.0",
-    "electron-builder": "^24.0.0"
+    "electron": "^41.1.0",
+    "electron-builder": "^26.8.1",
+    "electron-builder-squirrel-windows": "^26.8.1"
   }
 }

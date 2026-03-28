@@ -413,10 +413,29 @@
       display: flex; align-items: center; gap: 12px;
       background: var(--s2); border: 1px solid var(--border); border-radius: 7px; padding: 10px 14px;
     }
+    .mode-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+      flex: 1;
+    }
     .mode-degree { font-size: 10px; color: var(--muted); min-width: 18px; font-family: var(--mono); }
     .mode-name { font-size: 13px; font-weight: 700; color: var(--text); min-width: 110px; }
     .mode-notes { font-size: 11px; color: var(--muted); font-family: var(--mono); }
+    .mode-theory { font-size: 10px; color: var(--blue); line-height: 1.5; }
     .mode-feel { font-size: 10px; color: var(--purple); margin-left: auto; font-style: italic; }
+    .mode-play {
+      flex-shrink: 0;
+      min-width: 76px;
+      text-align: center;
+    }
+    .mode-play.playing {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+      font-weight: 700;
+    }
 
     /* ── IMPROV TIPS ── */
     .tips-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
@@ -486,6 +505,49 @@
       border-left: 2px solid var(--accent);
       padding-left: 10px;
     }
+    .jam-flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+    }
+    .jam-flow-card {
+      background: var(--s2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 120px;
+    }
+    .jam-flow-step {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--hint);
+    }
+    .jam-flow-title {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 700;
+    }
+    .jam-flow-body {
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .jam-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .jam-status {
+      font-size: 10px;
+      color: var(--muted);
+      min-height: 14px;
+    }
+    .jam-status.ok { color: var(--green); }
     .mapa-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-start; }
     .mapa-label { font-size: 9px; color: var(--hint); width: 100%; letter-spacing: 0.12em; text-transform: uppercase; }
     .mapa-chip {
@@ -585,6 +647,141 @@
       max-width: 72ch;
     }
     .guitar-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .guitar-select-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .guitar-position-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .guitar-pos-btn {
+      border: 1px solid var(--border);
+      background: var(--s1);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .guitar-pos-btn.active {
+      border-color: var(--accent);
+      background: rgba(255,107,53,0.12);
+      color: var(--text);
+    }
+    .guitar-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .guitar-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.02);
+    }
+    .g-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .g-dot.scale { background: rgba(255,107,53,0.22); }
+    .g-dot.chord { background: rgba(91,255,160,0.30); }
+    .g-dot.chord-root { background: rgba(126,208,255,0.5); }
+    .guitar-focus-bar {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 12px;
+    }
+    .guitar-focus-card {
+      background: var(--s2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .guitar-focus-kicker {
+      font-size: 10px;
+      color: var(--hint);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .guitar-focus-title {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .guitar-focus-meta {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .guitar-note-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .guitar-note-chip {
+      padding: 5px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-family: var(--mono);
+      border: 1px solid var(--border2);
+      background: rgba(255,255,255,0.03);
+    }
+    .guitar-note-chip.chord {
+      border-color: rgba(91,255,160,0.3);
+      background: rgba(91,255,160,0.13);
+      color: #d8ffe8;
+    }
+    .guitar-note-chip.color {
+      border-color: rgba(255,179,71,0.25);
+      background: rgba(255,179,71,0.10);
+      color: #ffe3bb;
+    }
+    .guitar-pro-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .guitar-pro-tip {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--s1);
+      padding: 12px;
+    }
+    .guitar-pro-step {
+      font-size: 10px;
+      color: var(--accent2);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .guitar-pro-title {
+      font-size: 12px;
+      color: var(--text);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .guitar-pro-body {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
     .guitar-wrap {
       background: var(--s2);
       border: 1px solid var(--border);
@@ -619,8 +816,25 @@
     }
     .guitar-grid .g-cell { cursor: pointer; transition: background 0.1s; }
     .guitar-grid .g-cell.in-scale { background: rgba(255,107,53,0.18); color: var(--text); }
+    .guitar-grid .g-cell.chord-tone {
+      background: rgba(91,255,160,0.24);
+      color: #f7fff9;
+      box-shadow: inset 0 0 0 1px rgba(91,255,160,0.25);
+      font-weight: 700;
+    }
+    .guitar-grid .g-cell.chord-root {
+      background: rgba(126,208,255,0.48);
+      color: #081218;
+      box-shadow: inset 0 0 0 1px rgba(126,208,255,0.5);
+      font-weight: 700;
+    }
+    .guitar-grid .g-cell.chord-color {
+      background: rgba(255,179,71,0.14);
+      color: var(--text);
+    }
     .guitar-grid .g-cell.root { background: var(--accent2); color: #000; font-weight: 700; }
     .guitar-grid .g-cell.phrase-off { opacity: 0.35; }
+    .guitar-grid .g-cell.out-pos { opacity: 0.18; }
     .guitar-grid .g-cell:not(.in-scale):not(.root) { color: var(--hint); }
 
     /* Circle of fifths */
@@ -688,6 +902,8 @@
       .tips-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
       .mode-row { flex-wrap: wrap; }
       .mode-feel { margin-left: 0; width: 100%; }
+      .guitar-focus-bar { grid-template-columns: 1fr; }
+      .guitar-pro-list { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 640px) {
@@ -835,6 +1051,28 @@
         <div class="jam-only jam-panel" id="jamPanel">
           <div class="jam-hint" id="jamHint">—</div>
           <div class="jam-micro" id="jamMicroTip"></div>
+          <div class="jam-flow" id="jamFlow">
+            <div class="jam-flow-card">
+              <div class="jam-flow-step">Paso 1</div>
+              <div class="jam-flow-title" id="jamFlowStart">—</div>
+              <div class="jam-flow-body" id="jamFlowStartBody"></div>
+            </div>
+            <div class="jam-flow-card">
+              <div class="jam-flow-step">Paso 2</div>
+              <div class="jam-flow-title" id="jamFlowMove">—</div>
+              <div class="jam-flow-body" id="jamFlowMoveBody"></div>
+            </div>
+            <div class="jam-flow-card">
+              <div class="jam-flow-step">Paso 3</div>
+              <div class="jam-flow-title" id="jamFlowShare">—</div>
+              <div class="jam-flow-body" id="jamFlowShareBody"></div>
+            </div>
+          </div>
+          <div class="jam-cta-row">
+            <button type="button" class="btn-accent" id="btnJamIdea">Dame una idea</button>
+            <button type="button" id="btnJamReset">Volver al mapa</button>
+            <div class="jam-status" id="jamStatus"></div>
+          </div>
           <div>
             <div class="mapa-label">Mapa rápido</div>
             <div class="mapa-row" id="jamMapaAnchor"></div>
@@ -948,6 +1186,28 @@
               <option value="15">15</option>
               <option value="17">17</option>
             </select>
+            <div class="guitar-select-wrap">
+              <span class="label-sm">Acorde foco</span>
+              <select id="guitarChordFocus"></select>
+            </div>
+          </div>
+          <div class="guitar-position-row" id="guitarPositionRow"></div>
+          <div class="guitar-legend">
+            <span><i class="g-dot scale"></i> escala</span>
+            <span><i class="g-dot chord"></i> notas del acorde</span>
+            <span><i class="g-dot chord-root"></i> raíz del acorde</span>
+          </div>
+          <div class="guitar-focus-bar">
+            <div class="guitar-focus-card">
+              <div class="guitar-focus-kicker">Lectura rápida</div>
+              <div class="guitar-focus-title" id="guitarFocusTitle">Escala completa</div>
+              <div class="guitar-focus-meta" id="guitarFocusMeta">Elegí una posición del mástil y, si querés, un acorde foco para ver dónde resolver y dónde colorear la frase.</div>
+              <div class="guitar-note-row" id="guitarFocusNotes"></div>
+            </div>
+            <div class="guitar-focus-card">
+              <div class="guitar-focus-kicker">Tips de jam</div>
+              <div class="guitar-pro-list" id="guitarProTips"></div>
+            </div>
           </div>
           <div class="guitar-wrap">
             <table class="guitar-grid" id="guitarFretboard" aria-label="Diapasón de guitarra"></table>
@@ -1240,12 +1500,34 @@ let phraseMode = 'off';
 let metroInterval = null;
 let metroBeat = 0;
 let activeTab = 'ref';
+let jamRoutineIdx = 0;
+let manualGuitarChordKey = '';
+let playerGuitarChordKey = '';
+let guitarPositionKey = 'all';
 
 const GUITAR_OPEN_MIDI = [40, 45, 50, 55, 59, 64];
-const GUITAR_STR_LABELS = ['e', 'B', 'G', 'D', 'A', 'E'];
+const GUITAR_STR_LABELS = ['E', 'A', 'D', 'G', 'B', 'e'];
 const GUITAR_STR_ORDER = [5, 4, 3, 2, 1, 0];
 
 const COF_MAJOR_SEMI = [0, 7, 2, 9, 4, 11, 6, 1, 8, 3, 10, 5];
+const CHORD_INTERVALS = {
+  maj: [0, 4, 7],
+  min: [0, 3, 7],
+  dim: [0, 3, 6],
+  aug: [0, 4, 8],
+  dom: [0, 4, 7, 10],
+  hdim: [0, 3, 6, 10],
+};
+const GUITAR_POSITION_PRESETS = [
+  { key: 'all', label: 'Todo' },
+  { key: 'open', label: 'Abierta', start: 0, end: 3 },
+  { key: 'c1', label: 'Caja 1', start: 2, end: 5 },
+  { key: 'c2', label: 'Caja 2', start: 4, end: 7 },
+  { key: 'c3', label: 'Caja 3', start: 7, end: 10 },
+  { key: 'c4', label: 'Caja 4', start: 9, end: 12 },
+  { key: 'c5', label: 'Caja 5', start: 12, end: 15 },
+  { key: 'c6', label: 'Alta', start: 14, end: 17 },
+];
 
 // ══════════════════════════════════════════════
 // HELPERS
@@ -1254,6 +1536,51 @@ function notes() { return notation === 'sharp' ? NOTES_SHARP : NOTES_FLAT; }
 function noteName(idx) { return notes()[(idx + 12) % 12]; }
 function scaleNotes(scale, root) {
   return scale.intervals.map(i => noteName(root + i));
+}
+function chordLabel(rootName, chordType) {
+  const suffix = chordType === 'maj' ? '' : chordType === 'min' ? 'm' : chordType === 'dim' ? '°' : chordType === 'aug' ? '+' : chordType === 'dom' ? '7' : chordType === 'hdim' ? 'ø' : '';
+  return `${rootName}${suffix}`;
+}
+function chordNotes(rootName, chordType) {
+  const ivs = CHORD_INTERVALS[chordType] || [0, 4, 7];
+  const rootSemi = NOTE_SEMI[rootName];
+  if (rootSemi === undefined) return [rootName];
+  return ivs.map(iv => noteName(rootSemi + iv));
+}
+function getScaleChordOptions(scale, rootIndex) {
+  if (!scale.chordTypes) return [];
+  const sNotes = scaleNotes(scale, rootIndex);
+  return scale.chordTypes.map((type, i) => {
+    const note = sNotes[i];
+    const degree = scale.degrees[i] || (i + 1);
+    return {
+      key: `${note}|${type}|${degree}|${i}`,
+      note,
+      type,
+      degree,
+      label: `${degree} · ${chordLabel(note, type)}`,
+      notes: chordNotes(note, type),
+    };
+  });
+}
+function getFretCount() {
+  const fretEl = document.getElementById('guitarFretCount');
+  return fretEl ? parseInt(fretEl.value, 10) || 12 : 12;
+}
+function getAvailableGuitarPositions(fretCount) {
+  return GUITAR_POSITION_PRESETS.filter(pos => pos.key === 'all' || pos.start <= fretCount);
+}
+function getActiveGuitarPosition() {
+  const options = getAvailableGuitarPositions(getFretCount());
+  return options.find(pos => pos.key === guitarPositionKey) || options[0];
+}
+function getActiveGuitarChord() {
+  const options = getScaleChordOptions(SCALES[scaleIdx], rootIdx);
+  const activeKey = playerGuitarChordKey || manualGuitarChordKey;
+  return options.find(opt => opt.key === activeKey) || null;
+}
+function formatNoteList(list) {
+  return list.filter(Boolean).join(' · ');
 }
 
 function getWishlist() {
@@ -1419,6 +1746,86 @@ function getJamMap(scale, rootIdx) {
   return { anchor, tension, outside };
 }
 
+function getJamRoutines(scale, rootIndex) {
+  const root = noteName(rootIndex);
+  const sNotes = scaleNotes(scale, rootIndex);
+  const safeThird = sNotes[2] || sNotes[1] || sNotes[0];
+  const safeFifth = sNotes[4] || sNotes[2] || sNotes[sNotes.length - 1];
+  const colorA = sNotes[1] || sNotes[0];
+  const colorB = sNotes[sNotes.length - 1] || sNotes[0];
+  const phraseLabel = {
+    off: 'escala completa',
+    triad: 'tríada',
+    pent_maj: 'pentatónica mayor',
+    pent_min: 'pentatónica menor',
+    four: '4 notas',
+  };
+  const shareFormat = scale.cat === 'Pentatónica'
+    ? 'grabá un loop corto y dejá huecos'
+    : scale.cat === 'Modal'
+      ? 'sostené una base y mostrá un color claro'
+      : 'tocá una vuelta simple y cerrala con intención';
+
+  return [
+    {
+      phrase: 'triad',
+      startTitle: `Aterrizá en ${root}`,
+      startBody: `Empezá solo con ${root}, ${safeThird} y ${safeFifth}. Tocá lento hasta sentir reposo antes de agregar más notas.`,
+      moveTitle: 'Abrí el fraseo',
+      moveBody: `Hacé una frase de 3 o 4 notas y repetila con una variación mínima. Si dudás, volvé a ${root}.`,
+      shareTitle: 'Convertílo en algo compartible',
+      shareBody: `No busques el take perfecto: ${shareFormat}. Una vuelta clara vale más que una idea gigante a medio hacer.`,
+      status: `Idea activa: ancla + tríada. Fraseo sugerido: ${phraseLabel.triad}.`,
+    },
+    {
+      phrase: scale.id.includes('minor') || scale.id === 'phrygian' || scale.id === 'blues' ? 'pent_min' : 'pent_maj',
+      startTitle: 'Sacá presión',
+      startBody: `Reducí el mapa a pocas notas. Elegí una célula simple y repetila hasta que aparezca una intención natural.`,
+      moveTitle: 'Dale movimiento',
+      moveBody: `Probá subir por ${colorA} y resolver en ${root}, o caer desde ${colorB} hacia ${safeFifth}. Menos notas, más groove.`,
+      shareTitle: 'Compartí proceso, no perfección',
+      shareBody: `Pensalo como “hoy encontré este color”. Ese formato íntimo funciona mejor cuando te sentís bloqueado.`,
+      status: `Idea activa: menos notas, más flow. Fraseo sugerido: ${phraseLabel[scale.id.includes('minor') || scale.id === 'phrygian' || scale.id === 'blues' ? 'pent_min' : 'pent_maj']}.`,
+    },
+    {
+      phrase: 'four',
+      startTitle: 'Hacé una mini escena',
+      startBody: `Elegí 4 notas de ${root} ${scale.name} y pensalas como principio, aire y cierre. No improvises todo: contá algo corto.`,
+      moveTitle: 'Buscá contraste',
+      moveBody: `Alterná una nota estable con una de color. Si una frase te gusta, repetila dos veces antes de cambiar.`,
+      shareTitle: 'Dejá una huella clara',
+      shareBody: `Grabá 15 segundos con inicio y final reconocibles. En 2026 eso suele conectar más que una demo larga sin foco.`,
+      status: `Idea activa: mini escena en 4 notas. Fraseo sugerido: ${phraseLabel.four}.`,
+    },
+  ];
+}
+
+function renderJamFlow(scale, rootIndex) {
+  const routines = getJamRoutines(scale, rootIndex);
+  if (jamRoutineIdx >= routines.length) jamRoutineIdx = 0;
+  const routine = routines[jamRoutineIdx];
+  const byId = id => document.getElementById(id);
+  byId('jamFlowStart').textContent = routine.startTitle;
+  byId('jamFlowStartBody').textContent = routine.startBody;
+  byId('jamFlowMove').textContent = routine.moveTitle;
+  byId('jamFlowMoveBody').textContent = routine.moveBody;
+  byId('jamFlowShare').textContent = routine.shareTitle;
+  byId('jamFlowShareBody').textContent = routine.shareBody;
+  const status = byId('jamStatus');
+  status.textContent = routine.status;
+  status.classList.add('ok');
+}
+
+function applyJamRoutine(nextIdx) {
+  const scale = SCALES[scaleIdx];
+  const routines = getJamRoutines(scale, rootIdx);
+  jamRoutineIdx = ((nextIdx % routines.length) + routines.length) % routines.length;
+  phraseMode = routines[jamRoutineIdx].phrase;
+  renderPiano();
+  renderJamPanel();
+  if (activeTab === 'guitar') renderGuitarFretboard();
+}
+
 function renderJamPanel() {
   const scale = SCALES[scaleIdx];
   const root = noteName(rootIdx);
@@ -1432,7 +1839,7 @@ function renderJamPanel() {
   const anchorHint = scale.intervals.length >= 5
     ? `Aterrizá en <em>${root}</em>, 3ª y 5ª como reposo.`
     : `Usá <em>${root}</em> como ancla; el resto son color.`;
-  hint.innerHTML = `<strong>${root} ${scale.name}</strong> · ${scale.intervals.length} notas — ${anchorHint}`;
+  hint.innerHTML = `<strong>${root} ${scale.name}</strong> · ${scale.intervals.length} notas — ${anchorHint} Si hoy estás bloqueado, buscá una frase corta y cerrala.`;
   const tip = scale.tips && scale.tips[0];
   micro.textContent = tip ? `${tip.icon} ${tip.title}: ${tip.body}` : '';
 
@@ -1440,6 +1847,7 @@ function renderJamPanel() {
   mapA.innerHTML = anchor.map(n => `<span class="mapa-chip anchor">${n}</span>`).join('') || '—';
   mapT.innerHTML = tension.map(n => `<span class="mapa-chip tension">${n}</span>`).join('') || '—';
   mapO.innerHTML = outside.map(n => `<span class="mapa-chip outside">${n}</span>`).join('');
+  renderJamFlow(scale, rootIdx);
 
   document.querySelectorAll('.phrase-btn').forEach(btn => {
     btn.classList.toggle('on', btn.dataset.phrase === phraseMode);
@@ -1461,6 +1869,103 @@ function setTab(tab) {
   if (activeTab === 'circle') renderCircleOfFifths();
 }
 
+function renderGuitarPositionButtons() {
+  const row = document.getElementById('guitarPositionRow');
+  if (!row) return;
+  const positions = getAvailableGuitarPositions(getFretCount());
+  if (!positions.some(pos => pos.key === guitarPositionKey)) guitarPositionKey = positions[0].key;
+  row.innerHTML = positions.map(pos =>
+    `<button type="button" class="guitar-pos-btn${pos.key === guitarPositionKey ? ' active' : ''}" data-guitar-pos="${pos.key}">${pos.label}</button>`
+  ).join('');
+}
+
+function renderGuitarChordFocus() {
+  const sel = document.getElementById('guitarChordFocus');
+  if (!sel) return;
+  const options = getScaleChordOptions(SCALES[scaleIdx], rootIdx);
+  if (!options.some(opt => opt.key === manualGuitarChordKey)) manualGuitarChordKey = '';
+  const activeKey = playerGuitarChordKey || manualGuitarChordKey;
+  const selectedKey = playerGuitarChordKey ? '__player__' : (activeKey || '');
+  sel.innerHTML = `<option value="">Escala completa</option>` +
+    (playerGuitarChordKey ? `<option value="__player__">Siguiendo progresión</option>` : '') +
+    options.map(opt => `<option value="${opt.key}">${opt.label}</option>`).join('');
+  sel.value = selectedKey;
+}
+
+function renderGuitarGuidance() {
+  const scale = SCALES[scaleIdx];
+  const scaleNoteList = scaleNotes(scale, rootIdx);
+  const activeChord = getActiveGuitarChord();
+  const activePos = getActiveGuitarPosition();
+  const title = document.getElementById('guitarFocusTitle');
+  const meta = document.getElementById('guitarFocusMeta');
+  const notesRow = document.getElementById('guitarFocusNotes');
+  const tips = document.getElementById('guitarProTips');
+  if (!title || !meta || !notesRow || !tips) return;
+
+  const posText = activePos.key === 'all'
+    ? 'todo el mástil'
+    : `la zona ${activePos.label.toLowerCase()} (trastes ${activePos.start}-${activePos.end})`;
+
+  if (!activeChord) {
+    const anchor = [scaleNoteList[0], scaleNoteList[2], scaleNoteList[4]].filter(Boolean);
+    const color = scaleNoteList.filter(note => !anchor.includes(note));
+    title.textContent = `${noteName(rootIdx)} ${scale.name}`;
+    meta.textContent = `Trabajá ${posText}. Si querés sonar más sólido, aterrizá en ${formatNoteList(anchor)} y usá ${formatNoteList(color)} como color o paso.`;
+    notesRow.innerHTML = [
+      ...anchor.map(note => `<span class="guitar-note-chip chord">${note}</span>`),
+      ...color.map(note => `<span class="guitar-note-chip color">${note}</span>`),
+    ].join('');
+    tips.innerHTML = `
+      <div class="guitar-pro-tip">
+        <div class="guitar-pro-step">Paso 1</div>
+        <div class="guitar-pro-title">Ubicate en una caja</div>
+        <div class="guitar-pro-body">No recorras todo el diapasón. Quedate en ${posText} y aprendé primero dónde cae la tónica.</div>
+      </div>
+      <div class="guitar-pro-tip">
+        <div class="guitar-pro-step">Paso 2</div>
+        <div class="guitar-pro-title">Reposo claro</div>
+        <div class="guitar-pro-body">Probá cerrar frases en ${formatNoteList(anchor)}. Aunque improvises libre, esas notas te devuelven al centro.</div>
+      </div>
+      <div class="guitar-pro-tip">
+        <div class="guitar-pro-step">Paso 3</div>
+        <div class="guitar-pro-title">Patrón simple</div>
+        <div class="guitar-pro-body">Subí 3 notas, bajá 2 y repetí. Después desplazá la misma célula a otra cuerda dentro de la misma caja.</div>
+      </div>`;
+    return;
+  }
+
+  const chordToneSet = new Set(activeChord.notes);
+  const colorNotes = scaleNoteList.filter(note => !chordToneSet.has(note));
+  const guideNotes = activeChord.notes.length >= 4
+    ? [activeChord.notes[1], activeChord.notes[3]].filter(Boolean)
+    : [activeChord.notes[1], activeChord.notes[0]].filter(Boolean);
+  const followingText = playerGuitarChordKey ? ' siguiendo la progresión' : '';
+
+  title.textContent = `${activeChord.label}${followingText}`;
+  meta.textContent = `En ${posText}, apoyate en ${formatNoteList(activeChord.notes)}. Las notas ${formatNoteList(colorNotes)} funcionan mejor como paso, arrastre o cierre corto hacia el acorde.`;
+  notesRow.innerHTML = [
+    ...activeChord.notes.map(note => `<span class="guitar-note-chip chord">${note}</span>`),
+    ...colorNotes.map(note => `<span class="guitar-note-chip color">${note}</span>`),
+  ].join('');
+  tips.innerHTML = `
+    <div class="guitar-pro-tip">
+      <div class="guitar-pro-step">Paso 1</div>
+      <div class="guitar-pro-title">Aterrizá en chord tones</div>
+      <div class="guitar-pro-body">Si querés que “suene bien” rápido, cerrá la frase en ${formatNoteList(activeChord.notes)}. Ahí está el acorde real.</div>
+    </div>
+    <div class="guitar-pro-tip">
+      <div class="guitar-pro-step">Paso 2</div>
+      <div class="guitar-pro-title">Buscá notas guía</div>
+      <div class="guitar-pro-body">Marcá ${formatNoteList(guideNotes)} y movete medio tono o tono hacia una nota del acorde. Ese detalle hace sonar la frase más musical.</div>
+    </div>
+    <div class="guitar-pro-tip">
+      <div class="guitar-pro-step">Paso 3</div>
+      <div class="guitar-pro-title">Jugá con tensión corta</div>
+      <div class="guitar-pro-body">Usá ${formatNoteList(colorNotes)} como color breve. Tocala y resolvé enseguida a la nota del acorde más cercana dentro de la misma posición.</div>
+    </div>`;
+}
+
 function renderGuitarFretboard() {
   const table = document.getElementById('guitarFretboard');
   if (!table) return;
@@ -1468,8 +1973,14 @@ function renderGuitarFretboard() {
   const sNotes = new Set(scaleNotes(scale, rootIdx));
   const rootNote = noteName(rootIdx);
   const phraseSet = getPhraseNoteSet(scale, rootIdx, phraseMode);
-  const fretEl = document.getElementById('guitarFretCount');
-  const fretCount = fretEl ? parseInt(fretEl.value, 10) || 12 : 12;
+  const fretCount = getFretCount();
+  const activeChord = getActiveGuitarChord();
+  const chordToneSet = activeChord ? new Set(activeChord.notes) : null;
+  const activePos = getActiveGuitarPosition();
+
+  renderGuitarChordFocus();
+  renderGuitarPositionButtons();
+  renderGuitarGuidance();
 
   let html = '<tr><th></th>';
   for (let f = 0; f <= fretCount; f++) {
@@ -1485,11 +1996,18 @@ function renderGuitarFretboard() {
       const noteN = noteName(midi % 12);
       const inScale = sNotes.has(noteN);
       const isRoot = noteN === rootNote;
+      const isChordRoot = activeChord && noteN === activeChord.note;
+      const isChordTone = chordToneSet && chordToneSet.has(noteN);
       const phraseOff = inScale && phraseSet && !phraseSet.has(noteN);
+      const outPos = activePos.key !== 'all' && (f < activePos.start || f > activePos.end);
       let cls = 'g-cell';
       if (isRoot) cls += ' root';
+      else if (isChordRoot) cls += ' chord-root';
+      else if (isChordTone) cls += ' chord-tone';
+      else if (inScale && activeChord) cls += ' chord-color';
       else if (inScale) cls += ' in-scale';
       if (phraseOff) cls += ' phrase-off';
+      if (outPos) cls += ' out-pos';
       html += `<td class="${cls}" data-midi="${midi}">${noteN}</td>`;
     }
     html += '</tr>';
@@ -1538,6 +2056,9 @@ function buildPanicBody() {
   const scale = SCALES[scaleIdx];
   const sNotes = scaleNotes(scale, rootIdx);
   const INTERVAL_NAMES = ['1','b2','2','b3','3','4','b5','5','b6','6','b7','7'];
+  const root = noteName(rootIdx);
+  const routines = getJamRoutines(scale, rootIdx);
+  const routine = routines[jamRoutineIdx] || routines[0];
   let degHtml = sNotes.map((n, i) => {
     const deg = scale.degrees[i] || (i + 1);
     const iv = INTERVAL_NAMES[scale.intervals[i]] ?? scale.intervals[i];
@@ -1554,7 +2075,11 @@ function buildPanicBody() {
     }).join('');
   }
 
-  return `<p style="font-size:11px;color:var(--muted);margin-bottom:8px;">Grados y notas en ${noteName(rootIdx)} ${scale.name}:</p>${degHtml}
+  return `<p style="font-size:11px;color:var(--muted);margin-bottom:8px;">Si te perdiste en <strong>${root} ${scale.name}</strong>, volvé a esto:</p>
+    <div class="panic-deg"><strong>1.</strong> ${routine.startBody}</div>
+    <div class="panic-deg"><strong>2.</strong> ${routine.moveBody}</div>
+    <div class="panic-deg"><strong>3.</strong> ${routine.shareBody}</div>
+    <p style="font-size:11px;color:var(--muted);margin:12px 0 8px;">Notas y grados para reencontrarte:</p>${degHtml}
     ${chordsHtml ? `<div style="margin-top:12px;font-size:10px;color:var(--muted);">Primeros acordes (referencia):</div><div class="panic-chords">${chordsHtml}</div>` : ''}`;
 }
 
@@ -1812,6 +2337,8 @@ let playerBpm = 80;
 let playerTimeSig = 4;
 let playerBeats = [];     // flat array of {chordName, chordQuality, measure, beatInMeasure}
 let currentProgIdx = 0;
+let modePlaybackTimers = [];
+let activeModePlayback = null;
 
 // ══════════════════════════════════════════════
 // AUDIO ENGINE  (Web Audio API — no deps)
@@ -1842,6 +2369,36 @@ function noteNameToMidi(name, octave) {
   const s = NOTE_SEMI[name]; if (s === undefined) return 60;
   return (octave + 1) * 12 + s;
 }
+
+const MODE_THEORY = {
+  major: [
+    { focus: '3 mayor + 7 mayor', color: 'estable, abierto, resolutivo', center: 'centro tonal claro', cue: 'descansá en 1 y 3; dejá que la 7 resuelva a la tónica', phrase: [0,2,4,2,6,7] },
+    { focus: '6 mayor sobre menor', color: 'menor con impulso y esperanza', center: 'i menor con IV mayor', cue: 'apoyate en 1, b3 y 6 para que no suene eólico', phrase: [0,2,5,4,2,0,6,7] },
+    { focus: 'b2', color: 'tenso, oscuro, cercano', center: 'i menor con fricción inmediata', cue: 'rozá b2 y volvé a 1 para mostrar el color frigio', phrase: [0,1,0,2,4,2,1,0,7] },
+    { focus: '#4', color: 'luminoso, flotante, cinematográfico', center: 'I mayor suspendido', cue: 'sostené 1 y subrayá #4 antes de caer a 3 o 5', phrase: [0,2,3,2,4,6,4,7] },
+    { focus: 'b7 sobre acorde mayor', color: 'abierto, bluesy, terrenal', center: 'I7 que no pide resolver', cue: 'usá 1, 3, b7 y 5 como núcleo', phrase: [0,2,4,6,4,2,0,7] },
+    { focus: 'b3 + b6', color: 'íntimo, melancólico, introspectivo', center: 'i menor natural', cue: 'mostrá b6 antes de bajar a 5 o volver a 1', phrase: [0,2,4,5,4,2,0,6,7] },
+    { focus: 'b2 + b5', color: 'inestable, áspero, suspendido', center: 'medio disminuido', cue: 'tratá este modo como máxima tensión, no como reposo largo', phrase: [0,1,3,1,4,5,4,1,0] },
+  ],
+  natural_minor: [
+    { focus: 'b3 + b6', color: 'íntimo, melancólico, introspectivo', center: 'i menor natural', cue: 'mostrá b6 antes de bajar a 5 o volver a 1', phrase: [0,2,4,5,4,2,0,6,7] },
+    { focus: 'b2 + b5', color: 'inestable, áspero, suspendido', center: 'medio disminuido', cue: 'tratá este modo como máxima tensión, no como reposo largo', phrase: [0,1,3,1,4,5,4,1,0] },
+    { focus: '3 mayor + 7 mayor', color: 'estable, abierto, resolutivo', center: 'centro tonal claro', cue: 'descansá en 1 y 3; dejá que la 7 resuelva a la tónica', phrase: [0,2,4,2,6,7] },
+    { focus: '6 mayor sobre menor', color: 'menor con impulso y esperanza', center: 'i menor con IV mayor', cue: 'apoyate en 1, b3 y 6 para que no suene eólico', phrase: [0,2,5,4,2,0,6,7] },
+    { focus: 'b2', color: 'tenso, oscuro, cercano', center: 'i menor con fricción inmediata', cue: 'rozá b2 y volvé a 1 para mostrar el color frigio', phrase: [0,1,0,2,4,2,1,0,7] },
+    { focus: '#4', color: 'luminoso, flotante, cinematográfico', center: 'I mayor suspendido', cue: 'sostené 1 y subrayá #4 antes de caer a 3 o 5', phrase: [0,2,3,2,4,6,4,7] },
+    { focus: 'b7 sobre acorde mayor', color: 'abierto, bluesy, terrenal', center: 'I7 que no pide resolver', cue: 'usá 1, 3, b7 y 5 como núcleo', phrase: [0,2,4,6,4,2,0,7] },
+  ],
+  melodic_minor: [
+    { focus: '6 mayor + 7 mayor sobre menor', color: 'sofisticado, elegante, nocturno', center: 'i menor maj7', cue: 'marcá 1, b3, 6 y 7 para diferenciarlo del eólico', phrase: [0,2,5,6,5,2,0,7] },
+    { focus: 'b2 con 6 mayor', color: 'menor tenso y refinado', center: 'ii menor alterado por b2', cue: 'acercá b2 a 1 y conservá el brillo de la 6', phrase: [0,1,0,2,5,4,2,0,7] },
+    { focus: '#4 + #5', color: 'expansivo, irreal, brillante', center: 'acorde mayor aumentado', cue: 'dejá oír #4 y #5 como colores sostenidos, no como paso rápido', phrase: [0,2,3,4,6,4,3,7] },
+    { focus: '#4 con b7', color: 'dominante abierto y moderno', center: '7sus brillante o dominante lídio', cue: 'mostrá 3, #4 y b7 antes de resolver', phrase: [0,2,3,4,6,4,2,0,7] },
+    { focus: 'b6 sobre dominante', color: 'cálido, ambiguo, contenido', center: 'dominante menos agresivo', cue: 'usá 3, 5 y b6 para el color principal', phrase: [0,2,4,5,4,2,6,7] },
+    { focus: '2 mayor con b5', color: 'oscuro pero más cantable', center: 'semidisminuido con aire', cue: 'la 2 natural suaviza el locrio tradicional', phrase: [0,2,1,3,4,3,1,0] },
+    { focus: 'b9 #9 b5 #5', color: 'máxima tensión, filo, urgencia', center: 'V7 alterado', cue: 'pensalo como clímax antes de resolver, no como reposo', phrase: [0,1,2,4,5,4,2,1,0] },
+  ],
+};
 
 // ── Karplus-Strong plucked-string synthesis ────────────────────
 function playPlucked(freq, startTime, duration, vol) {
@@ -1912,8 +2469,7 @@ function playHihat(time, open) {
 function playGuitarChord(rootName, chordType) {
   if (!audioCtx || isMuted) return;
   resumeAudio();
-  const IVS = { maj:[0,4,7], min:[0,3,7], dim:[0,3,6], aug:[0,4,8], dom:[0,4,7,10], hdim:[0,3,6,10] };
-  const ivs  = IVS[chordType] || [0,4,7];
+  const ivs  = CHORD_INTERVALS[chordType] || [0,4,7];
   const root = noteNameToMidi(rootName, 2);
   // 6 strings low→high: Root2, 5th2, Root3, 3rd3, 5th3, Root4
   const strings = [
@@ -1945,6 +2501,96 @@ function toggleMute() {
   const btn = document.getElementById('btnMute');
   if (masterGain) masterGain.gain.value = isMuted ? 0 : masterVolume;
   btn.textContent = isMuted ? '🔇' : '🔊';
+}
+
+function getModeData(scale, modeIdx) {
+  if (!scale.modes || !scale.modes[modeIdx]) return null;
+  const baseInterval = scale.intervals[modeIdx];
+  const modeRootIdx = (rootIdx + baseInterval) % 12;
+  const relativeIntervals = [
+    ...scale.intervals.slice(modeIdx).map(iv => iv - baseInterval),
+    ...scale.intervals.slice(0, modeIdx).map(iv => iv + 12 - baseInterval),
+  ];
+  const notesList = relativeIntervals.map(iv => noteName(modeRootIdx + iv));
+  const theoryBank = MODE_THEORY[scale.id] || [];
+  const theory = theoryBank[modeIdx] || {
+    focus: 'color modal',
+    color: 'carácter propio del centro modal',
+    center: 'centro modal',
+    cue: 'hacé reposar la frase en la tónica modal',
+    phrase: [0, 2, 4, 2, 0, relativeIntervals.length - 1, relativeIntervals.length],
+  };
+  return {
+    scale,
+    modeIdx,
+    name: scale.modes[modeIdx],
+    rootIdx: modeRootIdx,
+    rootName: noteName(modeRootIdx),
+    relativeIntervals,
+    notesList,
+    theory,
+  };
+}
+
+function clearModePlayButtons() {
+  document.querySelectorAll('.mode-play').forEach(btn => {
+    btn.classList.remove('playing');
+    btn.textContent = '▶ Escuchar';
+  });
+}
+
+function stopModePlayback() {
+  modePlaybackTimers.forEach(id => clearTimeout(id));
+  modePlaybackTimers = [];
+  activeModePlayback = null;
+  clearModePlayButtons();
+}
+
+function scheduleModeNote(midi, timeOffsetSec, durationSec, volume) {
+  if (!audioCtx || isMuted) return;
+  playPlucked(midiToHz(midi), audioCtx.currentTime + timeOffsetSec, durationSec, volume);
+}
+
+function playModePreview(scale, modeIdx) {
+  const mode = getModeData(scale, modeIdx);
+  if (!mode) return;
+  initAudio();
+  resumeAudio();
+  stopModePlayback();
+  activeModePlayback = `${scale.id}:${modeIdx}`;
+
+  const btn = document.querySelector(`.mode-play[data-mode-idx="${modeIdx}"]`);
+  if (btn) {
+    btn.classList.add('playing');
+    btn.textContent = '■ Parar';
+  }
+
+  const rootMidi = noteNameToMidi(mode.rootName, 3);
+  const lowRootMidi = noteNameToMidi(mode.rootName, 2);
+  const phrasePattern = (mode.theory.phrase || []).filter(step => step >= 0 && step <= mode.relativeIntervals.length);
+  const phraseIntervals = phrasePattern.map(step => {
+    if (step === mode.relativeIntervals.length) return 12;
+    return mode.relativeIntervals[Math.min(step, mode.relativeIntervals.length - 1)];
+  });
+
+  scheduleModeNote(lowRootMidi, 0, 2.2, 0.24);
+  scheduleModeNote(rootMidi, 0.12, 1.1, 0.28);
+
+  let cursor = 0.36;
+  phraseIntervals.forEach((iv, idx) => {
+    const isColorPeak = idx === Math.floor(phraseIntervals.length / 2);
+    scheduleModeNote(rootMidi + iv, cursor, isColorPeak ? 0.85 : 0.52, isColorPeak ? 0.34 : 0.28);
+    cursor += isColorPeak ? 0.48 : 0.34;
+  });
+
+  scheduleModeNote(lowRootMidi, cursor - 0.08, 1.8, 0.2);
+  scheduleModeNote(rootMidi + 12, cursor + 0.12, 0.95, 0.24);
+
+  const totalMs = Math.ceil((cursor + 1.5) * 1000);
+  modePlaybackTimers.push(setTimeout(() => {
+    activeModePlayback = null;
+    clearModePlayButtons();
+  }, totalMs));
 }
 
 function getProgressions() {
@@ -2078,6 +2724,10 @@ function advancePlayerBeat() {
       playHihat(audioCtx.currentTime, false);
     }
     if (beat.isFirst && beat.chordRoot && beat.chordType) {
+      const options = getScaleChordOptions(SCALES[scaleIdx], rootIdx);
+      const synced = options.find(opt => opt.note === beat.chordRoot && opt.type === beat.chordType);
+      playerGuitarChordKey = synced ? synced.key : '';
+      if (activeTab === 'guitar') renderGuitarFretboard();
       playGuitarChord(beat.chordRoot, beat.chordType);
     }
   }
@@ -2095,6 +2745,7 @@ function startPlayer() {
 function stopPlayer() {
   clearInterval(playerInterval);
   playerInterval = null;
+  playerGuitarChordKey = '';
   // Clear all active states
   playerBeats.forEach((_, i) => {
     const c = document.getElementById(`beat-cell-${i}`);
@@ -2103,6 +2754,7 @@ function stopPlayer() {
     if (d) d.classList.remove('on','downon');
   });
   playerBeat = 0;
+  if (activeTab === 'guitar') renderGuitarFretboard();
 }
 
 function togglePlay() {
@@ -2124,30 +2776,25 @@ function restartPlayerIfRunning() {
 
 function renderModes() {
   const scale = SCALES[scaleIdx];
-  const sNotes = scaleNotes(scale, rootIdx);
   const section = document.getElementById('modesSection');
 
   if (!scale.modes) { section.style.display = 'none'; return; }
   section.style.display = 'block';
 
-  const FEELS = [
-    'Alegre, luminoso','Melancólico, jazzy','Oscuro, flamenco',
-    'Mágico, flotante','Bluesy, rockero','Melancólico, introspectivo',
-    'Tenso, inestable','Menor jazz, sofisticado',
-  ];
-
   const list = document.getElementById('modesList');
   list.innerHTML = scale.modes.map((m, i) => {
-    const modeRoot = sNotes[i] || '';
-    // Build mode notes starting from this degree
-    const modeIntervals = [...scale.intervals.slice(i), ...scale.intervals.slice(0,i)];
-    const baseInterval = scale.intervals[i];
-    const modeNotes = modeIntervals.map(iv => noteName(rootIdx + iv)).join(' ');
+    const mode = getModeData(scale, i);
+    const modeNotes = mode.notesList.join(' ');
+    const isPlaying = activeModePlayback === `${scale.id}:${i}`;
     return `<div class="mode-row">
       <div class="mode-degree">${scale.degrees[i] || i+1}</div>
-      <div class="mode-name">${modeRoot} ${m}</div>
-      <div class="mode-notes">${modeNotes}</div>
-      <div class="mode-feel">${FEELS[i] || ''}</div>
+      <div class="mode-copy">
+        <div class="mode-name">${mode.rootName} ${m}</div>
+        <div class="mode-notes">${modeNotes}</div>
+        <div class="mode-theory">Color: ${mode.theory.focus} · Centro: ${mode.theory.center} · Clave: ${mode.theory.cue}</div>
+      </div>
+      <div class="mode-feel">${mode.theory.color}</div>
+      <button type="button" class="mode-play${isPlaying ? ' playing' : ''}" data-mode-idx="${i}">${isPlaying ? '■ Parar' : '▶ Escuchar'}</button>
     </div>`;
   }).join('');
 }
@@ -2174,6 +2821,7 @@ function renderInfoBar() {
 }
 
 function render() {
+  stopModePlayback();
   buildRootGrid();
   buildScaleList();
   renderInfoBar();
@@ -2252,6 +2900,11 @@ document.getElementById('chordsGrid').addEventListener('click', e => {
   const card = e.target.closest('.chord-card');
   if (!card || !card.dataset.note || !card.dataset.type) return;
   initAudio();
+  const options = getScaleChordOptions(SCALES[scaleIdx], rootIdx);
+  const selected = options.find(opt => opt.note === card.dataset.note && opt.type === card.dataset.type);
+  manualGuitarChordKey = selected ? selected.key : '';
+  playerGuitarChordKey = '';
+  if (activeTab === 'guitar') renderGuitarFretboard();
   playGuitarChord(card.dataset.note, card.dataset.type);
 });
 
@@ -2331,6 +2984,7 @@ document.querySelectorAll('.phrase-btn').forEach(btn => {
     phraseMode = btn.dataset.phrase || 'off';
     renderPiano();
     renderJamPanel();
+    if (activeTab === 'guitar') renderGuitarFretboard();
   });
 });
 
@@ -2351,10 +3005,13 @@ document.getElementById('presetSave').addEventListener('click', () => {
   const name = document.getElementById('presetName').value.trim();
   if (!name) return;
   const list = getPresets();
-  list.push({ name, rootIdx, scaleIdx, at: new Date().toISOString() });
+  list.push({ name, rootIdx, scaleIdx, phraseMode, jamRoutineIdx, at: new Date().toISOString() });
   setPresets(list);
   renderPresetSelect();
   document.getElementById('presetName').value = '';
+  const status = document.getElementById('jamStatus');
+  status.textContent = `Preset guardado: ${name}`;
+  status.classList.add('ok');
 });
 
 document.getElementById('presetLoad').addEventListener('click', () => {
@@ -2365,7 +3022,12 @@ document.getElementById('presetLoad').addEventListener('click', () => {
   if (!p) return;
   rootIdx = p.rootIdx;
   scaleIdx = p.scaleIdx;
+  phraseMode = p.phraseMode || 'off';
+  jamRoutineIdx = Number.isInteger(p.jamRoutineIdx) ? p.jamRoutineIdx : 0;
   render();
+  const status = document.getElementById('jamStatus');
+  status.textContent = `Preset cargado: ${p.name}`;
+  status.classList.add('ok');
 });
 
 document.getElementById('presetDelete').addEventListener('click', () => {
@@ -2375,6 +3037,24 @@ document.getElementById('presetDelete').addEventListener('click', () => {
   list.splice(i, 1);
   setPresets(list);
   renderPresetSelect();
+  const status = document.getElementById('jamStatus');
+  status.textContent = 'Preset borrado.';
+  status.classList.add('ok');
+});
+
+document.getElementById('btnJamIdea').addEventListener('click', () => {
+  applyJamRoutine(jamRoutineIdx + 1);
+});
+
+document.getElementById('btnJamReset').addEventListener('click', () => {
+  phraseMode = 'off';
+  jamRoutineIdx = 0;
+  renderPiano();
+  renderJamPanel();
+  if (activeTab === 'guitar') renderGuitarFretboard();
+  const status = document.getElementById('jamStatus');
+  status.textContent = 'Volviste al mapa completo de la escala.';
+  status.classList.add('ok');
 });
 
 document.getElementById('btnPanic').addEventListener('click', openPanic);
@@ -2395,11 +3075,33 @@ document.getElementById('guitarFretCount').addEventListener('change', () => {
   if (activeTab === 'guitar') renderGuitarFretboard();
 });
 
+document.getElementById('guitarChordFocus').addEventListener('change', e => {
+  manualGuitarChordKey = e.target.value === '__player__' ? '' : (e.target.value || '');
+  playerGuitarChordKey = e.target.value === '__player__' ? playerGuitarChordKey : '';
+  if (activeTab === 'guitar') renderGuitarFretboard();
+});
+
 document.getElementById('mainScroll').addEventListener('click', e => {
+  const modeBtn = e.target.closest('.mode-play[data-mode-idx]');
+  if (modeBtn) {
+    const modeIdx = parseInt(modeBtn.dataset.modeIdx, 10);
+    if (Number.isNaN(modeIdx)) return;
+    const currentKey = `${SCALES[scaleIdx].id}:${modeIdx}`;
+    if (activeModePlayback === currentKey) stopModePlayback();
+    else playModePreview(SCALES[scaleIdx], modeIdx);
+    return;
+  }
   const cell = e.target.closest('.g-cell[data-midi]');
   if (!cell) return;
   initAudio();
   playPianoNote(parseInt(cell.dataset.midi, 10));
+});
+
+document.getElementById('guitarPositionRow').addEventListener('click', e => {
+  const btn = e.target.closest('[data-guitar-pos]');
+  if (!btn) return;
+  guitarPositionKey = btn.dataset.guitarPos || 'all';
+  if (activeTab === 'guitar') renderGuitarFretboard();
 });
 
 document.getElementById('circleOfFifths').addEventListener('click', e => {
