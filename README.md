@@ -29,6 +29,13 @@ npm run build-linux  # Linux .AppImage
 - **Teclado visual** con 1 o 2 octavas, notas de la escala resaltadas
 - **Grados** con nombre, nota e intervalo
 - **Acordes diatónicos** con calidad (mayor, menor, disminuido, aumentado, dominante)
+- **Círculo de quintas interactivo (SVG responsive)** con:
+  - 12 tonalidades mayores, 12 relativas menores y anillo de armaduras
+  - selección contextual (tónica, dominante y subdominante) + atenuación del resto
+  - distancia tonal para modulación (suave/media/dramática) con gradiente visual
+  - panel contextual con armadura, relativa menor, funciones IV/V, progresiones y tip por tonalidad
+  - sincronización bidireccional con la app (sidebar ↔ círculo)
+  - resaltado en pulso de acordes del beat player según BPM/progresión
 - **Modos** relativos con "feeling" de cada uno
 - **Tips de improvisación** específicos para cada escala
 - **Navegación por teclado**: ← → para cambiar tónica, ↑ ↓ para cambiar escala
