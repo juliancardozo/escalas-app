@@ -322,6 +322,60 @@
       color: #fff;
     }
 
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .resource-card {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 8px;
+      min-height: 168px;
+    }
+    .resource-type {
+      color: var(--hint);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .resource-name {
+      color: #fff;
+      font-family: var(--display);
+      font-size: 14px;
+      line-height: 1.3;
+    }
+    .resource-desc {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+      margin-top: auto;
+    }
+    .resource-link {
+      margin-top: 6px;
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #fff;
+      border: 1px solid var(--border2);
+      border-radius: 999px;
+      padding: 6px 10px;
+      text-decoration: none;
+      transition: border-color .12s ease, background .12s ease, transform .12s ease;
+    }
+    .resource-link:hover {
+      text-decoration: none;
+      border-color: var(--accent2);
+      background: rgba(255,179,71,0.08);
+      transform: translateY(-1px);
+    }
+
     .faq { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     details {
       border: 1px solid var(--border);
@@ -433,6 +487,7 @@
       .grid-3 { grid-template-columns: 1fr; }
       .mock-row { grid-template-columns: 1fr; }
       .pricing { grid-template-columns: 1fr; }
+      .resources-grid { grid-template-columns: 1fr; }
       .faq { grid-template-columns: 1fr; }
       .testimonials { grid-template-columns: 1fr; }
       .demo-kpis { grid-template-columns: 1fr; }
@@ -490,6 +545,7 @@
           <a href="#features">Features</a>
           <a href="#demo">Demo</a>
           <a href="#pricing">Precios</a>
+          <a href="#recursos">Recursos</a>
           <a href="#faq">FAQ</a>
         </div>
         <div class="cta-row">
@@ -693,6 +749,45 @@
           </ul>
           <a class="btn buy" href="#demo">Contactar</a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="recursos" class="section">
+    <div class="container">
+      <h2>5 recursos nuevos</h2>
+      <p class="lead">Material adicional para aprender más rápido y aplicar la teoría en contexto real.</p>
+      <div class="resources-grid">
+        <article class="resource-card">
+          <div class="resource-type">Guía PDF</div>
+          <div class="resource-name">Mapa de escalas por tonalidad</div>
+          <div class="resource-desc">Resumen visual con 12 tonalidades para ubicar rápidamente notas clave y grados.</div>
+          <a class="resource-link" href="resources/mapa-escalas-12-tonalidades.md" target="_blank" rel="noopener">Abrir recurso →</a>
+        </article>
+        <article class="resource-card">
+          <div class="resource-type">Playlist</div>
+          <div class="resource-name">Backings por modo</div>
+          <div class="resource-desc">Pistas para practicar jónico, dórico, mixolidio y menor natural a distintos BPM.</div>
+          <a class="resource-link" href="resources/backings-por-modo.md" target="_blank" rel="noopener">Abrir recurso →</a>
+        </article>
+        <article class="resource-card">
+          <div class="resource-type">Cheatsheet</div>
+          <div class="resource-name">Progresiones diatónicas listas</div>
+          <div class="resource-desc">Secuencias comunes para pop, rock, funk y blues con sugerencias de escala encima.</div>
+          <a class="resource-link" href="resources/progresiones-diatonicas-cheatsheet.md" target="_blank" rel="noopener">Abrir recurso →</a>
+        </article>
+        <article class="resource-card">
+          <div class="resource-type">Workshop</div>
+          <div class="resource-name">Rutina de 15 minutos diarios</div>
+          <div class="resource-desc">Plan corto de estudio para consolidar oído, técnica y resolución melódica.</div>
+          <a class="resource-link" href="resources/rutina-15-min-diarios.md" target="_blank" rel="noopener">Abrir recurso →</a>
+        </article>
+        <article class="resource-card">
+          <div class="resource-type">Toolkit</div>
+          <div class="resource-name">Licks base para improvisar</div>
+          <div class="resource-desc">Frases iniciales en pentatónica, blues y mayor para variar ideas sin perder musicalidad.</div>
+          <a class="resource-link" href="resources/licks-base-improvisacion.md" target="_blank" rel="noopener">Abrir recurso →</a>
+        </article>
       </div>
     </div>
   </section>
