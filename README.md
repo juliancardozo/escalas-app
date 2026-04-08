@@ -24,6 +24,14 @@ npm run build-linux  # Linux .AppImage
 
 ## Funcionalidades
 
+- **Entrenador de intervalos** con 3 tipos de ejercicio:
+  - *Identificar*: "¿qué intervalo hay entre Do y Lab?"
+  - *Construir*: "dame la 6ª menor de Mi"
+  - *Encontrar raíz*: "¿qué nota está una 5ª justa por debajo de Re?"
+  - Modo **Examen** con cuenta regresiva por pregunta (5 / 10 / 15 s)
+  - Corrección instantánea con marcado de botones y piano mini (raíz en azul, nota objetivo en naranja)
+  - Filtro de intervalos activos (toggle por intervalo)
+  - Score de sesión en tiempo real (correctas, racha, racha máxima)
 - **14 escalas**: Mayor, menores (natural, armónica, melódica), modos griegos, pentatónicas, blues, tonos enteros, disminuida, cromática
 - **12 tónicas** con notación en sostenidos ♯ o bemoles ♭
 - **Teclado visual** con 1 o 2 octavas, notas de la escala resaltadas

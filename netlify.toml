@@ -1,22 +1,33 @@
-# Configuración de build para Netlify (también editable en Site settings → Build & deploy)
-# Sitio estático: HTML/CSS/JS en la raíz del repo, sin bundler.
-
 [build]
-  # Sin compilación; Netlify solo publica los archivos. Equivale a dejar Build command vacío en la UI.
   command = "echo 'Static site — sin build'"
   publish = "."
 
-# Coincide con Site settings → Build & deploy → Functions directory: netlify/functions
 [functions]
   directory = "netlify/functions"
 
-# Redirecciones internas (rewrite): la URL no cambia en el navegador.
+# Landing como entrypoint principal del sitio
 [[redirects]]
   from = "/"
   to = "/landing.html"
   status = 200
+  force = true
 
+# Alias semántico para abrir la landing también por /landing
+[[redirects]]
+  from = "/landing"
+  to = "/landing.html"
+  status = 200
+  force = true
+
+# Entrada clara a la app
 [[redirects]]
   from = "/app"
   to = "/index.html"
   status = 200
+  force = true
+
+# Evita cache agresivo en HTML para que cada deploy levante la versión nueva
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
