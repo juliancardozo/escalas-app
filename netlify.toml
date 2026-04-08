@@ -2,6 +2,12 @@
   command = "echo 'Static site — sin build'"
   publish = "."
 
+[build.environment]
+  # Sitio estático puro — no necesita instalar devDependencies (electron, electron-builder)
+  NODE_ENV = "production"
+  ELECTRON_SKIP_BINARY_DOWNLOAD = "1"
+  NPM_FLAGS = "--omit=dev --ignore-scripts"
+
 [functions]
   directory = "netlify/functions"
 
