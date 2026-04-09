@@ -1481,6 +1481,19 @@
       transition: all 0.12s; align-self: flex-start;
     }
     .listener-apply-btn:hover { background: var(--accent2); }
+    /* mode selector */
+    .listener-mode-row {
+      display: flex; gap: 0; border: 1px solid var(--border2); border-radius: 8px; overflow: hidden; align-self: flex-start;
+    }
+    .listener-mode-btn {
+      border: none; border-right: 1px solid var(--border2); padding: 8px 14px; font-size: 11px; cursor: pointer;
+      background: var(--s2); color: var(--muted); font-family: var(--mono); transition: all 0.1s;
+    }
+    .listener-mode-btn:last-child { border-right: none; }
+    .listener-mode-btn.active { background: var(--blue); color: #000; font-weight: 700; }
+    .listener-mode-hint { font-size: 11px; color: var(--muted); padding: 6px 2px 12px; }
+    /* rms debug */
+    .listener-rms-debug { font-family: var(--mono); font-size: 9px; color: var(--muted); text-align: center; margin-top: 3px; }
     /* status messages */
     .listener-status-msg {
       background: var(--s1); border-radius: 10px; padding: 16px; border: 1px solid var(--border);
@@ -5695,14 +5708,16 @@ const CHORD_TPLS = {
 // Estado del listener
 const listenerState = {
   status: 'idle',
+  mode: 'app',         // 'app' | 'mic'
   stream: null,
   sourceNode: null,
   analyserNode: null,
-  rafId: null,
+  internalNode: null,  // AnalyserNode conectado a masterGain (modo app)
   intervalId: null,
   chromaHistory: [],
   rmsHistory: [],
   result: null,
+  lastRms: 0,
 };
 
 // INIT
@@ -5835,25 +5850,29 @@ function listenerAnalyzeFrame() {
   listenerState.analyserNode.getFloatFrequencyData(freqData);
 
   const rms = listenerComputeRMS(freqData);
+  listenerState.lastRms = rms;
   listenerState.rmsHistory.push(rms);
   if (listenerState.rmsHistory.length > 8) listenerState.rmsHistory.shift();
   const avgRms = listenerState.rmsHistory.reduce((a, b) => a + b, 0) / listenerState.rmsHistory.length;
 
   updateListenerLevel(rms);
 
-  if (avgRms < 0.001) {
+  // Umbral de señal: modo app es más sensible (el audio es digital limpio)
+  const rmsThreshold = listenerState.mode === 'app' ? 0.0001 : 0.001;
+  if (avgRms < rmsThreshold) {
     listenerState.status = 'no_signal';
-    renderListener(); return;
+    renderListenerDynamic(); return;
   }
 
-  const chroma = listenerExtractChroma(freqData, audioCtx.sampleRate);
+  const sampleRate = listenerState.analyserNode.context.sampleRate;
+  const chroma = listenerExtractChroma(freqData, sampleRate);
 
   listenerState.chromaHistory.push(chroma);
   if (listenerState.chromaHistory.length > 6) listenerState.chromaHistory.shift();
 
   if (listenerState.chromaHistory.length < 2) {
     listenerState.status = 'listening';
-    renderListener(); return;
+    renderListenerDynamic(); return;
   }
 
   const smoothed = listenerSmoothChroma(listenerState.chromaHistory);
@@ -5867,7 +5886,7 @@ function listenerAnalyzeFrame() {
   const chord = listenerDetectChord(smoothed, top.rootPc);
   listenerState.result = listenerBuildRecommendation(top, alt, chord, confidence);
   listenerState.status = confidence >= 0.62 ? 'stable' : 'uncertain';
-  renderListener();
+  renderListenerDynamic();
 }
 
 // ── UI rendering ─────────────────────────────────────────────────
@@ -5875,112 +5894,61 @@ function listenerAnalyzeFrame() {
 function updateListenerLevel(rms) {
   const bars = document.querySelectorAll('.listener-level-bar-seg');
   if (!bars.length) return;
-  const norm = Math.min(1, rms / 0.06);
+  const norm = Math.min(1, rms / (listenerState.mode === 'app' ? 0.01 : 0.06));
   bars.forEach((bar, i) => {
     const threshold = i / bars.length;
     const active = norm > threshold;
     bar.style.height = active ? `${8 + (i / bars.length) * 12}px` : '4px';
     bar.style.background = active ? (i < 8 ? 'var(--green)' : 'var(--accent)') : 'var(--border2)';
   });
+  // Actualizar RMS numérico en live si existe
+  const rmsEl = document.getElementById('listenerRmsVal');
+  if (rmsEl) rmsEl.textContent = rms.toExponential(2);
 }
 
+// renderListener: pintado completo (inicial o cambio de modo/estado mayor)
 function renderListener() {
   const wrap = document.getElementById('listenerWrap');
   if (!wrap) return;
 
   const st = listenerState.status;
   const isRunning = st !== 'idle' && st !== 'permission_denied' && st !== 'error';
-  const btnLabel  = isRunning ? '⏹ Detener' : '🎙 Escuchar';
-  const btnClass  = isRunning ? 'listener-start-btn listening' : 'listener-start-btn';
-
-  // Barra de nivel (13 segmentos)
-  const levelBars = Array.from({length: 13}, (_, i) =>
+  const modeApp = listenerState.mode === 'app';
+  const levelBars = Array.from({length: 13}, () =>
     `<div class="listener-level-bar-seg" style="height:4px"></div>`).join('');
-
-  // Chromagram
-  let chromaHtml = '';
   const notesDisp = notation === 'flat' ? NOTES_FLAT : NOTES_SHARP;
-  if (isRunning && listenerState.chromaHistory.length > 0) {
-    const chroma = listenerSmoothChroma(listenerState.chromaHistory);
-    let maxPc = 0;
-    for (let i = 1; i < 12; i++) if (chroma[i] > chroma[maxPc]) maxPc = i;
-    chromaHtml = `
-      <div class="listener-chroma-card">
-        <div class="listener-section-title">Actividad por nota</div>
-        <div class="listener-chroma-bars">` +
-        Array.from({length: 12}, (_, i) => {
-          const h = Math.max(2, Math.round(chroma[i] * 48));
-          const dominant = i === maxPc ? ' dominant' : '';
-          return `<div class="listener-chroma-bar-wrap">
-            <div class="listener-chroma-bar${dominant}" style="height:${h}px"></div>
-            <div class="listener-chroma-note">${notesDisp[i]}</div>
-          </div>`;
-        }).join('') +
-        `</div>
-      </div>`;
-  }
 
-  // Mensaje de estado sin resultado
+  // Selector de modo
+  const modeSel = `
+    <div class="listener-mode-row">
+      <button type="button" class="listener-mode-btn${modeApp ? ' active' : ''}" id="listenerModeApp">🎹 Desde la app</button>
+      <button type="button" class="listener-mode-btn${!modeApp ? ' active' : ''}" id="listenerModeMic">🎙 Micrófono</button>
+    </div>
+    <div class="listener-mode-hint">${modeApp
+      ? 'Tocá acordes o escalas en cualquier tab — la app los analiza directamente.'
+      : 'Usá el micrófono para detectar audio externo (instrumento, parlante, backing track).'
+    }</div>`;
+
+  // Chromagram (actualizado en renderListenerDynamic también)
+  const chromaHtml = isRunning && listenerState.chromaHistory.length > 0
+    ? buildChromaHtml(notesDisp) : '';
+
+  // Status inicial
   let statusHtml = '';
-  let resultHtml = '';
-
-  if (st === 'idle') {
-    statusHtml = `<div class="listener-status-msg"><strong>Empezá a escuchar</strong>Tocá "🎙 Escuchar" y ponele play a tu backing track o tocá unos acordes.</div>`;
-  } else if (st === 'requesting') {
-    statusHtml = `<div class="listener-status-msg"><strong>Esperando permiso...</strong>El navegador va a pedirte acceso al micrófono.</div>`;
-  } else if (st === 'permission_denied') {
-    statusHtml = `<div class="listener-status-msg"><strong>🚫 Micrófono bloqueado</strong>Habilitá el acceso al micrófono en la barra de direcciones del navegador y volvé a intentar.</div>`;
-  } else if (st === 'error') {
-    statusHtml = `<div class="listener-status-msg"><strong>⚠️ Error de audio</strong>Tu navegador no soporta captura de micrófono. Probá con Chrome o Firefox.</div>`;
-  } else if (st === 'listening' || st === 'no_signal') {
-    statusHtml = `<div class="listener-status-msg">Esperando señal... tocá unos acordes sostenidos o subí el volumen del backing.</div>`;
+  if (!isRunning) {
+    if (st === 'idle') {
+      statusHtml = modeApp
+        ? `<div class="listener-status-msg"><strong>Listo para analizar</strong>Tocá "▶ Analizar" y luego tocá acordes en cualquier tab de la app.</div>`
+        : `<div class="listener-status-msg"><strong>Micrófono externo</strong>Tocá "▶ Analizar", permitiá el acceso al micrófono y poné a sonar tu instrumento o backing track.</div>`;
+    } else if (st === 'permission_denied') {
+      statusHtml = `<div class="listener-status-msg"><strong>🚫 Micrófono bloqueado</strong>Habilitá el acceso al micrófono en la barra de direcciones y volvé a intentar.</div>`;
+    } else if (st === 'error') {
+      statusHtml = `<div class="listener-status-msg"><strong>⚠️ Error de audio</strong>No se pudo acceder al micrófono. Probá con Chrome o Firefox.</div>`;
+    }
   }
 
-  if ((st === 'stable' || st === 'uncertain') && listenerState.result) {
-    const r = listenerState.result;
-    const confPct = Math.round(r.confidence * 100);
-    const confColor = r.confidence >= 0.75 ? 'var(--green)' : r.confidence >= 0.62 ? 'var(--accent2)' : 'var(--accent)';
-    const uncertain = st === 'uncertain' ? ' <em style="color:var(--muted);font-size:10px">(poco claro)</em>' : '';
-    const modeLabel = r.mode === 'major' ? 'Mayor' : r.mode === 'natural_minor' ? 'Menor Natural' : r.mode === 'pentatonic_minor' ? 'Pentatónica Menor' : r.mode.replace('_', ' ');
-    const chordRow = r.chord ? `<div class="listener-chord-row">Acorde probable: <span>${r.chord.label}</span></div>` : '';
-    const safeChips = r.safeNotes.map(n => `<div class="listener-note-chip target">${n}</div>`).join('');
-    const scaleObj = SCALES.find(s => s.id === r.suggestedScaleId);
-    const scaleName = scaleObj ? scaleObj.name : r.suggestedScaleId;
-
-    resultHtml = `
-      <div class="listener-result-card">
-        <div class="listener-section-title">Detección principal${uncertain}</div>
-        <div class="listener-result-main">
-          <div class="listener-tonal-badge">
-            <div class="listener-tonal-root">${r.rootName}</div>
-            <div class="listener-tonal-mode">${modeLabel}</div>
-          </div>
-          <div class="listener-result-meta">
-            <div class="listener-conf-row">
-              <div class="listener-conf-label">Confianza</div>
-              <div class="listener-conf-bar-wrap">
-                <div class="listener-conf-bar" style="width:${confPct}%;background:${confColor}"></div>
-              </div>
-              <div class="listener-conf-val" style="color:${confColor}">${confPct}%</div>
-            </div>
-            <div class="listener-alt">Alternativa: <strong>${r.altLabel}</strong></div>
-            ${chordRow}
-          </div>
-        </div>
-      </div>
-      <div class="listener-suggest-card">
-        <div class="listener-section-title">Qué tocar encima</div>
-        <div class="listener-suggest-row">
-          <div class="listener-suggest-label">Escala sugerida</div>
-          <div class="listener-suggest-val">${scaleName} — ${r.rootName}</div>
-        </div>
-        <div class="listener-suggest-row">
-          <div class="listener-suggest-label">Notas objetivo</div>
-          <div class="listener-notes-row">${safeChips}</div>
-        </div>
-        <button type="button" class="listener-apply-btn" id="listenerApplyBtn">✓ Usar este contexto en la app</button>
-      </div>`;
-  }
+  const startLabel = isRunning ? '⏹ Detener' : '▶ Analizar';
+  const startClass = isRunning ? 'listener-start-btn listening' : 'listener-start-btn';
 
   wrap.innerHTML = `
     <div class="listener-header">
@@ -5991,25 +5959,125 @@ function renderListener() {
       <div class="listener-level-wrap">
         <div class="listener-level-label">nivel</div>
         <div class="listener-level-bars">${levelBars}</div>
+        <div class="listener-rms-debug">rms: <span id="listenerRmsVal">—</span></div>
       </div>
-      <button type="button" class="${btnClass}" id="listenerToggleBtn">${btnLabel}</button>
+      <button type="button" class="${startClass}" id="listenerToggleBtn">${startLabel}</button>
     </div>
-    ${chromaHtml}
-    ${statusHtml}
-    ${resultHtml}
+    ${modeSel}
+    <div id="listenerDynamic">
+      ${chromaHtml}
+      ${statusHtml}
+      ${buildResultHtml()}
+    </div>
   `;
 
-  // Bind events
-  const toggleBtn = document.getElementById('listenerToggleBtn');
-  if (toggleBtn) toggleBtn.addEventListener('click', listenerToggle);
-  const applyBtn = document.getElementById('listenerApplyBtn');
-  if (applyBtn) applyBtn.addEventListener('click', listenerApply);
+  document.getElementById('listenerToggleBtn')?.addEventListener('click', listenerToggle);
+  document.getElementById('listenerModeApp')?.addEventListener('click', () => listenerSetMode('app'));
+  document.getElementById('listenerModeMic')?.addEventListener('click', () => listenerSetMode('mic'));
+  document.getElementById('listenerApplyBtn')?.addEventListener('click', listenerApply);
+}
+
+// renderListenerDynamic: actualiza solo la zona dinámica sin repintar header/modos
+function renderListenerDynamic() {
+  const dyn = document.getElementById('listenerDynamic');
+  if (!dyn) { renderListener(); return; }
+
+  const st = listenerState.status;
+  const notesDisp = notation === 'flat' ? NOTES_FLAT : NOTES_SHARP;
+  const isRunning = st !== 'idle' && st !== 'permission_denied' && st !== 'error';
+
+  const chromaHtml = isRunning && listenerState.chromaHistory.length > 0
+    ? buildChromaHtml(notesDisp) : '';
+
+  let statusHtml = '';
+  if (st === 'no_signal') {
+    const hint = listenerState.mode === 'app'
+      ? 'Tocá una nota o acorde en el teclado, la guitarra o la armonización.'
+      : 'Subí el volumen del instrumento o acercalo al micrófono.';
+    statusHtml = `<div class="listener-status-msg">Sin señal — ${hint}</div>`;
+  } else if (st === 'listening') {
+    statusHtml = `<div class="listener-status-msg">Analizando... tocá y sosté un acorde.</div>`;
+  }
+
+  dyn.innerHTML = chromaHtml + statusHtml + buildResultHtml();
+  document.getElementById('listenerApplyBtn')?.addEventListener('click', listenerApply);
+}
+
+function buildChromaHtml(notesDisp) {
+  const chroma = listenerSmoothChroma(listenerState.chromaHistory);
+  let maxPc = 0;
+  for (let i = 1; i < 12; i++) if (chroma[i] > chroma[maxPc]) maxPc = i;
+  return `<div class="listener-chroma-card">
+    <div class="listener-section-title">Actividad por nota</div>
+    <div class="listener-chroma-bars">${
+      Array.from({length: 12}, (_, i) => {
+        const h = Math.max(2, Math.round(chroma[i] * 48));
+        return `<div class="listener-chroma-bar-wrap">
+          <div class="listener-chroma-bar${i === maxPc ? ' dominant' : ''}" style="height:${h}px"></div>
+          <div class="listener-chroma-note">${notesDisp[i]}</div>
+        </div>`;
+      }).join('')
+    }</div>
+  </div>`;
+}
+
+function buildResultHtml() {
+  const st = listenerState.status;
+  const r = listenerState.result;
+  if ((st !== 'stable' && st !== 'uncertain') || !r) return '';
+
+  const confPct = Math.round(r.confidence * 100);
+  const confColor = r.confidence >= 0.75 ? 'var(--green)' : r.confidence >= 0.62 ? 'var(--accent2)' : 'var(--accent)';
+  const uncertain = st === 'uncertain' ? ' <em style="color:var(--muted);font-size:10px">(poco claro)</em>' : '';
+  const modeLabel = { major: 'Mayor', natural_minor: 'Menor Natural', pentatonic_minor: 'Pentatónica Menor', pentatonic_major: 'Pentatónica Mayor' }[r.mode] || r.mode;
+  const chordRow = r.chord ? `<div class="listener-chord-row">Acorde probable: <span>${r.chord.label}</span></div>` : '';
+  const safeChips = r.safeNotes.map(n => `<div class="listener-note-chip target">${n}</div>`).join('');
+  const scaleObj = SCALES.find(s => s.id === r.suggestedScaleId);
+
+  return `
+    <div class="listener-result-card">
+      <div class="listener-section-title">Detección principal${uncertain}</div>
+      <div class="listener-result-main">
+        <div class="listener-tonal-badge">
+          <div class="listener-tonal-root">${r.rootName}</div>
+          <div class="listener-tonal-mode">${modeLabel}</div>
+        </div>
+        <div class="listener-result-meta">
+          <div class="listener-conf-row">
+            <div class="listener-conf-label">Confianza</div>
+            <div class="listener-conf-bar-wrap"><div class="listener-conf-bar" style="width:${confPct}%;background:${confColor}"></div></div>
+            <div class="listener-conf-val" style="color:${confColor}">${confPct}%</div>
+          </div>
+          <div class="listener-alt">Alternativa: <strong>${r.altLabel}</strong></div>
+          ${chordRow}
+        </div>
+      </div>
+    </div>
+    <div class="listener-suggest-card">
+      <div class="listener-section-title">Qué tocar encima</div>
+      <div class="listener-suggest-row">
+        <div class="listener-suggest-label">Escala sugerida</div>
+        <div class="listener-suggest-val">${scaleObj ? scaleObj.name : r.suggestedScaleId} — ${r.rootName}</div>
+      </div>
+      <div class="listener-suggest-row">
+        <div class="listener-suggest-label">Notas objetivo</div>
+        <div class="listener-notes-row">${safeChips}</div>
+      </div>
+      <button type="button" class="listener-apply-btn" id="listenerApplyBtn">✓ Usar este contexto en la app</button>
+    </div>`;
 }
 
 // ── Control ──────────────────────────────────────────────────────
 
+function listenerSetMode(mode) {
+  if (listenerState.status !== 'idle') listenerStop();
+  listenerState.mode = mode;
+  renderListener();
+}
+
 function listenerToggle() {
-  if (listenerState.status === 'idle' || listenerState.status === 'permission_denied' || listenerState.status === 'error') {
+  const s = listenerState.status;
+  if (s === 'idle' || s === 'permission_denied' || s === 'error') {
     listenerStart();
   } else {
     listenerStop();
@@ -6017,40 +6085,72 @@ function listenerToggle() {
 }
 
 function listenerStart() {
+  if (listenerState.mode === 'app') {
+    listenerStartFromApp();
+  } else {
+    listenerStartFromMic();
+  }
+}
+
+// Modo app: tap directo al masterGain del AudioContext existente
+function listenerStartFromApp() {
+  initAudio();
+  if (!audioCtx || !masterGain) {
+    listenerState.status = 'error'; renderListener(); return;
+  }
+  const analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 4096;
+  analyser.smoothingTimeConstant = 0.55;
+  masterGain.connect(analyser);
+  // masterGain sigue conectado a destination — esto es un tap en paralelo
+  listenerState.analyserNode = analyser;
+  listenerState.internalNode = analyser;
+  listenerState.status = 'listening';
+  listenerState.chromaHistory = [];
+  listenerState.rmsHistory = [];
+  renderListener();
+  listenerState.intervalId = setInterval(listenerAnalyzeFrame, 250);
+}
+
+// Modo mic: getUserMedia
+function listenerStartFromMic() {
   listenerState.status = 'requesting';
   renderListener();
 
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    listenerState.status = 'error';
-    renderListener(); return;
+    listenerState.status = 'error'; renderListener(); return;
   }
 
-  navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false }, video: false })
-    .then(stream => {
-      initAudio();
-      listenerState.stream = stream;
-      listenerState.sourceNode = audioCtx.createMediaStreamSource(stream);
-      listenerState.analyserNode = audioCtx.createAnalyser();
-      listenerState.analyserNode.fftSize = 4096;
-      listenerState.analyserNode.smoothingTimeConstant = 0.55;
-      listenerState.sourceNode.connect(listenerState.analyserNode);
-      // NO conectar a destination → evitar feedback
-      listenerState.status = 'listening';
-      listenerState.chromaHistory = [];
-      listenerState.rmsHistory = [];
-      renderListener();
-      // Análisis cada 300ms
-      listenerState.intervalId = setInterval(listenerAnalyzeFrame, 300);
-    })
-    .catch(err => {
-      listenerState.status = err.name === 'NotAllowedError' ? 'permission_denied' : 'error';
-      renderListener();
-    });
+  navigator.mediaDevices.getUserMedia({
+    audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false },
+    video: false
+  }).then(stream => {
+    initAudio();
+    listenerState.stream = stream;
+    listenerState.sourceNode = audioCtx.createMediaStreamSource(stream);
+    const analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 4096;
+    analyser.smoothingTimeConstant = 0.55;
+    listenerState.sourceNode.connect(analyser);
+    listenerState.analyserNode = analyser;
+    listenerState.status = 'listening';
+    listenerState.chromaHistory = [];
+    listenerState.rmsHistory = [];
+    renderListener();
+    listenerState.intervalId = setInterval(listenerAnalyzeFrame, 250);
+  }).catch(err => {
+    listenerState.status = err.name === 'NotAllowedError' ? 'permission_denied' : 'error';
+    renderListener();
+  });
 }
 
 function listenerStop() {
   if (listenerState.intervalId) { clearInterval(listenerState.intervalId); listenerState.intervalId = null; }
-  if (listenerState.rafId) { cancelAnimationFrame(listenerState.rafId); listenerState.rafId = null; }
+  if (listenerState.internalNode) {
+    try { masterGain && masterGain.disconnect(listenerState.internalNode); } catch(e) {}
+    try { listenerState.internalNode.disconnect(); } catch(e) {}
+    listenerState.internalNode = null;
+  }
   if (listenerState.stream) { listenerState.stream.getTracks().forEach(t => t.stop()); listenerState.stream = null; }
   if (listenerState.sourceNode) { try { listenerState.sourceNode.disconnect(); } catch(e) {} listenerState.sourceNode = null; }
   listenerState.analyserNode = null;
@@ -6068,9 +6168,8 @@ function listenerApply() {
   const newScaleIdx = SCALES.findIndex(s => s.id === r.suggestedScaleId);
   scaleIdx = newScaleIdx >= 0 ? newScaleIdx : 0;
   render();
-  // Visual feedback
   const btn = document.getElementById('listenerApplyBtn');
-  if (btn) { btn.textContent = '✓ Aplicado'; btn.disabled = true; setTimeout(() => renderListener(), 1500); }
+  if (btn) { btn.textContent = '✓ Aplicado'; btn.disabled = true; setTimeout(() => renderListenerDynamic(), 1500); }
 }
 </script>
 </body>
