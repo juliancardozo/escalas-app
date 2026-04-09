@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:47321;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:47321; img-src 'self' data:;">
   <title>Escalas — Improvisación</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Unbounded:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
@@ -5673,23 +5673,6 @@ document.getElementById('btnStartTrainer').addEventListener('click', startTraine
 document.getElementById('btnNextQuestion').addEventListener('click', nextTrainerQuestion);
 document.getElementById('btnEndSession').addEventListener('click', endTrainerSession);
 
-// INIT
-(function initUiMode() {
-  const saved = localStorage.getItem(UI_MODE_STORAGE_KEY);
-  if (saved === 'jam') setUIMode('jam');
-  else setUIMode('studio');
-})();
-(function initTab() {
-  const t = localStorage.getItem(ACTIVE_TAB_KEY);
-  if (t === 'guitar' || t === 'circle' || t === 'ref' || t === 'trainer' || t === 'builder' || t === 'minors' || t === 'harm' || t === 'listener') setTab(t);
-  else setTab('ref');
-})();
-renderPresetSelect();
-initTrainerFilter();
-render();
-renderWishlistCount();
-scheduleFeedbackPrompt();
-
 /* ════════════════════════════════════════════════════════════════
    JAM LISTENER — detección armónica en tiempo real
    ════════════════════════════════════════════════════════════════ */
@@ -5711,7 +5694,7 @@ const CHORD_TPLS = {
 
 // Estado del listener
 const listenerState = {
-  status: 'idle',      // idle | requesting | permission_denied | listening | no_signal | noisy | stable | uncertain | error
+  status: 'idle',
   stream: null,
   sourceNode: null,
   analyserNode: null,
@@ -5721,6 +5704,24 @@ const listenerState = {
   rmsHistory: [],
   result: null,
 };
+
+// INIT
+(function initUiMode() {
+  const saved = localStorage.getItem(UI_MODE_STORAGE_KEY);
+  if (saved === 'jam') setUIMode('jam');
+  else setUIMode('studio');
+})();
+(function initTab() {
+  const t = localStorage.getItem(ACTIVE_TAB_KEY);
+  if (t === 'guitar' || t === 'circle' || t === 'ref' || t === 'trainer' || t === 'builder' || t === 'minors' || t === 'harm' || t === 'listener') setTab(t);
+  else setTab('ref');
+})();
+
+renderPresetSelect();
+initTrainerFilter();
+render();
+renderWishlistCount();
+scheduleFeedbackPrompt();
 
 // ── Audio helpers ────────────────────────────────────────────────
 
