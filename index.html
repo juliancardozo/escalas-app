@@ -1405,102 +1405,136 @@
     .harm-wrap { display: flex; flex-direction: column; gap: 20px; }
 
     /* ── Jam Listener ─────────────────────────────────────────── */
-    .listener-wrap { display: flex; flex-direction: column; gap: 18px; }
-    .listener-header {
-      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-      background: var(--s1); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--border);
+    /* ══ JAM LISTENER — Shazam style ══════════════════════════════ */
+    .listener-wrap {
+      display: flex; flex-direction: column; align-items: center; gap: 0;
+      min-height: 480px; padding: 24px 0 32px;
     }
-    .listener-header-info { flex: 1; min-width: 160px; }
-    .listener-title { font-family: var(--display); font-size: 18px; font-weight: 700; }
-    .listener-subtitle { font-size: 11px; color: var(--muted); margin-top: 2px; }
-    .listener-start-btn {
-      padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer;
-      background: var(--green); color: #000; font-family: var(--mono); font-size: 12px; font-weight: 700;
-      display: flex; align-items: center; gap: 6px; transition: all 0.15s; white-space: nowrap;
+    /* Top status text */
+    .listener-top-label {
+      font-family: var(--mono); font-size: 11px; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 40px; text-align: center;
     }
-    .listener-start-btn:hover { filter: brightness(1.1); }
-    .listener-start-btn.listening { background: var(--s3); color: var(--text); border: 1px solid var(--border2); }
-    .listener-level-wrap { display: flex; align-items: center; gap: 8px; }
-    .listener-level-label { font-size: 10px; color: var(--muted); font-family: var(--mono); }
-    .listener-level-bars { display: flex; gap: 2px; align-items: flex-end; height: 20px; }
+    /* Shazam button ring area */
+    .listener-btn-area {
+      position: relative; display: flex; align-items: center; justify-content: center;
+      width: 180px; height: 180px; margin-bottom: 36px;
+    }
+    /* Ripple rings (3 of them, animated when listening) */
+    .listener-ripple {
+      position: absolute; border-radius: 50%; border: 2px solid var(--blue);
+      opacity: 0; pointer-events: none;
+    }
+    .listener-ripple-1 { width: 140px; height: 140px; }
+    .listener-ripple-2 { width: 164px; height: 164px; }
+    .listener-ripple-3 { width: 180px; height: 180px; }
+    @keyframes lripple {
+      0%   { opacity: 0.5; transform: scale(0.85); }
+      100% { opacity: 0;   transform: scale(1.05); }
+    }
+    .listener-btn-area.listening .listener-ripple-1 { animation: lripple 2s ease-out infinite 0s; }
+    .listener-btn-area.listening .listener-ripple-2 { animation: lripple 2s ease-out infinite 0.5s; }
+    .listener-btn-area.listening .listener-ripple-3 { animation: lripple 2s ease-out infinite 1s; }
+    /* Main circular button */
+    .listener-main-btn {
+      position: relative; z-index: 2;
+      width: 112px; height: 112px; border-radius: 50%; border: none; cursor: pointer;
+      background: var(--blue); color: #fff;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+      box-shadow: 0 4px 32px rgba(41,182,246,0.35);
+      transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+      font-family: var(--mono);
+    }
+    .listener-main-btn:hover { transform: scale(1.06); box-shadow: 0 6px 40px rgba(41,182,246,0.5); }
+    .listener-main-btn:active { transform: scale(0.97); }
+    .listener-main-btn.listening { background: var(--s3); box-shadow: 0 2px 18px rgba(0,0,0,0.3); border: 2px solid var(--blue); }
+    .listener-main-btn.requesting { background: var(--s2); cursor: default; }
+    .listener-main-btn-icon { font-size: 28px; line-height: 1; }
+    .listener-main-btn-label { font-size: 9px; color: rgba(255,255,255,0.75); letter-spacing: 0.08em; text-transform: uppercase; }
+    .listener-main-btn.listening .listener-main-btn-label { color: var(--muted); }
+    /* Level meter — thin arc below button */
+    .listener-level-row {
+      display: flex; gap: 3px; align-items: flex-end; height: 18px; margin-bottom: 32px;
+    }
     .listener-level-bar-seg {
-      width: 5px; border-radius: 2px; background: var(--border2); transition: height 0.1s, background 0.1s;
+      width: 4px; border-radius: 2px; background: var(--border2); transition: height 0.08s, background 0.08s;
     }
-    /* chromagram */
+    /* Section title */
+    .listener-section-title {
+      font-size: 10px; color: var(--muted); font-family: var(--mono);
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px;
+    }
+    /* Chromagram */
     .listener-chroma-card {
-      background: var(--s1); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--border);
+      width: 100%; background: var(--s1); border-radius: 12px; padding: 14px 16px;
+      border: 1px solid var(--border); margin-bottom: 12px;
     }
-    .listener-section-title { font-size: 10px; color: var(--muted); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
-    .listener-chroma-bars { display: flex; gap: 4px; align-items: flex-end; height: 50px; }
+    .listener-chroma-bars { display: flex; gap: 4px; align-items: flex-end; height: 52px; }
     .listener-chroma-bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
     .listener-chroma-bar {
-      width: 100%; border-radius: 3px 3px 0 0; background: var(--blue); transition: height 0.2s;
-      min-height: 2px;
+      width: 100%; border-radius: 3px 3px 0 0; background: var(--blue); transition: height 0.18s; min-height: 2px;
     }
     .listener-chroma-bar.dominant { background: var(--accent); }
     .listener-chroma-note { font-size: 8px; color: var(--muted); font-family: var(--mono); }
-    /* result card */
-    .listener-result-card {
-      background: var(--s1); border-radius: 10px; padding: 16px; border: 1px solid var(--border);
-      display: flex; flex-direction: column; gap: 12px;
+    /* Result area — full width below */
+    .listener-results-area { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+    /* Big key/scale card */
+    .listener-key-card {
+      background: var(--s1); border-radius: 14px; padding: 16px 20px;
+      border: 1px solid var(--border); display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
     }
-    .listener-result-main { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-    .listener-tonal-badge {
-      background: var(--s2); border-radius: 8px; padding: 10px 16px; border: 1px solid var(--border2);
-      display: flex; flex-direction: column; gap: 2px; min-width: 120px;
+    .listener-key-main { flex: 1; min-width: 120px; }
+    .listener-key-root {
+      font-family: var(--display); font-size: 42px; font-weight: 800; line-height: 1;
+      color: var(--text);
     }
-    .listener-tonal-root { font-family: var(--display); font-size: 26px; font-weight: 800; line-height: 1; }
-    .listener-tonal-mode { font-size: 11px; color: var(--muted); font-family: var(--mono); }
-    .listener-result-meta { flex: 1; min-width: 160px; display: flex; flex-direction: column; gap: 6px; }
+    .listener-key-mode {
+      font-size: 13px; color: var(--muted); font-family: var(--mono); margin-top: 2px;
+    }
+    .listener-key-scale { font-size: 12px; color: var(--blue); font-family: var(--mono); margin-top: 4px; }
+    .listener-key-right { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 140px; }
     .listener-conf-row { display: flex; align-items: center; gap: 8px; }
-    .listener-conf-label { font-size: 10px; color: var(--muted); font-family: var(--mono); min-width: 70px; }
-    .listener-conf-bar-wrap { flex: 1; height: 6px; background: var(--border2); border-radius: 3px; overflow: hidden; }
-    .listener-conf-bar { height: 100%; border-radius: 3px; transition: width 0.3s, background 0.3s; }
-    .listener-conf-val { font-size: 10px; font-family: var(--mono); min-width: 32px; text-align: right; }
-    .listener-alt { font-size: 11px; color: var(--muted); }
-    .listener-alt strong { color: var(--text); }
-    .listener-chord-row { font-size: 12px; color: var(--text); }
-    .listener-chord-row span { color: var(--accent); font-weight: 700; font-family: var(--mono); }
-    /* suggestions */
-    .listener-suggest-card {
-      background: var(--s1); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--border);
-      display: flex; flex-direction: column; gap: 10px;
+    .listener-conf-label { font-size: 10px; color: var(--muted); font-family: var(--mono); min-width: 68px; }
+    .listener-conf-bar-wrap { flex: 1; height: 5px; background: var(--border2); border-radius: 3px; overflow: hidden; }
+    .listener-conf-bar { height: 100%; border-radius: 3px; transition: width 0.35s, background 0.35s; }
+    .listener-conf-val { font-size: 10px; font-family: var(--mono); min-width: 30px; text-align: right; }
+    .listener-alt-row { font-size: 11px; color: var(--muted); }
+    .listener-alt-row strong { color: var(--text2, var(--text)); }
+    /* Chord progression */
+    .listener-prog-card {
+      background: var(--s1); border-radius: 12px; padding: 14px 16px; border: 1px solid var(--border);
     }
-    .listener-suggest-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-    .listener-suggest-label { font-size: 11px; color: var(--muted); font-family: var(--mono); min-width: 110px; }
-    .listener-suggest-val { font-size: 13px; font-weight: 600; }
+    .listener-prog-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; min-height: 36px; }
+    .listener-chord-chip {
+      background: var(--s2); border: 1px solid var(--border2); border-radius: 8px;
+      padding: 6px 12px; font-family: var(--mono); font-size: 13px; font-weight: 700;
+      transition: all 0.15s; color: var(--text);
+    }
+    .listener-chord-chip.new { background: var(--blue); color: #000; border-color: var(--blue); }
+    .listener-chord-chip.roman { font-size: 10px; color: var(--muted); background: transparent; border-color: transparent; padding: 0 4px; font-weight: 400; }
+    /* Scale notes */
+    .listener-notes-card {
+      background: var(--s1); border-radius: 12px; padding: 14px 16px; border: 1px solid var(--border);
+    }
     .listener-notes-row { display: flex; gap: 6px; flex-wrap: wrap; }
     .listener-note-chip {
       background: var(--s2); border: 1px solid var(--border2); border-radius: 20px;
-      padding: 4px 10px; font-family: var(--mono); font-size: 11px; font-weight: 700;
+      padding: 5px 11px; font-family: var(--mono); font-size: 12px; font-weight: 700;
     }
-    .listener-note-chip.target { background: var(--green); color: #000; border-color: var(--green); }
+    .listener-note-chip.root { background: var(--accent); color: #000; border-color: var(--accent); }
+    .listener-note-chip.strong { background: var(--blue); color: #000; border-color: var(--blue); }
+    /* Apply btn */
     .listener-apply-btn {
-      padding: 11px 20px; border-radius: 8px; border: none; cursor: pointer;
+      padding: 12px 24px; border-radius: 10px; border: none; cursor: pointer;
       background: var(--accent); color: #000; font-family: var(--mono); font-size: 12px; font-weight: 700;
-      transition: all 0.12s; align-self: flex-start;
+      transition: all 0.12s; align-self: flex-start; width: 100%;
     }
     .listener-apply-btn:hover { background: var(--accent2); }
-    /* mode selector */
-    .listener-mode-row {
-      display: flex; gap: 0; border: 1px solid var(--border2); border-radius: 8px; overflow: hidden; align-self: flex-start;
+    /* Status messages (below button) */
+    .listener-status-row {
+      text-align: center; color: var(--muted); font-size: 12px; max-width: 280px;
     }
-    .listener-mode-btn {
-      border: none; border-right: 1px solid var(--border2); padding: 8px 14px; font-size: 11px; cursor: pointer;
-      background: var(--s2); color: var(--muted); font-family: var(--mono); transition: all 0.1s;
-    }
-    .listener-mode-btn:last-child { border-right: none; }
-    .listener-mode-btn.active { background: var(--blue); color: #000; font-weight: 700; }
-    .listener-mode-hint { font-size: 11px; color: var(--muted); padding: 6px 2px 12px; }
-    /* rms debug */
-    .listener-rms-debug { font-family: var(--mono); font-size: 9px; color: var(--muted); text-align: center; margin-top: 3px; }
-    /* status messages */
-    .listener-status-msg {
-      background: var(--s1); border-radius: 10px; padding: 16px; border: 1px solid var(--border);
-      color: var(--muted); font-size: 13px; text-align: center;
-    }
-    .listener-status-msg strong { color: var(--text); display: block; margin-bottom: 4px; font-size: 14px; }
-    .listener-status-msg a { color: var(--blue); }
+    .listener-status-row strong { color: var(--text); display: block; margin-bottom: 4px; font-size: 14px; }
 
     /* Toolbar */
     .harm-toolbar {
@@ -2789,8 +2823,8 @@ function setTab(tab) {
   cancelTrainerTimer();
   cancelHarmPlay();
   cancelMinorsPlay();
-  // En modo micrófono, liberar el stream al salir del tab; en modo app el análisis sigue corriendo
-  if (tab !== 'listener' && listenerState.mode === 'mic') listenerStop();
+  // Liberar micrófono siempre al salir del tab listener
+  if (tab !== 'listener') listenerStop();
   activeTab = tab === 'guitar' || tab === 'circle' || tab === 'trainer' || tab === 'builder' || tab === 'minors' || tab === 'harm' || tab === 'listener' ? tab : 'ref';
   localStorage.setItem(ACTIVE_TAB_KEY, activeTab);
   document.querySelectorAll('.tab-btn').forEach(b => {
@@ -5703,20 +5737,28 @@ const CHORD_TPLS = {
   'm7':   [1,0,0,1,0,0,0,1,0,0,1,0],
   'maj7': [1,0,0,0,1,0,0,1,0,0,0,1],
   'dim':  [1,0,0,1,0,0,1,0,0,0,0,0],
+  'aug':  [1,0,0,0,1,0,0,0,1,0,0,0],
+  'sus2': [1,0,1,0,0,0,0,1,0,0,0,0],
   'sus4': [1,0,0,0,0,1,0,1,0,0,0,0],
 };
 
-// Estado del listener
+// Numerales romanos para grados diatónicos (mayor y menor natural)
+const ROMAN_MAJOR = ['I','II','III','IV','V','VI','VII'];
+const ROMAN_MINOR = ['i','ii','III','iv','v','VI','VII'];
+// Intervalos de la escala mayor diatónica
+const MAJOR_SCALE_INTERVALS = [0,2,4,5,7,9,11];
+const MINOR_SCALE_INTERVALS = [0,2,3,5,7,8,10];
+
+// Estado del listener (solo mic)
 const listenerState = {
-  status: 'idle',
-  mode: 'app',         // 'app' | 'mic'
+  status: 'idle', // idle | requesting | listening | no_signal | stable | uncertain | error | permission_denied
   stream: null,
   sourceNode: null,
   analyserNode: null,
-  internalNode: null,  // AnalyserNode conectado a masterGain (modo app)
   intervalId: null,
   chromaHistory: [],
   rmsHistory: [],
+  chordHistory: [],   // últimos N acordes detectados {label, rootPc, type}
   result: null,
   lastRms: 0,
 };
@@ -5747,15 +5789,14 @@ function listenerExtractChroma(freqDataDb, sampleRate) {
   const binWidth = sampleRate / (N * 2);
   for (let i = 1; i < N; i++) {
     const freq = i * binWidth;
-    if (freq < 80 || freq > 2200) continue;
+    if (freq < 65 || freq > 2600) continue;
     const db = freqDataDb[i];
-    if (db < -90) continue;                      // silencio del bin
+    if (db < -88) continue;
     const mag = Math.pow(10, db / 20);
     const midi = 69 + 12 * Math.log2(freq / 440);
     const pc = ((Math.round(midi) % 12) + 12) % 12;
     chroma[pc] += mag;
   }
-  // Normalizar 0..1
   let max = 0;
   for (let i = 0; i < 12; i++) if (chroma[i] > max) max = chroma[i];
   if (max > 0) for (let i = 0; i < 12; i++) chroma[i] /= max;
@@ -5763,21 +5804,18 @@ function listenerExtractChroma(freqDataDb, sampleRate) {
 }
 
 function listenerComputeRMS(freqDataDb) {
-  // Aproximación de nivel de señal: promedio de magnitudes lineales
   let sum = 0, count = 0;
   for (let i = 0; i < freqDataDb.length; i++) {
-    if (freqDataDb[i] > -90) { sum += Math.pow(10, freqDataDb[i] / 20); count++; }
+    if (freqDataDb[i] > -88) { sum += Math.pow(10, freqDataDb[i] / 20); count++; }
   }
   return count > 0 ? sum / count : 0;
 }
 
 function listenerSmoothChroma(history) {
-  // Media exponencial acumulada
   if (history.length === 0) return new Float32Array(12);
   const result = new Float32Array(12);
-  const lambda = 0.6;
-  let weight = 1;
-  let totalWeight = 0;
+  const lambda = 0.65;
+  let weight = 1, totalWeight = 0;
   for (let h = history.length - 1; h >= 0; h--) {
     for (let i = 0; i < 12; i++) result[i] += history[h][i] * weight;
     totalWeight += weight;
@@ -5803,41 +5841,56 @@ function listenerScoreTonalities(chroma) {
   return results;
 }
 
-function listenerDetectChord(chroma, topRootPc) {
-  let best = null;
-  let bestScore = -Infinity;
+function listenerDetectChord(chroma) {
+  let best = null, bestScore = -Infinity;
   for (const [type, tpl] of Object.entries(CHORD_TPLS)) {
     for (let root = 0; root < 12; root++) {
       let score = 0;
-      for (let pc = 0; pc < 12; pc++) {
-        score += chroma[pc] * tpl[(pc - root + 12) % 12];
-      }
+      for (let pc = 0; pc < 12; pc++) score += chroma[pc] * tpl[(pc - root + 12) % 12];
       if (score > bestScore) { bestScore = score; best = { rootPc: root, type, score }; }
     }
   }
-  if (!best || best.score < 0.55) return null;
-  const label = NOTES_SHARP[best.rootPc] + (best.type === 'maj' ? '' : best.type === 'min' ? 'm' : best.type === 'dom7' ? '7' : best.type === 'm7' ? 'm7' : best.type === 'maj7' ? 'Maj7' : best.type === 'dim' ? '°' : 'sus4');
+  if (!best || best.score < 0.5) return null;
+  const suffixes = { maj:'', min:'m', dom7:'7', m7:'m7', maj7:'Maj7', dim:'°', aug:'+', sus2:'sus2', sus4:'sus4' };
+  const label = NOTES_SHARP[best.rootPc] + (suffixes[best.type] ?? best.type);
   return { rootPc: best.rootPc, type: best.type, label, score: best.score };
 }
 
+// Obtener numeral romano de un acorde dado la tonalidad detectada
+function listenerGetRoman(chordRootPc, chordType, keyRootPc, keyMode) {
+  const intervals = keyMode === 'major' ? MAJOR_SCALE_INTERVALS : MINOR_SCALE_INTERVALS;
+  const romans = keyMode === 'major' ? ROMAN_MAJOR : ROMAN_MINOR;
+  const diff = (chordRootPc - keyRootPc + 12) % 12;
+  const degreeIdx = intervals.indexOf(diff);
+  if (degreeIdx < 0) return null;
+  let r = romans[degreeIdx];
+  if (chordType === 'dom7') r += '7';
+  else if (chordType === 'm7') r = r.toLowerCase() + '7';
+  else if (chordType === 'maj7') r += 'M7';
+  else if (chordType === 'dim') r += '°';
+  else if (chordType === 'aug') r += '+';
+  return r;
+}
+
+function listenerGetScaleNotes(rootPc, mode) {
+  const intervals = mode === 'major' ? MAJOR_SCALE_INTERVALS : MINOR_SCALE_INTERVALS;
+  return intervals.map(iv => (rootPc + iv) % 12);
+}
+
 function listenerBuildRecommendation(top, alt, chord, confidence) {
-  const topRootName = NOTES_SHARP[top.rootPc];
-  const useScale = confidence >= 0.62
-    ? top.mode
-    : (top.mode === 'major' ? 'pentatonic_major' : 'pentatonic_minor');
-  const scaleObj = SCALES.find(s => s.id === useScale) || SCALES.find(s => s.id === top.mode);
-  const safeNotes = scaleObj
-    ? [0, 2, 4].map(i => NOTES_SHARP[(top.rootPc + (scaleObj.intervals[i] || 0)) % 12])
-    : [topRootName];
-  const altLabel = `${NOTES_SHARP[alt.rootPc]} ${alt.mode === 'major' ? 'Mayor' : 'Menor'}`;
+  const notesDisp = notation === 'flat' ? NOTES_FLAT : NOTES_SHARP;
+  const rootName = notesDisp[top.rootPc];
+  const scaleNotesPc = listenerGetScaleNotes(top.rootPc, top.mode);
+  const scaleNoteNames = scaleNotesPc.map(pc => notesDisp[pc]);
+  const modeLabel = top.mode === 'major' ? 'Mayor' : 'Menor Natural';
+  const scaleId = top.mode === 'major' ? 'major' : 'natural_minor';
+  const altName = `${notesDisp[alt.rootPc]} ${alt.mode === 'major' ? 'Mayor' : 'Menor'}`;
   return {
-    rootPc: top.rootPc, rootName: topRootName,
-    mode: top.mode, scaleName: scaleObj ? scaleObj.name : top.mode,
+    rootPc: top.rootPc, rootName, mode: top.mode, modeLabel,
+    scaleId, scaleName: modeLabel, scaleNotesPc, scaleNoteNames,
     confidence,
-    altRootPc: alt.rootPc, altMode: alt.mode, altLabel,
+    altLabel: altName, altRootPc: alt.rootPc, altMode: alt.mode,
     chord,
-    suggestedScaleId: useScale, suggestedRootPc: top.rootPc,
-    safeNotes,
     timestamp: Date.now(),
   };
 }
@@ -5853,267 +5906,234 @@ function listenerAnalyzeFrame() {
   const rms = listenerComputeRMS(freqData);
   listenerState.lastRms = rms;
   listenerState.rmsHistory.push(rms);
-  if (listenerState.rmsHistory.length > 8) listenerState.rmsHistory.shift();
+  if (listenerState.rmsHistory.length > 10) listenerState.rmsHistory.shift();
   const avgRms = listenerState.rmsHistory.reduce((a, b) => a + b, 0) / listenerState.rmsHistory.length;
 
-  updateListenerLevel(rms);
+  listenerUpdateLevel(rms);
 
-  // Umbral de señal: modo app es más sensible (el audio es digital limpio)
-  const rmsThreshold = listenerState.mode === 'app' ? 0.0001 : 0.001;
-  if (avgRms < rmsThreshold) {
-    listenerState.status = 'no_signal';
-    renderListenerDynamic(); return;
+  if (avgRms < 0.0008) {
+    if (listenerState.status !== 'no_signal') {
+      listenerState.status = 'no_signal';
+      listenerRenderDynamic();
+    }
+    return;
   }
 
   const sampleRate = listenerState.analyserNode.context.sampleRate;
   const chroma = listenerExtractChroma(freqData, sampleRate);
-
   listenerState.chromaHistory.push(chroma);
-  if (listenerState.chromaHistory.length > 6) listenerState.chromaHistory.shift();
+  if (listenerState.chromaHistory.length > 8) listenerState.chromaHistory.shift();
 
   if (listenerState.chromaHistory.length < 2) {
     listenerState.status = 'listening';
-    renderListenerDynamic(); return;
+    listenerRenderDynamic();
+    return;
   }
 
   const smoothed = listenerSmoothChroma(listenerState.chromaHistory);
   const candidates = listenerScoreTonalities(smoothed);
-  const top = candidates[0];
-  const alt = candidates[1];
-
-  const totalScore = candidates.slice(0, 6).reduce((s, c) => s + c.score, 0);
+  const top = candidates[0], alt = candidates[1];
+  const totalScore = candidates.slice(0, 8).reduce((s, c) => s + c.score, 0);
   const confidence = totalScore > 0 ? top.score / totalScore : 0;
 
-  const chord = listenerDetectChord(smoothed, top.rootPc);
+  const chord = listenerDetectChord(smoothed);
+
+  // Agregar a historial de acordes si cambió
+  if (chord) {
+    const last = listenerState.chordHistory[listenerState.chordHistory.length - 1];
+    if (!last || last.label !== chord.label) {
+      listenerState.chordHistory.push({ ...chord, keyRootPc: top.rootPc, keyMode: top.mode });
+      if (listenerState.chordHistory.length > 8) listenerState.chordHistory.shift();
+    }
+  }
+
   listenerState.result = listenerBuildRecommendation(top, alt, chord, confidence);
-  listenerState.status = confidence >= 0.62 ? 'stable' : 'uncertain';
-  renderListenerDynamic();
+  listenerState.status = confidence >= 0.60 ? 'stable' : 'uncertain';
+  listenerRenderDynamic();
 }
 
-// ── UI rendering ─────────────────────────────────────────────────
+// ── UI ────────────────────────────────────────────────────────────
 
-function updateListenerLevel(rms) {
-  const bars = document.querySelectorAll('.listener-level-bar-seg');
-  if (!bars.length) return;
-  const norm = Math.min(1, rms / (listenerState.mode === 'app' ? 0.01 : 0.06));
-  bars.forEach((bar, i) => {
-    const threshold = i / bars.length;
-    const active = norm > threshold;
-    bar.style.height = active ? `${8 + (i / bars.length) * 12}px` : '4px';
-    bar.style.background = active ? (i < 8 ? 'var(--green)' : 'var(--accent)') : 'var(--border2)';
+function listenerUpdateLevel(rms) {
+  const segs = document.querySelectorAll('.listener-level-bar-seg');
+  if (!segs.length) return;
+  const norm = Math.min(1, rms / 0.06);
+  segs.forEach((seg, i) => {
+    const t = i / segs.length;
+    const on = norm > t;
+    seg.style.height = on ? `${5 + t * 13}px` : '3px';
+    seg.style.background = on ? (i < 9 ? 'var(--blue)' : 'var(--accent)') : 'var(--border2)';
   });
-  // Actualizar RMS numérico en live si existe
-  const rmsEl = document.getElementById('listenerRmsVal');
-  if (rmsEl) rmsEl.textContent = rms.toExponential(2);
 }
 
-// renderListener: pintado completo (inicial o cambio de modo/estado mayor)
 function renderListener() {
   const wrap = document.getElementById('listenerWrap');
   if (!wrap) return;
 
   const st = listenerState.status;
   const isRunning = st !== 'idle' && st !== 'permission_denied' && st !== 'error';
-  const modeApp = listenerState.mode === 'app';
-  const levelBars = Array.from({length: 13}, () =>
-    `<div class="listener-level-bar-seg" style="height:4px"></div>`).join('');
-  const notesDisp = notation === 'flat' ? NOTES_FLAT : NOTES_SHARP;
+  const isListening = isRunning;
+  const levelBars = Array.from({length: 16}, () => `<div class="listener-level-bar-seg"></div>`).join('');
 
-  // Selector de modo
-  const modeSel = `
-    <div class="listener-mode-row">
-      <button type="button" class="listener-mode-btn${modeApp ? ' active' : ''}" id="listenerModeApp">🎹 Desde la app</button>
-      <button type="button" class="listener-mode-btn${!modeApp ? ' active' : ''}" id="listenerModeMic">🎙 Micrófono</button>
-    </div>
-    <div class="listener-mode-hint">${modeApp
-      ? 'Tocá acordes o escalas en cualquier tab — la app los analiza directamente.'
-      : 'Usá el micrófono para detectar audio externo (instrumento, parlante, backing track).'
-    }</div>`;
+  let topLabel = '';
+  if (st === 'idle') topLabel = 'Detectar Armonía';
+  else if (st === 'requesting') topLabel = 'Esperando permiso...';
+  else if (st === 'no_signal') topLabel = 'Escuchando...';
+  else if (st === 'listening') topLabel = 'Analizando...';
+  else if (st === 'stable' || st === 'uncertain') topLabel = 'Detectando';
+  else if (st === 'permission_denied') topLabel = 'Micrófono bloqueado';
+  else if (st === 'error') topLabel = 'Error de audio';
 
-  // Chromagram (actualizado en renderListenerDynamic también)
-  const chromaHtml = isRunning && listenerState.chromaHistory.length > 0
-    ? buildChromaHtml(notesDisp) : '';
-
-  // Status inicial
-  let statusHtml = '';
-  if (!isRunning) {
-    if (st === 'idle') {
-      statusHtml = modeApp
-        ? `<div class="listener-status-msg"><strong>Listo para analizar</strong>Tocá "▶ Analizar" y luego tocá acordes en cualquier tab de la app.</div>`
-        : `<div class="listener-status-msg"><strong>Micrófono externo</strong>Tocá "▶ Analizar", permitiá el acceso al micrófono y poné a sonar tu instrumento o backing track.</div>`;
-    } else if (st === 'permission_denied') {
-      statusHtml = `<div class="listener-status-msg"><strong>🚫 Micrófono bloqueado</strong>Habilitá el acceso al micrófono en la barra de direcciones y volvé a intentar.</div>`;
-    } else if (st === 'error') {
-      statusHtml = `<div class="listener-status-msg"><strong>⚠️ Error de audio</strong>No se pudo acceder al micrófono. Probá con Chrome o Firefox.</div>`;
-    }
-  }
-
-  const startLabel = isRunning ? '⏹ Detener' : '▶ Analizar';
-  const startClass = isRunning ? 'listener-start-btn listening' : 'listener-start-btn';
+  const btnClass = isRunning ? 'listener-main-btn listening' : (st === 'requesting' ? 'listener-main-btn requesting' : 'listener-main-btn');
+  const btnIcon = isRunning ? '⏹' : '🎙';
+  const btnLabel = isRunning ? 'detener' : 'escuchar';
 
   wrap.innerHTML = `
-    <div class="listener-header">
-      <div class="listener-header-info">
-        <div class="listener-title">Detectar Armonía</div>
-        <div class="listener-subtitle">Escuchá lo que suena y tocá encima</div>
-      </div>
-      <div class="listener-level-wrap">
-        <div class="listener-level-label">nivel</div>
-        <div class="listener-level-bars">${levelBars}</div>
-        <div class="listener-rms-debug">rms: <span id="listenerRmsVal">—</span></div>
-      </div>
-      <button type="button" class="${startClass}" id="listenerToggleBtn">${startLabel}</button>
+    <div class="listener-top-label">${topLabel}</div>
+    <div class="listener-btn-area${isListening ? ' listening' : ''}" id="listenerBtnArea">
+      <div class="listener-ripple listener-ripple-1"></div>
+      <div class="listener-ripple listener-ripple-2"></div>
+      <div class="listener-ripple listener-ripple-3"></div>
+      <button type="button" class="${btnClass}" id="listenerToggleBtn">
+        <span class="listener-main-btn-icon">${btnIcon}</span>
+        <span class="listener-main-btn-label">${btnLabel}</span>
+      </button>
     </div>
-    ${modeSel}
-    <div id="listenerDynamic">
-      ${chromaHtml}
-      ${statusHtml}
-      ${buildResultHtml()}
-    </div>
+    <div class="listener-level-row">${levelBars}</div>
+    <div id="listenerDynamic" style="width:100%">${listenerBuildDynamicHtml()}</div>
   `;
 
   document.getElementById('listenerToggleBtn')?.addEventListener('click', listenerToggle);
-  document.getElementById('listenerModeApp')?.addEventListener('click', () => listenerSetMode('app'));
-  document.getElementById('listenerModeMic')?.addEventListener('click', () => listenerSetMode('mic'));
   document.getElementById('listenerApplyBtn')?.addEventListener('click', listenerApply);
 }
 
-// renderListenerDynamic: actualiza solo la zona dinámica sin repintar header/modos
-function renderListenerDynamic() {
+function listenerRenderDynamic() {
   const dyn = document.getElementById('listenerDynamic');
   if (!dyn) { renderListener(); return; }
 
+  // Actualizar label del top
+  const topLabel = document.querySelector('.listener-top-label');
   const st = listenerState.status;
-  const notesDisp = notation === 'flat' ? NOTES_FLAT : NOTES_SHARP;
-  const isRunning = st !== 'idle' && st !== 'permission_denied' && st !== 'error';
-
-  const chromaHtml = isRunning && listenerState.chromaHistory.length > 0
-    ? buildChromaHtml(notesDisp) : '';
-
-  let statusHtml = '';
-  if (st === 'no_signal') {
-    const hint = listenerState.mode === 'app'
-      ? 'Tocá una nota o acorde en el teclado, la guitarra o la armonización.'
-      : 'Subí el volumen del instrumento o acercalo al micrófono.';
-    statusHtml = `<div class="listener-status-msg">Sin señal — ${hint}</div>`;
-  } else if (st === 'listening') {
-    statusHtml = `<div class="listener-status-msg">Analizando... tocá y sosté un acorde.</div>`;
+  if (topLabel) {
+    if (st === 'no_signal') topLabel.textContent = 'Escuchando...';
+    else if (st === 'listening') topLabel.textContent = 'Analizando...';
+    else if (st === 'stable')    topLabel.textContent = 'Detectando';
+    else if (st === 'uncertain') topLabel.textContent = 'Detectando';
   }
 
-  dyn.innerHTML = chromaHtml + statusHtml + buildResultHtml();
+  dyn.innerHTML = listenerBuildDynamicHtml();
   document.getElementById('listenerApplyBtn')?.addEventListener('click', listenerApply);
 }
 
-function buildChromaHtml(notesDisp) {
+function listenerBuildDynamicHtml() {
+  const st = listenerState.status;
+  const r = listenerState.result;
+  const notesDisp = notation === 'flat' ? NOTES_FLAT : NOTES_SHARP;
+
+  // Status sin resultado
+  if (st === 'idle') {
+    return `<div class="listener-status-row">Tocá el botón y poné a sonar música — un instrumento, un backing track, cualquier canción.</div>`;
+  }
+  if (st === 'requesting') {
+    return `<div class="listener-status-row">El navegador va a pedirte acceso al micrófono.</div>`;
+  }
+  if (st === 'permission_denied') {
+    return `<div class="listener-status-row"><strong>Micrófono bloqueado</strong>Habilitá el acceso en la barra de direcciones y volvé a intentar.</div>`;
+  }
+  if (st === 'error') {
+    return `<div class="listener-status-row"><strong>Error de audio</strong>Tu navegador no soporta captura de micrófono. Probá con Chrome o Firefox.</div>`;
+  }
+  if (st === 'no_signal' || st === 'listening' || !r) {
+    return `<div class="listener-status-row">Subí el volumen del instrumento o acercalo al micrófono.</div>`;
+  }
+
+  // Resultado completo
+  const confPct = Math.round(r.confidence * 100);
+  const confColor = r.confidence >= 0.72 ? 'var(--green)' : r.confidence >= 0.60 ? 'var(--blue)' : 'var(--accent)';
+  const uncertain = st === 'uncertain' ? `<span style="font-family:var(--mono);font-size:10px;color:var(--muted)"> — poco claro</span>` : '';
+
+  // Chromagram
   const chroma = listenerSmoothChroma(listenerState.chromaHistory);
   let maxPc = 0;
   for (let i = 1; i < 12; i++) if (chroma[i] > chroma[maxPc]) maxPc = i;
-  return `<div class="listener-chroma-card">
-    <div class="listener-section-title">Actividad por nota</div>
-    <div class="listener-chroma-bars">${
-      Array.from({length: 12}, (_, i) => {
-        const h = Math.max(2, Math.round(chroma[i] * 48));
-        return `<div class="listener-chroma-bar-wrap">
-          <div class="listener-chroma-bar${i === maxPc ? ' dominant' : ''}" style="height:${h}px"></div>
-          <div class="listener-chroma-note">${notesDisp[i]}</div>
-        </div>`;
-      }).join('')
-    }</div>
-  </div>`;
-}
+  const chromaBars = Array.from({length: 12}, (_, i) => {
+    const h = Math.max(2, Math.round(chroma[i] * 48));
+    return `<div class="listener-chroma-bar-wrap">
+      <div class="listener-chroma-bar${i === maxPc ? ' dominant' : ''}" style="height:${h}px"></div>
+      <div class="listener-chroma-note">${notesDisp[i]}</div>
+    </div>`;
+  }).join('');
 
-function buildResultHtml() {
-  const st = listenerState.status;
-  const r = listenerState.result;
-  if ((st !== 'stable' && st !== 'uncertain') || !r) return '';
+  // Escala — resaltar root y notas fuertes (1ª, 3ª, 5ª)
+  const strongPcs = new Set([
+    r.scaleNotesPc[0],
+    r.scaleNotesPc[2],
+    r.scaleNotesPc[4],
+  ]);
+  const noteChips = r.scaleNotesPc.map((pc, i) => {
+    const cls = i === 0 ? 'root' : strongPcs.has(pc) ? 'strong' : '';
+    return `<div class="listener-note-chip${cls ? ' ' + cls : ''}">${r.scaleNoteNames[i]}</div>`;
+  }).join('');
 
-  const confPct = Math.round(r.confidence * 100);
-  const confColor = r.confidence >= 0.75 ? 'var(--green)' : r.confidence >= 0.62 ? 'var(--accent2)' : 'var(--accent)';
-  const uncertain = st === 'uncertain' ? ' <em style="color:var(--muted);font-size:10px">(poco claro)</em>' : '';
-  const modeLabel = { major: 'Mayor', natural_minor: 'Menor Natural', pentatonic_minor: 'Pentatónica Menor', pentatonic_major: 'Pentatónica Mayor' }[r.mode] || r.mode;
-  const chordRow = r.chord ? `<div class="listener-chord-row">Acorde probable: <span>${r.chord.label}</span></div>` : '';
-  const safeChips = r.safeNotes.map(n => `<div class="listener-note-chip target">${n}</div>`).join('');
-  const scaleObj = SCALES.find(s => s.id === r.suggestedScaleId);
+  // Progresión de acordes con numerales romanos
+  const progChips = listenerState.chordHistory.map((ch, idx) => {
+    const isNew = idx === listenerState.chordHistory.length - 1;
+    const roman = listenerGetRoman(ch.rootPc, ch.type, r.rootPc, r.mode);
+    const romanHtml = roman ? `<span style="display:block;font-size:9px;color:${isNew ? 'rgba(0,0,0,0.6)' : 'var(--muted)'};font-weight:400">${roman}</span>` : '';
+    return `<div class="listener-chord-chip${isNew ? ' new' : ''}">${isNew ? ch.label : ch.label}${romanHtml}</div>`;
+  }).join('');
+
+  const chordLine = r.chord
+    ? `<div class="listener-section-title" style="margin-top:0;margin-bottom:6px">Acorde actual: <span style="color:var(--accent);font-weight:700">${r.chord.label}</span></div>`
+    : '';
 
   return `
-    <div class="listener-result-card">
-      <div class="listener-section-title">Detección principal${uncertain}</div>
-      <div class="listener-result-main">
-        <div class="listener-tonal-badge">
-          <div class="listener-tonal-root">${r.rootName}</div>
-          <div class="listener-tonal-mode">${modeLabel}</div>
+    <div class="listener-chroma-card">
+      <div class="listener-section-title">Actividad por nota</div>
+      <div class="listener-chroma-bars">${chromaBars}</div>
+    </div>
+    <div class="listener-results-area">
+      <div class="listener-key-card">
+        <div class="listener-key-main">
+          <div class="listener-key-root">${r.rootName}${uncertain}</div>
+          <div class="listener-key-mode">${r.modeLabel}</div>
+          <div class="listener-key-scale">Escala: ${r.scaleName}</div>
         </div>
-        <div class="listener-result-meta">
+        <div class="listener-key-right">
           <div class="listener-conf-row">
-            <div class="listener-conf-label">Confianza</div>
+            <div class="listener-conf-label">confianza</div>
             <div class="listener-conf-bar-wrap"><div class="listener-conf-bar" style="width:${confPct}%;background:${confColor}"></div></div>
             <div class="listener-conf-val" style="color:${confColor}">${confPct}%</div>
           </div>
-          <div class="listener-alt">Alternativa: <strong>${r.altLabel}</strong></div>
-          ${chordRow}
+          <div class="listener-alt-row">También puede ser <strong>${r.altLabel}</strong></div>
         </div>
       </div>
+      ${listenerState.chordHistory.length > 0 ? `
+      <div class="listener-prog-card">
+        <div class="listener-section-title">Progresión de acordes</div>
+        ${chordLine}
+        <div class="listener-prog-row">${progChips}</div>
+      </div>` : ''}
+      <div class="listener-notes-card">
+        <div class="listener-section-title">Notas de la escala — tocá estas encima</div>
+        <div class="listener-notes-row">${noteChips}</div>
+      </div>
+      <button type="button" class="listener-apply-btn" id="listenerApplyBtn">✓ Aplicar esta tonalidad en la app</button>
     </div>
-    <div class="listener-suggest-card">
-      <div class="listener-section-title">Qué tocar encima</div>
-      <div class="listener-suggest-row">
-        <div class="listener-suggest-label">Escala sugerida</div>
-        <div class="listener-suggest-val">${scaleObj ? scaleObj.name : r.suggestedScaleId} — ${r.rootName}</div>
-      </div>
-      <div class="listener-suggest-row">
-        <div class="listener-suggest-label">Notas objetivo</div>
-        <div class="listener-notes-row">${safeChips}</div>
-      </div>
-      <button type="button" class="listener-apply-btn" id="listenerApplyBtn">✓ Usar este contexto en la app</button>
-    </div>`;
+  `;
 }
 
-// ── Control ──────────────────────────────────────────────────────
-
-function listenerSetMode(mode) {
-  if (listenerState.status !== 'idle') listenerStop();
-  listenerState.mode = mode;
-  renderListener();
-}
+// ── Control ───────────────────────────────────────────────────────
 
 function listenerToggle() {
   const s = listenerState.status;
   if (s === 'idle' || s === 'permission_denied' || s === 'error') {
-    listenerStart();
+    listenerStartFromMic();
   } else {
     listenerStop();
   }
 }
 
-function listenerStart() {
-  if (listenerState.mode === 'app') {
-    listenerStartFromApp();
-  } else {
-    listenerStartFromMic();
-  }
-}
-
-// Modo app: tap directo al masterGain del AudioContext existente
-function listenerStartFromApp() {
-  initAudio();
-  if (!audioCtx || !masterGain) {
-    listenerState.status = 'error'; renderListener(); return;
-  }
-  const analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 4096;
-  analyser.smoothingTimeConstant = 0.55;
-  masterGain.connect(analyser);
-  // masterGain sigue conectado a destination — esto es un tap en paralelo
-  listenerState.analyserNode = analyser;
-  listenerState.internalNode = analyser;
-  listenerState.status = 'listening';
-  listenerState.chromaHistory = [];
-  listenerState.rmsHistory = [];
-  renderListener();
-  listenerState.intervalId = setInterval(listenerAnalyzeFrame, 250);
-}
-
-// Modo mic: getUserMedia
 function listenerStartFromMic() {
   listenerState.status = 'requesting';
   renderListener();
@@ -6130,15 +6150,16 @@ function listenerStartFromMic() {
     listenerState.stream = stream;
     listenerState.sourceNode = audioCtx.createMediaStreamSource(stream);
     const analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 4096;
-    analyser.smoothingTimeConstant = 0.55;
+    analyser.fftSize = 8192;
+    analyser.smoothingTimeConstant = 0.6;
     listenerState.sourceNode.connect(analyser);
     listenerState.analyserNode = analyser;
     listenerState.status = 'listening';
     listenerState.chromaHistory = [];
     listenerState.rmsHistory = [];
+    listenerState.chordHistory = [];
     renderListener();
-    listenerState.intervalId = setInterval(listenerAnalyzeFrame, 250);
+    listenerState.intervalId = setInterval(listenerAnalyzeFrame, 300);
   }).catch(err => {
     listenerState.status = err.name === 'NotAllowedError' ? 'permission_denied' : 'error';
     renderListener();
@@ -6147,17 +6168,13 @@ function listenerStartFromMic() {
 
 function listenerStop() {
   if (listenerState.intervalId) { clearInterval(listenerState.intervalId); listenerState.intervalId = null; }
-  if (listenerState.internalNode) {
-    try { masterGain && masterGain.disconnect(listenerState.internalNode); } catch(e) {}
-    try { listenerState.internalNode.disconnect(); } catch(e) {}
-    listenerState.internalNode = null;
-  }
   if (listenerState.stream) { listenerState.stream.getTracks().forEach(t => t.stop()); listenerState.stream = null; }
   if (listenerState.sourceNode) { try { listenerState.sourceNode.disconnect(); } catch(e) {} listenerState.sourceNode = null; }
   listenerState.analyserNode = null;
   listenerState.status = 'idle';
   listenerState.chromaHistory = [];
   listenerState.rmsHistory = [];
+  listenerState.chordHistory = [];
   listenerState.result = null;
   renderListener();
 }
@@ -6165,12 +6182,12 @@ function listenerStop() {
 function listenerApply() {
   if (!listenerState.result) return;
   const r = listenerState.result;
-  rootIdx = r.suggestedRootPc;
-  const newScaleIdx = SCALES.findIndex(s => s.id === r.suggestedScaleId);
+  rootIdx = r.rootPc;
+  const newScaleIdx = SCALES.findIndex(s => s.id === r.scaleId);
   scaleIdx = newScaleIdx >= 0 ? newScaleIdx : 0;
   render();
   const btn = document.getElementById('listenerApplyBtn');
-  if (btn) { btn.textContent = '✓ Aplicado'; btn.disabled = true; setTimeout(() => renderListenerDynamic(), 1500); }
+  if (btn) { btn.textContent = '✓ Aplicado'; btn.disabled = true; setTimeout(() => listenerRenderDynamic(), 1800); }
 }
 </script>
 </body>
