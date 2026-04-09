@@ -2789,7 +2789,8 @@ function setTab(tab) {
   cancelTrainerTimer();
   cancelHarmPlay();
   cancelMinorsPlay();
-  if (tab !== 'listener') listenerStop();
+  // En modo micrófono, liberar el stream al salir del tab; en modo app el análisis sigue corriendo
+  if (tab !== 'listener' && listenerState.mode === 'mic') listenerStop();
   activeTab = tab === 'guitar' || tab === 'circle' || tab === 'trainer' || tab === 'builder' || tab === 'minors' || tab === 'harm' || tab === 'listener' ? tab : 'ref';
   localStorage.setItem(ACTIVE_TAB_KEY, activeTab);
   document.querySelectorAll('.tab-btn').forEach(b => {
