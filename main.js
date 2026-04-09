@@ -104,6 +104,14 @@ function createWindow() {
     titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default',
   })
   win.loadFile('landing.html')
+  win.webContents.on('will-navigate', (event, url) => {
+    // En Electron los hrefs "/app" se convierten en "file:///app".
+    // Interceptar y redirigir al archivo correcto.
+    if (url.endsWith('/app') || url.endsWith('/app/') || url.includes('/app#')) {
+      event.preventDefault()
+      win.loadFile('index.html')
+    }
+  })
   win.webContents.setWindowOpenHandler(({ url }) => {
     shell.openExternal(url)
     return { action: 'deny' }
