@@ -5841,20 +5841,12 @@ function listenerAnalyzeFrame() {
 
   updateListenerLevel(rms);
 
-  if (avgRms < 0.003) {
+  if (avgRms < 0.001) {
     listenerState.status = 'no_signal';
     renderListener(); return;
   }
 
   const chroma = listenerExtractChroma(freqData, audioCtx.sampleRate);
-
-  // Detectar si hay estructura tonal (entropía del chroma)
-  let entropy = 0;
-  for (let i = 0; i < 12; i++) if (chroma[i] > 0) entropy -= chroma[i] * Math.log2(chroma[i] + 1e-9);
-  if (entropy > 3.7 && avgRms > 0.08) {
-    listenerState.status = 'noisy';
-    renderListener(); return;
-  }
 
   listenerState.chromaHistory.push(chroma);
   if (listenerState.chromaHistory.length > 6) listenerState.chromaHistory.shift();
@@ -5942,8 +5934,6 @@ function renderListener() {
     statusHtml = `<div class="listener-status-msg"><strong>⚠️ Error de audio</strong>Tu navegador no soporta captura de micrófono. Probá con Chrome o Firefox.</div>`;
   } else if (st === 'listening' || st === 'no_signal') {
     statusHtml = `<div class="listener-status-msg">Esperando señal... tocá unos acordes sostenidos o subí el volumen del backing.</div>`;
-  } else if (st === 'noisy') {
-    statusHtml = `<div class="listener-status-msg">Hay demasiado ruido. Intentá con menos reverb o más volumen del instrumento.</div>`;
   }
 
   if ((st === 'stable' || st === 'uncertain') && listenerState.result) {
@@ -6035,14 +6025,14 @@ function listenerStart() {
     renderListener(); return;
   }
 
-  navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+  navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false }, video: false })
     .then(stream => {
       initAudio();
       listenerState.stream = stream;
       listenerState.sourceNode = audioCtx.createMediaStreamSource(stream);
       listenerState.analyserNode = audioCtx.createAnalyser();
       listenerState.analyserNode.fftSize = 4096;
-      listenerState.analyserNode.smoothingTimeConstant = 0.72;
+      listenerState.analyserNode.smoothingTimeConstant = 0.55;
       listenerState.sourceNode.connect(listenerState.analyserNode);
       // NO conectar a destination → evitar feedback
       listenerState.status = 'listening';
