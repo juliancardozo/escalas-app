@@ -1404,6 +1404,91 @@
     /* ── ARMONIZACIÓN POR GRADOS ── */
     .harm-wrap { display: flex; flex-direction: column; gap: 20px; }
 
+    /* ── Jam Listener ─────────────────────────────────────────── */
+    .listener-wrap { display: flex; flex-direction: column; gap: 18px; }
+    .listener-header {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      background: var(--s1); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--border);
+    }
+    .listener-header-info { flex: 1; min-width: 160px; }
+    .listener-title { font-family: var(--display); font-size: 18px; font-weight: 700; }
+    .listener-subtitle { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .listener-start-btn {
+      padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer;
+      background: var(--green); color: #000; font-family: var(--mono); font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; gap: 6px; transition: all 0.15s; white-space: nowrap;
+    }
+    .listener-start-btn:hover { filter: brightness(1.1); }
+    .listener-start-btn.listening { background: var(--s3); color: var(--text); border: 1px solid var(--border2); }
+    .listener-level-wrap { display: flex; align-items: center; gap: 8px; }
+    .listener-level-label { font-size: 10px; color: var(--muted); font-family: var(--mono); }
+    .listener-level-bars { display: flex; gap: 2px; align-items: flex-end; height: 20px; }
+    .listener-level-bar-seg {
+      width: 5px; border-radius: 2px; background: var(--border2); transition: height 0.1s, background 0.1s;
+    }
+    /* chromagram */
+    .listener-chroma-card {
+      background: var(--s1); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--border);
+    }
+    .listener-section-title { font-size: 10px; color: var(--muted); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+    .listener-chroma-bars { display: flex; gap: 4px; align-items: flex-end; height: 50px; }
+    .listener-chroma-bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
+    .listener-chroma-bar {
+      width: 100%; border-radius: 3px 3px 0 0; background: var(--blue); transition: height 0.2s;
+      min-height: 2px;
+    }
+    .listener-chroma-bar.dominant { background: var(--accent); }
+    .listener-chroma-note { font-size: 8px; color: var(--muted); font-family: var(--mono); }
+    /* result card */
+    .listener-result-card {
+      background: var(--s1); border-radius: 10px; padding: 16px; border: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .listener-result-main { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .listener-tonal-badge {
+      background: var(--s2); border-radius: 8px; padding: 10px 16px; border: 1px solid var(--border2);
+      display: flex; flex-direction: column; gap: 2px; min-width: 120px;
+    }
+    .listener-tonal-root { font-family: var(--display); font-size: 26px; font-weight: 800; line-height: 1; }
+    .listener-tonal-mode { font-size: 11px; color: var(--muted); font-family: var(--mono); }
+    .listener-result-meta { flex: 1; min-width: 160px; display: flex; flex-direction: column; gap: 6px; }
+    .listener-conf-row { display: flex; align-items: center; gap: 8px; }
+    .listener-conf-label { font-size: 10px; color: var(--muted); font-family: var(--mono); min-width: 70px; }
+    .listener-conf-bar-wrap { flex: 1; height: 6px; background: var(--border2); border-radius: 3px; overflow: hidden; }
+    .listener-conf-bar { height: 100%; border-radius: 3px; transition: width 0.3s, background 0.3s; }
+    .listener-conf-val { font-size: 10px; font-family: var(--mono); min-width: 32px; text-align: right; }
+    .listener-alt { font-size: 11px; color: var(--muted); }
+    .listener-alt strong { color: var(--text); }
+    .listener-chord-row { font-size: 12px; color: var(--text); }
+    .listener-chord-row span { color: var(--accent); font-weight: 700; font-family: var(--mono); }
+    /* suggestions */
+    .listener-suggest-card {
+      background: var(--s1); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .listener-suggest-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .listener-suggest-label { font-size: 11px; color: var(--muted); font-family: var(--mono); min-width: 110px; }
+    .listener-suggest-val { font-size: 13px; font-weight: 600; }
+    .listener-notes-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .listener-note-chip {
+      background: var(--s2); border: 1px solid var(--border2); border-radius: 20px;
+      padding: 4px 10px; font-family: var(--mono); font-size: 11px; font-weight: 700;
+    }
+    .listener-note-chip.target { background: var(--green); color: #000; border-color: var(--green); }
+    .listener-apply-btn {
+      padding: 11px 20px; border-radius: 8px; border: none; cursor: pointer;
+      background: var(--accent); color: #000; font-family: var(--mono); font-size: 12px; font-weight: 700;
+      transition: all 0.12s; align-self: flex-start;
+    }
+    .listener-apply-btn:hover { background: var(--accent2); }
+    /* status messages */
+    .listener-status-msg {
+      background: var(--s1); border-radius: 10px; padding: 16px; border: 1px solid var(--border);
+      color: var(--muted); font-size: 13px; text-align: center;
+    }
+    .listener-status-msg strong { color: var(--text); display: block; margin-bottom: 4px; font-size: 14px; }
+    .listener-status-msg a { color: var(--blue); }
+
     /* Toolbar */
     .harm-toolbar {
       display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
@@ -1731,6 +1816,7 @@
         <button type="button" class="tab-btn" role="tab" id="tabBtnBuilder" data-tab="builder" aria-selected="false">Constructor</button>
         <button type="button" class="tab-btn" role="tab" id="tabBtnMinors" data-tab="minors" aria-selected="false">Menores</button>
         <button type="button" class="tab-btn" role="tab" id="tabBtnHarm" data-tab="harm" aria-selected="false">Armonía</button>
+        <button type="button" class="tab-btn" role="tab" id="tabBtnListener" data-tab="listener" aria-selected="false">🎙 Escuchar</button>
       </div>
 
       <div class="main-scroll" id="mainScroll">
@@ -1953,6 +2039,12 @@
         <div class="tab-panel" id="tab-panel-harm" data-tab-panel="harm" hidden>
           <div class="harm-wrap" id="harmWrap">
             <!-- populated by renderHarmonization() -->
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-panel-listener" data-tab-panel="listener" hidden>
+          <div class="listener-wrap" id="listenerWrap">
+            <!-- populated by renderListener() -->
           </div>
         </div>
 
@@ -2684,7 +2776,8 @@ function setTab(tab) {
   cancelTrainerTimer();
   cancelHarmPlay();
   cancelMinorsPlay();
-  activeTab = tab === 'guitar' || tab === 'circle' || tab === 'trainer' || tab === 'builder' || tab === 'minors' || tab === 'harm' ? tab : 'ref';
+  if (tab !== 'listener') listenerStop();
+  activeTab = tab === 'guitar' || tab === 'circle' || tab === 'trainer' || tab === 'builder' || tab === 'minors' || tab === 'harm' || tab === 'listener' ? tab : 'ref';
   localStorage.setItem(ACTIVE_TAB_KEY, activeTab);
   document.querySelectorAll('.tab-btn').forEach(b => {
     const on = b.dataset.tab === activeTab;
@@ -2699,6 +2792,7 @@ function setTab(tab) {
   if (activeTab === 'builder') renderBuilder();
   if (activeTab === 'minors') renderMinors();
   if (activeTab === 'harm') renderHarmonization();
+  if (activeTab === 'listener') renderListener();
 }
 
 function renderGuitarPositionButtons() {
@@ -5587,7 +5681,7 @@ document.getElementById('btnEndSession').addEventListener('click', endTrainerSes
 })();
 (function initTab() {
   const t = localStorage.getItem(ACTIVE_TAB_KEY);
-  if (t === 'guitar' || t === 'circle' || t === 'ref' || t === 'trainer' || t === 'builder' || t === 'minors' || t === 'harm') setTab(t);
+  if (t === 'guitar' || t === 'circle' || t === 'ref' || t === 'trainer' || t === 'builder' || t === 'minors' || t === 'harm' || t === 'listener') setTab(t);
   else setTab('ref');
 })();
 renderPresetSelect();
@@ -5595,6 +5689,398 @@ initTrainerFilter();
 render();
 renderWishlistCount();
 scheduleFeedbackPrompt();
+
+/* ════════════════════════════════════════════════════════════════
+   JAM LISTENER — detección armónica en tiempo real
+   ════════════════════════════════════════════════════════════════ */
+
+// Perfiles de Krumhansl-Schmuckler (1990)
+const KK_MAJOR = [6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88];
+const KK_MINOR = [6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17];
+
+// Plantillas de triadas y séptimas (12 dimensiones, pitch class relativo)
+const CHORD_TPLS = {
+  'maj':  [1,0,0,0,1,0,0,1,0,0,0,0],
+  'min':  [1,0,0,1,0,0,0,1,0,0,0,0],
+  'dom7': [1,0,0,0,1,0,0,1,0,0,1,0],
+  'm7':   [1,0,0,1,0,0,0,1,0,0,1,0],
+  'maj7': [1,0,0,0,1,0,0,1,0,0,0,1],
+  'dim':  [1,0,0,1,0,0,1,0,0,0,0,0],
+  'sus4': [1,0,0,0,0,1,0,1,0,0,0,0],
+};
+
+// Estado del listener
+const listenerState = {
+  status: 'idle',      // idle | requesting | permission_denied | listening | no_signal | noisy | stable | uncertain | error
+  stream: null,
+  sourceNode: null,
+  analyserNode: null,
+  rafId: null,
+  intervalId: null,
+  chromaHistory: [],
+  rmsHistory: [],
+  result: null,
+};
+
+// ── Audio helpers ────────────────────────────────────────────────
+
+function listenerExtractChroma(freqDataDb, sampleRate) {
+  const N = freqDataDb.length;
+  const chroma = new Float32Array(12);
+  const binWidth = sampleRate / (N * 2);
+  for (let i = 1; i < N; i++) {
+    const freq = i * binWidth;
+    if (freq < 80 || freq > 2200) continue;
+    const db = freqDataDb[i];
+    if (db < -90) continue;                      // silencio del bin
+    const mag = Math.pow(10, db / 20);
+    const midi = 69 + 12 * Math.log2(freq / 440);
+    const pc = ((Math.round(midi) % 12) + 12) % 12;
+    chroma[pc] += mag;
+  }
+  // Normalizar 0..1
+  let max = 0;
+  for (let i = 0; i < 12; i++) if (chroma[i] > max) max = chroma[i];
+  if (max > 0) for (let i = 0; i < 12; i++) chroma[i] /= max;
+  return chroma;
+}
+
+function listenerComputeRMS(freqDataDb) {
+  // Aproximación de nivel de señal: promedio de magnitudes lineales
+  let sum = 0, count = 0;
+  for (let i = 0; i < freqDataDb.length; i++) {
+    if (freqDataDb[i] > -90) { sum += Math.pow(10, freqDataDb[i] / 20); count++; }
+  }
+  return count > 0 ? sum / count : 0;
+}
+
+function listenerSmoothChroma(history) {
+  // Media exponencial acumulada
+  if (history.length === 0) return new Float32Array(12);
+  const result = new Float32Array(12);
+  const lambda = 0.6;
+  let weight = 1;
+  let totalWeight = 0;
+  for (let h = history.length - 1; h >= 0; h--) {
+    for (let i = 0; i < 12; i++) result[i] += history[h][i] * weight;
+    totalWeight += weight;
+    weight *= lambda;
+  }
+  for (let i = 0; i < 12; i++) result[i] /= totalWeight;
+  return result;
+}
+
+function listenerScoreTonalities(chroma) {
+  const results = [];
+  for (let root = 0; root < 12; root++) {
+    let scoreMaj = 0, scoreMin = 0;
+    for (let pc = 0; pc < 12; pc++) {
+      const idx = (pc - root + 12) % 12;
+      scoreMaj += chroma[pc] * KK_MAJOR[idx];
+      scoreMin += chroma[pc] * KK_MINOR[idx];
+    }
+    results.push({ rootPc: root, mode: 'major',         score: scoreMaj });
+    results.push({ rootPc: root, mode: 'natural_minor', score: scoreMin });
+  }
+  results.sort((a, b) => b.score - a.score);
+  return results;
+}
+
+function listenerDetectChord(chroma, topRootPc) {
+  let best = null;
+  let bestScore = -Infinity;
+  for (const [type, tpl] of Object.entries(CHORD_TPLS)) {
+    for (let root = 0; root < 12; root++) {
+      let score = 0;
+      for (let pc = 0; pc < 12; pc++) {
+        score += chroma[pc] * tpl[(pc - root + 12) % 12];
+      }
+      if (score > bestScore) { bestScore = score; best = { rootPc: root, type, score }; }
+    }
+  }
+  if (!best || best.score < 0.55) return null;
+  const label = NOTES_SHARP[best.rootPc] + (best.type === 'maj' ? '' : best.type === 'min' ? 'm' : best.type === 'dom7' ? '7' : best.type === 'm7' ? 'm7' : best.type === 'maj7' ? 'Maj7' : best.type === 'dim' ? '°' : 'sus4');
+  return { rootPc: best.rootPc, type: best.type, label, score: best.score };
+}
+
+function listenerBuildRecommendation(top, alt, chord, confidence) {
+  const topRootName = NOTES_SHARP[top.rootPc];
+  const useScale = confidence >= 0.62
+    ? top.mode
+    : (top.mode === 'major' ? 'pentatonic_major' : 'pentatonic_minor');
+  const scaleObj = SCALES.find(s => s.id === useScale) || SCALES.find(s => s.id === top.mode);
+  const safeNotes = scaleObj
+    ? [0, 2, 4].map(i => NOTES_SHARP[(top.rootPc + (scaleObj.intervals[i] || 0)) % 12])
+    : [topRootName];
+  const altLabel = `${NOTES_SHARP[alt.rootPc]} ${alt.mode === 'major' ? 'Mayor' : 'Menor'}`;
+  return {
+    rootPc: top.rootPc, rootName: topRootName,
+    mode: top.mode, scaleName: scaleObj ? scaleObj.name : top.mode,
+    confidence,
+    altRootPc: alt.rootPc, altMode: alt.mode, altLabel,
+    chord,
+    suggestedScaleId: useScale, suggestedRootPc: top.rootPc,
+    safeNotes,
+    timestamp: Date.now(),
+  };
+}
+
+// ── Análisis loop ────────────────────────────────────────────────
+
+function listenerAnalyzeFrame() {
+  if (!listenerState.analyserNode) return;
+  const N = listenerState.analyserNode.frequencyBinCount;
+  const freqData = new Float32Array(N);
+  listenerState.analyserNode.getFloatFrequencyData(freqData);
+
+  const rms = listenerComputeRMS(freqData);
+  listenerState.rmsHistory.push(rms);
+  if (listenerState.rmsHistory.length > 8) listenerState.rmsHistory.shift();
+  const avgRms = listenerState.rmsHistory.reduce((a, b) => a + b, 0) / listenerState.rmsHistory.length;
+
+  updateListenerLevel(rms);
+
+  if (avgRms < 0.003) {
+    listenerState.status = 'no_signal';
+    renderListener(); return;
+  }
+
+  const chroma = listenerExtractChroma(freqData, audioCtx.sampleRate);
+
+  // Detectar si hay estructura tonal (entropía del chroma)
+  let entropy = 0;
+  for (let i = 0; i < 12; i++) if (chroma[i] > 0) entropy -= chroma[i] * Math.log2(chroma[i] + 1e-9);
+  if (entropy > 3.7 && avgRms > 0.08) {
+    listenerState.status = 'noisy';
+    renderListener(); return;
+  }
+
+  listenerState.chromaHistory.push(chroma);
+  if (listenerState.chromaHistory.length > 6) listenerState.chromaHistory.shift();
+
+  if (listenerState.chromaHistory.length < 2) {
+    listenerState.status = 'listening';
+    renderListener(); return;
+  }
+
+  const smoothed = listenerSmoothChroma(listenerState.chromaHistory);
+  const candidates = listenerScoreTonalities(smoothed);
+  const top = candidates[0];
+  const alt = candidates[1];
+
+  const totalScore = candidates.slice(0, 6).reduce((s, c) => s + c.score, 0);
+  const confidence = totalScore > 0 ? top.score / totalScore : 0;
+
+  const chord = listenerDetectChord(smoothed, top.rootPc);
+  listenerState.result = listenerBuildRecommendation(top, alt, chord, confidence);
+  listenerState.status = confidence >= 0.62 ? 'stable' : 'uncertain';
+  renderListener();
+}
+
+// ── UI rendering ─────────────────────────────────────────────────
+
+function updateListenerLevel(rms) {
+  const bars = document.querySelectorAll('.listener-level-bar-seg');
+  if (!bars.length) return;
+  const norm = Math.min(1, rms / 0.06);
+  bars.forEach((bar, i) => {
+    const threshold = i / bars.length;
+    const active = norm > threshold;
+    bar.style.height = active ? `${8 + (i / bars.length) * 12}px` : '4px';
+    bar.style.background = active ? (i < 8 ? 'var(--green)' : 'var(--accent)') : 'var(--border2)';
+  });
+}
+
+function renderListener() {
+  const wrap = document.getElementById('listenerWrap');
+  if (!wrap) return;
+
+  const st = listenerState.status;
+  const isRunning = st !== 'idle' && st !== 'permission_denied' && st !== 'error';
+  const btnLabel  = isRunning ? '⏹ Detener' : '🎙 Escuchar';
+  const btnClass  = isRunning ? 'listener-start-btn listening' : 'listener-start-btn';
+
+  // Barra de nivel (13 segmentos)
+  const levelBars = Array.from({length: 13}, (_, i) =>
+    `<div class="listener-level-bar-seg" style="height:4px"></div>`).join('');
+
+  // Chromagram
+  let chromaHtml = '';
+  const notesDisp = notation === 'flat' ? NOTES_FLAT : NOTES_SHARP;
+  if (isRunning && listenerState.chromaHistory.length > 0) {
+    const chroma = listenerSmoothChroma(listenerState.chromaHistory);
+    let maxPc = 0;
+    for (let i = 1; i < 12; i++) if (chroma[i] > chroma[maxPc]) maxPc = i;
+    chromaHtml = `
+      <div class="listener-chroma-card">
+        <div class="listener-section-title">Actividad por nota</div>
+        <div class="listener-chroma-bars">` +
+        Array.from({length: 12}, (_, i) => {
+          const h = Math.max(2, Math.round(chroma[i] * 48));
+          const dominant = i === maxPc ? ' dominant' : '';
+          return `<div class="listener-chroma-bar-wrap">
+            <div class="listener-chroma-bar${dominant}" style="height:${h}px"></div>
+            <div class="listener-chroma-note">${notesDisp[i]}</div>
+          </div>`;
+        }).join('') +
+        `</div>
+      </div>`;
+  }
+
+  // Mensaje de estado sin resultado
+  let statusHtml = '';
+  let resultHtml = '';
+
+  if (st === 'idle') {
+    statusHtml = `<div class="listener-status-msg"><strong>Empezá a escuchar</strong>Tocá "🎙 Escuchar" y ponele play a tu backing track o tocá unos acordes.</div>`;
+  } else if (st === 'requesting') {
+    statusHtml = `<div class="listener-status-msg"><strong>Esperando permiso...</strong>El navegador va a pedirte acceso al micrófono.</div>`;
+  } else if (st === 'permission_denied') {
+    statusHtml = `<div class="listener-status-msg"><strong>🚫 Micrófono bloqueado</strong>Habilitá el acceso al micrófono en la barra de direcciones del navegador y volvé a intentar.</div>`;
+  } else if (st === 'error') {
+    statusHtml = `<div class="listener-status-msg"><strong>⚠️ Error de audio</strong>Tu navegador no soporta captura de micrófono. Probá con Chrome o Firefox.</div>`;
+  } else if (st === 'listening' || st === 'no_signal') {
+    statusHtml = `<div class="listener-status-msg">Esperando señal... tocá unos acordes sostenidos o subí el volumen del backing.</div>`;
+  } else if (st === 'noisy') {
+    statusHtml = `<div class="listener-status-msg">Hay demasiado ruido. Intentá con menos reverb o más volumen del instrumento.</div>`;
+  }
+
+  if ((st === 'stable' || st === 'uncertain') && listenerState.result) {
+    const r = listenerState.result;
+    const confPct = Math.round(r.confidence * 100);
+    const confColor = r.confidence >= 0.75 ? 'var(--green)' : r.confidence >= 0.62 ? 'var(--accent2)' : 'var(--accent)';
+    const uncertain = st === 'uncertain' ? ' <em style="color:var(--muted);font-size:10px">(poco claro)</em>' : '';
+    const modeLabel = r.mode === 'major' ? 'Mayor' : r.mode === 'natural_minor' ? 'Menor Natural' : r.mode === 'pentatonic_minor' ? 'Pentatónica Menor' : r.mode.replace('_', ' ');
+    const chordRow = r.chord ? `<div class="listener-chord-row">Acorde probable: <span>${r.chord.label}</span></div>` : '';
+    const safeChips = r.safeNotes.map(n => `<div class="listener-note-chip target">${n}</div>`).join('');
+    const scaleObj = SCALES.find(s => s.id === r.suggestedScaleId);
+    const scaleName = scaleObj ? scaleObj.name : r.suggestedScaleId;
+
+    resultHtml = `
+      <div class="listener-result-card">
+        <div class="listener-section-title">Detección principal${uncertain}</div>
+        <div class="listener-result-main">
+          <div class="listener-tonal-badge">
+            <div class="listener-tonal-root">${r.rootName}</div>
+            <div class="listener-tonal-mode">${modeLabel}</div>
+          </div>
+          <div class="listener-result-meta">
+            <div class="listener-conf-row">
+              <div class="listener-conf-label">Confianza</div>
+              <div class="listener-conf-bar-wrap">
+                <div class="listener-conf-bar" style="width:${confPct}%;background:${confColor}"></div>
+              </div>
+              <div class="listener-conf-val" style="color:${confColor}">${confPct}%</div>
+            </div>
+            <div class="listener-alt">Alternativa: <strong>${r.altLabel}</strong></div>
+            ${chordRow}
+          </div>
+        </div>
+      </div>
+      <div class="listener-suggest-card">
+        <div class="listener-section-title">Qué tocar encima</div>
+        <div class="listener-suggest-row">
+          <div class="listener-suggest-label">Escala sugerida</div>
+          <div class="listener-suggest-val">${scaleName} — ${r.rootName}</div>
+        </div>
+        <div class="listener-suggest-row">
+          <div class="listener-suggest-label">Notas objetivo</div>
+          <div class="listener-notes-row">${safeChips}</div>
+        </div>
+        <button type="button" class="listener-apply-btn" id="listenerApplyBtn">✓ Usar este contexto en la app</button>
+      </div>`;
+  }
+
+  wrap.innerHTML = `
+    <div class="listener-header">
+      <div class="listener-header-info">
+        <div class="listener-title">Detectar Armonía</div>
+        <div class="listener-subtitle">Escuchá lo que suena y tocá encima</div>
+      </div>
+      <div class="listener-level-wrap">
+        <div class="listener-level-label">nivel</div>
+        <div class="listener-level-bars">${levelBars}</div>
+      </div>
+      <button type="button" class="${btnClass}" id="listenerToggleBtn">${btnLabel}</button>
+    </div>
+    ${chromaHtml}
+    ${statusHtml}
+    ${resultHtml}
+  `;
+
+  // Bind events
+  const toggleBtn = document.getElementById('listenerToggleBtn');
+  if (toggleBtn) toggleBtn.addEventListener('click', listenerToggle);
+  const applyBtn = document.getElementById('listenerApplyBtn');
+  if (applyBtn) applyBtn.addEventListener('click', listenerApply);
+}
+
+// ── Control ──────────────────────────────────────────────────────
+
+function listenerToggle() {
+  if (listenerState.status === 'idle' || listenerState.status === 'permission_denied' || listenerState.status === 'error') {
+    listenerStart();
+  } else {
+    listenerStop();
+  }
+}
+
+function listenerStart() {
+  listenerState.status = 'requesting';
+  renderListener();
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    listenerState.status = 'error';
+    renderListener(); return;
+  }
+
+  navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+    .then(stream => {
+      initAudio();
+      listenerState.stream = stream;
+      listenerState.sourceNode = audioCtx.createMediaStreamSource(stream);
+      listenerState.analyserNode = audioCtx.createAnalyser();
+      listenerState.analyserNode.fftSize = 4096;
+      listenerState.analyserNode.smoothingTimeConstant = 0.72;
+      listenerState.sourceNode.connect(listenerState.analyserNode);
+      // NO conectar a destination → evitar feedback
+      listenerState.status = 'listening';
+      listenerState.chromaHistory = [];
+      listenerState.rmsHistory = [];
+      renderListener();
+      // Análisis cada 300ms
+      listenerState.intervalId = setInterval(listenerAnalyzeFrame, 300);
+    })
+    .catch(err => {
+      listenerState.status = err.name === 'NotAllowedError' ? 'permission_denied' : 'error';
+      renderListener();
+    });
+}
+
+function listenerStop() {
+  if (listenerState.intervalId) { clearInterval(listenerState.intervalId); listenerState.intervalId = null; }
+  if (listenerState.rafId) { cancelAnimationFrame(listenerState.rafId); listenerState.rafId = null; }
+  if (listenerState.stream) { listenerState.stream.getTracks().forEach(t => t.stop()); listenerState.stream = null; }
+  if (listenerState.sourceNode) { try { listenerState.sourceNode.disconnect(); } catch(e) {} listenerState.sourceNode = null; }
+  listenerState.analyserNode = null;
+  listenerState.status = 'idle';
+  listenerState.chromaHistory = [];
+  listenerState.rmsHistory = [];
+  listenerState.result = null;
+  renderListener();
+}
+
+function listenerApply() {
+  if (!listenerState.result) return;
+  const r = listenerState.result;
+  rootIdx = r.suggestedRootPc;
+  const newScaleIdx = SCALES.findIndex(s => s.id === r.suggestedScaleId);
+  scaleIdx = newScaleIdx >= 0 ? newScaleIdx : 0;
+  render();
+  // Visual feedback
+  const btn = document.getElementById('listenerApplyBtn');
+  if (btn) { btn.textContent = '✓ Aplicado'; btn.disabled = true; setTimeout(() => renderListener(), 1500); }
+}
 </script>
 </body>
 </html>
