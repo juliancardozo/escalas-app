@@ -1069,6 +1069,61 @@
     .sync-label input { accent-color: var(--accent); }
     .share-msg { font-size: 10px; color: var(--green); }
 
+    /* ── CURSO ── */
+    .course-wrap { display: flex; flex-direction: column; gap: 16px; }
+    .course-head { display: flex; gap: 16px; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; }
+    .course-sub { font-size: 11px; color: var(--muted); line-height: 1.7; max-width: 640px; }
+    .course-sub b { color: var(--text); }
+    .course-progress { font-size: 10px; color: var(--muted); text-align: right; min-width: 160px; }
+    .course-progress b { font-family: var(--display); font-size: 22px; color: var(--green); display: block; }
+    .course-method { background: linear-gradient(135deg, rgba(255,107,53,0.08), rgba(91,168,255,0.06)); border: 1px solid var(--border2); border-radius: 12px; padding: 12px 16px; }
+    .course-method-title { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent2); margin-bottom: 8px; }
+    .course-method-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; font-size: 11px; color: var(--text); line-height: 1.5; }
+    .course-method-steps b { display: inline-flex; width: 18px; height: 18px; border-radius: 50%; background: var(--accent); color: #000; font-size: 10px; align-items: center; justify-content: center; margin-right: 6px; }
+    .course-map { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+    .course-level { background: var(--s1); border: 1px solid var(--border); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+    .course-level-name { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text); }
+    .course-level-desc { font-size: 10px; color: var(--muted); line-height: 1.5; margin-bottom: 4px; }
+    .lesson-pill { display: flex; gap: 8px; align-items: center; text-align: left; font-size: 11px; padding: 8px 10px; }
+    .lesson-pill .lp-num { font-size: 9px; color: var(--muted); min-width: 16px; }
+    .lesson-pill .lp-state { margin-left: auto; font-size: 11px; }
+    .lesson-pill.done .lp-state { color: var(--green); }
+    .lesson-pill.next { border-color: var(--accent2); }
+    .lesson-pill.active { border-color: var(--accent); background: rgba(255,107,53,0.1); }
+    .lesson { background: var(--s1); border: 1px solid var(--border2); border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 16px; }
+    .lesson-kicker { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent2); }
+    .lesson-title { font-family: var(--display); font-size: 22px; font-weight: 700; color: var(--text); margin-top: 4px; }
+    .lesson-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+    .lesson-card { background: var(--s2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+    .lesson-card h4 { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; font-weight: 400; }
+    .lesson-card p { font-size: 11px; color: var(--text); line-height: 1.7; }
+    .lesson-card.think { border-color: rgba(255,179,71,0.4); }
+    .lesson-card.think h4 { color: var(--accent2); }
+    .lesson-steps { font-size: 11px; color: var(--text); line-height: 1.8; padding-left: 18px; }
+    .lesson-steps li::marker { color: var(--accent); font-weight: 700; }
+    .lesson-setup { font-size: 10px; color: var(--muted); }
+    .lesson-setup b { color: var(--text); }
+    .lesson-live { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; background: var(--s2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; }
+    .lesson-now { font-family: var(--display); font-size: 22px; font-weight: 700; color: var(--accent2); min-width: 110px; }
+    .lesson-now small { display: block; font-family: var(--mono); font-size: 10px; font-weight: 400; color: var(--muted); margin-top: 4px; }
+    .lesson-heard { font-size: 11px; color: var(--muted); }
+    .lesson-heard b { font-family: var(--display); font-size: 16px; color: var(--text); }
+    .lesson-heard .ok { color: var(--green); }
+    .lesson-heard .no { color: #ff6767; }
+    .lesson-goals { display: flex; flex-direction: column; gap: 8px; }
+    .lesson-goal { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; font-size: 11px; color: var(--text); }
+    .lesson-goal .lg-val { color: var(--muted); font-size: 10px; }
+    .lesson-goal.done .lg-val { color: var(--green); }
+    .lesson-goal .lg-bar { grid-column: 1 / -1; height: 5px; background: var(--s3); border-radius: 3px; overflow: hidden; }
+    .lesson-goal .lg-fill { height: 100%; background: var(--accent); transition: width 0.25s; }
+    .lesson-goal.done .lg-fill { background: var(--green); }
+    .lesson-done { background: rgba(91,255,160,0.08); border: 1px solid rgba(91,255,160,0.35); border-radius: 10px; padding: 12px 14px; font-size: 11px; color: var(--text); line-height: 1.7; }
+    .lesson-done b { color: var(--green); }
+    .lesson-reflect { display: flex; flex-direction: column; gap: 8px; }
+    .lesson-reflect-q { font-size: 12px; font-weight: 700; color: var(--text); }
+    .lesson-why { font-size: 11px; color: var(--muted); line-height: 1.7; }
+    .lesson-nav { display: flex; gap: 8px; justify-content: space-between; flex-wrap: wrap; }
+
     /* ── PRÁCTICA ── */
     .practice-wrap { display: flex; flex-direction: column; gap: 22px; }
     .pr-card { background: var(--s1); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; display: flex; flex-direction: column; gap: 14px; }
@@ -1938,6 +1993,7 @@
 
       <div class="feature-tabs" id="featureTabs" role="tablist" aria-label="Secciones">
         <button type="button" class="tab-btn active" role="tab" id="tabBtnRef" data-tab="ref" aria-selected="true">Teclado</button>
+        <button type="button" class="tab-btn" role="tab" id="tabBtnCourse" data-tab="course" aria-selected="false">🎓 Curso</button>
         <button type="button" class="tab-btn" role="tab" id="tabBtnGuitar" data-tab="guitar" aria-selected="false">Guitarra</button>
         <button type="button" class="tab-btn" role="tab" id="tabBtnCircle" data-tab="circle" aria-selected="false">Quintas</button>
         <button type="button" class="tab-btn" role="tab" id="tabBtnTrainer" data-tab="trainer" aria-selected="false">Entrenador</button>
@@ -2234,6 +2290,28 @@
         <div class="tab-panel" id="tab-panel-listener" data-tab-panel="listener" hidden>
           <div class="listener-wrap" id="listenerWrap">
             <!-- populated by renderListener() -->
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-panel-course" data-tab-panel="course" hidden>
+          <div class="course-wrap">
+            <div class="course-head">
+              <div>
+                <h3 class="sec">Curso: improvisar razonando</h3>
+                <div class="course-sub">No se trata de memorizar escalas, sino de decidir en cada momento <b>qué</b> tocar, <b>cómo</b> y <b>cuándo</b>. Cada lección se toca sobre la banda y el micrófono evalúa tus decisiones.</div>
+              </div>
+              <div class="course-progress" id="courseProgress"></div>
+            </div>
+            <div class="course-method">
+              <div class="course-method-title">El método de las 3 preguntas</div>
+              <div class="course-method-steps">
+                <div><b>1</b> ¿Qué acorde suena ahora y cuál viene?</div>
+                <div><b>2</b> ¿Cuáles son sus notas y cuál me queda más cerca?</div>
+                <div><b>3</b> ¿Quiero reposo (nota del acorde) o tensión (nota de paso que después resuelvo)?</div>
+              </div>
+            </div>
+            <div class="course-map" id="courseMap"></div>
+            <div class="lesson" id="lessonView"></div>
           </div>
         </div>
 
@@ -3054,12 +3132,13 @@ function setTab(tab) {
   cancelMinorsPlay();
   // Liberar micrófono siempre al salir del tab listener
   if (tab !== 'listener') listenerStop();
+  if (tab !== 'course' && lessonRun.active) stopLessonEval();
   if (tab !== 'practice') {
     // Release the mic used by the tuner and drills.
     if (pitchMic.subs.has(onTunerPitch)) toggleTuner();
     if (drillState.active) { stopDrill(); renderDrill(); }
   }
-  activeTab = tab === 'guitar' || tab === 'circle' || tab === 'trainer' || tab === 'builder' || tab === 'minors' || tab === 'harm' || tab === 'listener' || tab === 'practice' ? tab : 'ref';
+  activeTab = tab === 'guitar' || tab === 'circle' || tab === 'trainer' || tab === 'builder' || tab === 'minors' || tab === 'harm' || tab === 'listener' || tab === 'practice' || tab === 'course' ? tab : 'ref';
   localStorage.setItem(ACTIVE_TAB_KEY, activeTab);
   document.querySelectorAll('.tab-btn').forEach(b => {
     const on = b.dataset.tab === activeTab;
@@ -3076,6 +3155,7 @@ function setTab(tab) {
   if (activeTab === 'harm') renderHarmonization();
   if (activeTab === 'listener') renderListener();
   if (activeTab === 'practice') { renderDrill(); renderSpeed(); }
+  if (activeTab === 'course') renderCourse();
 }
 
 function renderGuitarPositionButtons() {
@@ -4325,8 +4405,10 @@ function showPlayerBeat(idx) {
   if (dot) { dot.classList.add(beat.beatInMeasure === 0 ? 'downon' : 'on'); }
   updateCircleBeatHighlight(beat);
   updateJamNow(idx, true);
+  if (activeTab === 'course') updateLessonNow();
   if (!prev || prev.chordIdx !== beat.chordIdx || prev.chordPc !== beat.chordPc) {
     setChordHighlight(chordPcs(beat.chordPc, beat.chordType));
+    jamChordSerial++;
     // Mirror the sounding chord on the guitar tab (also non-diatonic ones, e.g. the IV7 of a blues).
     const note = noteName(beat.chordPc);
     playerChord = { key: '__player__', note, type: beat.chordType, degree: '', label: beat.chordName, notes: chordNotes(note, beat.chordType) };
@@ -4468,6 +4550,7 @@ function stopPlayer() {
   updateJamNow(0, false);
   updatePlayButton();
   if (speedState.active) endSpeedTrainer();
+  if (activeTab === 'course') renderLesson();
 }
 
 function togglePlay() {
@@ -5380,6 +5463,7 @@ function render() {
   applyChordHighlight();
   if (drillState.active) stopDrill();
   if (activeTab === 'practice') { renderDrill(); renderSpeed(); }
+  if (activeTab === 'course') renderLesson();
   renderJamPanel();
   if (activeTab === 'guitar') renderGuitarFretboard();
   if (activeTab === 'circle') { renderCircleTabSvg(); renderFifthsKeyDetail(); }
@@ -7401,6 +7485,679 @@ const listenerState = {
   lastRms: 0,
 };
 
+// ══════════════════════════════════════════════
+// CURSO: improvisar razonando (qué, cómo y cuándo tocar)
+// ══════════════════════════════════════════════
+// Texts are templates relative to the lesson's tonic, so "Otra tonalidad" transposes
+// the whole lesson: {n} = note n semitones above the tonic, {c:n:type} = chord on it.
+// Goal types (evaluated live from the mic while the jam plays):
+//   inSet          share of notes inside a set ('chord' sounding now, 'scale', or ivs over the tonic)
+//   phraseEnd      phrases (split by silence) whose last note hits a target
+//   phrases        phrases of a given length, i.e. leaving space
+//   targetOnChange first note after each chord change hits the target ('third', 'guide', 'chord')
+//   pair           two consecutive notes forming a tension → resolution (ivs over the tonic)
+//   approach       chromatic approach: a non-chord note a semitone below a chord tone, then the chord tone
+//   count          how many times a given degree is played (e.g. the characteristic note of a mode)
+//   motif          consecutive phrases that repeat the same melodic shape
+const COURSE_LEVELS = [
+  { id: 'basico', name: 'Básico', desc: 'Ubicarte: escuchar dónde está "casa", qué notas son seguras y cómo dejar espacio.' },
+  { id: 'intermedio', name: 'Intermedio', desc: 'Seguir los cambios: tocar el acorde que suena, tensar y resolver, elegir la escala razonando.' },
+  { id: 'avanzado', name: 'Avanzado', desc: 'Conducción de voces, color modal, cromatismo con intención y desarrollo de ideas.' },
+];
+
+const COURSE = [
+  // ── BÁSICO ───────────────────────────────────────
+  {
+    id: 'b1', level: 'basico', title: 'Dónde está "casa"',
+    setup: { root: 9, scale: 'pentatonic_minor', prog: 'Vamp i7', style: 'rock', bpm: 80 },
+    idea: 'Toda música tiene un centro: la tónica. Antes de pensar en escalas, tu oído tiene que reconocer cuándo una frase terminó en casa y cuándo quedó colgada.',
+    think: 'Antes de tocar, preguntate: ¿dónde está casa? Acá es {0}. Cualquier frase, por simple que sea, suena cerrada si termina ahí.',
+    when: 'Siempre que quieras cerrar una idea, o cuando te sientas perdido: volver a la tónica te reubica.',
+    steps: [
+      'Dale Play y escuchá dos vueltas sin tocar. Cantá la nota que suena "en casa".',
+      'Tocá frases cortas (2 a 4 notas) de la pentatónica y terminá cada una en {0}.',
+      'Entre frase y frase apagá las cuerdas: el silencio separa las frases.',
+    ],
+    goals: [{ type: 'phraseEnd', target: 'root', count: 6, label: 'Frases que terminan en la tónica ({0})' }],
+    debrief: 'Tu oído ya distingue reposo de suspenso. Todo lo que sigue en el curso se apoya en esto: saber hacia dónde vas antes de salir.',
+    reflect: {
+      q: 'Terminaste una frase en {7} en vez de {0}. ¿Qué sensación genera?',
+      options: ['Queda abierta, como una pregunta que pide continuar', 'Suena igual de cerrada', 'Suena desafinada', 'Cambia la tonalidad'],
+      why: '{7} es la 5ª: pertenece al acorde y no choca, pero no es casa. Sirve para dejar una frase abierta y responderla después en {0}.',
+    },
+  },
+  {
+    id: 'b2', level: 'basico', title: 'Con tres notas alcanza',
+    setup: { root: 9, scale: 'pentatonic_minor', prog: 'Vamp i7', style: 'ballad', bpm: 75 },
+    idea: 'Las notas del acorde (1, ♭3, 5) son las más seguras. Con solo tres notas ya se puede improvisar con sentido si variás el ritmo y el orden.',
+    think: 'No necesitás más notas, necesitás decisiones: ¿qué nota, cuánto dura, cuándo entra? Limitarte a {0}, {3} y {7} te obliga a pensar en ritmo y dirección.',
+    when: 'Cuando estás bloqueado o el tempo es rápido: reducí a las notas del acorde.',
+    steps: [
+      'Ubicá {0}, {3} y {7} en una sola zona del mástil.',
+      'Tocá frases usando solo esas tres notas. Variá: notas largas, repetidas, silencios.',
+      'Probá empezar una frase en un tiempo débil (el "y" del 2) en vez de en el 1.',
+    ],
+    goals: [
+      { type: 'inSet', set: 'ivs', ivs: [0, 3, 7], min: 0.9, notes: 20, label: 'Notas dentro de {0}–{3}–{7}' },
+      { type: 'phrases', count: 5, minLen: 2, label: 'Frases separadas por silencio' },
+    ],
+    debrief: 'Si sonó musical con tres notas, es porque la música está en las decisiones, no en la cantidad de notas.',
+    reflect: {
+      q: '¿Por qué {0}, {3} y {7} no "chocan" nunca sobre {c:0:min7}?',
+      options: ['Porque forman el acorde que está sonando', 'Porque son notas naturales', 'Porque están en la pentatónica', 'Porque son graves'],
+      why: 'Son 1, ♭3 y 5 de {c:0:min}: tocar una nota del acorde es reforzar lo que ya suena. Las demás notas de la escala son color o tensión.',
+    },
+  },
+  {
+    id: 'b3', level: 'basico', title: 'La caja 1 y sus puntos de apoyo',
+    setup: { root: 9, scale: 'pentatonic_minor', prog: 'Vamp i7', style: 'rock', bpm: 85 },
+    idea: 'La pentatónica menor tiene 5 notas y ninguna choca con el acorde menor. En la guitarra se organiza en 5 cajas; la primera tiene la tónica en la 6ª cuerda (forma E).',
+    think: 'Ubicá primero las tónicas dentro de la caja: están en las cuerdas 6, 4 y 1. Son tus puntos de apoyo: salí de una, recorré, y volvé a otra.',
+    when: 'Rock, blues y pop: sobre acordes menores y progresiones que no cambian de tonalidad.',
+    steps: [
+      'En la pestaña Guitarra elegí "Pos 1 · forma E" para ver la caja.',
+      'Marcá las tres {0} de la caja y tocá frases que vayan de una a otra.',
+      'Terminá las frases en notas del acorde: {0}, {3} o {7}.',
+    ],
+    goals: [
+      { type: 'inSet', set: 'scale', min: 0.9, notes: 30, label: 'Notas dentro de la pentatónica' },
+      { type: 'phraseEnd', target: 'chord', count: 5, label: 'Frases que terminan en nota del acorde' },
+    ],
+    debrief: 'Ya no recorrés la caja de memoria: te movés entre puntos de apoyo. Eso es lo que te deja improvisar sin perderte.',
+    reflect: {
+      q: 'Tocaste un {8} y sonó raro. ¿Por qué?',
+      options: ['Es la ♭6: no está en la pentatónica y roza la 5ª ({7}) a medio tono', 'Es la tónica', 'Está desafinada', 'Es una nota del acorde'],
+      why: '{8} está a medio tono de {7}, la 5ª del acorde. Una nota a medio tono de una nota del acorde genera fricción: si no la resolvés, suena a error.',
+    },
+  },
+  {
+    id: 'b4', level: 'basico', title: 'Pregunta y respuesta',
+    setup: { root: 9, scale: 'pentatonic_minor', prog: 'Vamp i7', style: 'funk', bpm: 85 },
+    idea: 'Improvisar es conversar. Una frase "pregunta" (termina abierta) y otra "responde" (termina en casa). El silencio entre ellas le da sentido.',
+    think: 'Dos compases tocás, dos compases escuchás. Pregunta → terminá en la 5ª ({7}) o la ♭7 ({10}). Respuesta → terminá en la tónica ({0}).',
+    when: 'En cualquier solo. Es lo que separa "tocar notas" de "decir algo".',
+    steps: [
+      'Tocá una frase corta que termine en {7} o {10} (pregunta).',
+      'Callate un compás.',
+      'Respondé con una frase parecida que termine en {0}.',
+    ],
+    goals: [
+      { type: 'phrases', count: 8, minLen: 2, maxLen: 6, label: 'Frases cortas (2 a 6 notas)' },
+      { type: 'phraseEnd', target: 'ivs', ivs: [7, 10], count: 3, label: 'Preguntas: terminan en {7} o {10}' },
+      { type: 'phraseEnd', target: 'root', count: 3, label: 'Respuestas: terminan en {0}' },
+    ],
+    debrief: 'Con preguntas y respuestas tu solo tiene forma. El oyente siente que la música avanza y se cierra.',
+    reflect: {
+      q: '¿Por qué el silencio mejora un solo?',
+      options: ['Deja que la idea se escuche y le da peso a la siguiente', 'Porque hay menos errores', 'Porque la banda suena más fuerte', 'No lo mejora'],
+      why: 'Sin silencio no hay frases, hay un chorro de notas. El espacio es lo que convierte notas en ideas.',
+    },
+  },
+  {
+    id: 'b5', level: 'basico', title: 'Dos acordes, dos destinos',
+    setup: { root: 9, scale: 'dorian', prog: 'i7 – IV7 (vamp funk)', style: 'funk', bpm: 90 },
+    idea: 'Cuando el acorde cambia, las notas seguras cambian. {c:0:min7} = {0} {3} {7} {10}; {c:5:dom} = {5} {9} {0} {3}. La escala sirve para los dos, pero el destino es otro.',
+    think: 'Las 3 preguntas: ¿qué acorde suena? → ¿cuáles son sus notas? → ¿cuál me queda más cerca? Terminá cada frase en una nota del acorde que suena en ESE momento.',
+    when: 'Siempre que haya más de un acorde: es la base para seguir los cambios.',
+    steps: [
+      'Mirá el panel "Ahora / Sigue" del Modo jam para saber qué acorde viene.',
+      'Sobre {c:0:min7} terminá en {0}, {3} o {7}. Sobre {c:5:dom} terminá en {5}, {9} o {0}.',
+      'Fijate que {0} y {3} sirven en los dos acordes: son notas "puente".',
+    ],
+    goals: [
+      { type: 'phraseEnd', target: 'chord', count: 8, label: 'Frases que aterrizan en el acorde del momento' },
+      { type: 'inSet', set: 'chord', min: 0.5, notes: 30, label: 'Al menos la mitad de las notas en el acorde' },
+    ],
+    debrief: 'Pasaste de "tocar la escala" a "tocar el acorde". Esa diferencia es la que hace que un solo suene a la canción y no a un ejercicio.',
+    reflect: {
+      q: 'Sobre {c:5:dom}, ¿qué nota de la escala es la más "de ese acorde" y no estaba en {c:0:min7}?',
+      options: ['{9}', '{0}', '{3}', '{7}'],
+      why: '{9} es la 3ª de {c:5:dom} y es justamente la 6ª mayor que distingue al dórico. Tocarla en el cambio hace que se escuche la armonía.',
+    },
+  },
+
+  // ── INTERMEDIO ───────────────────────────────────
+  {
+    id: 'i1', level: 'intermedio', title: 'Notas guía: la 3ra en cada cambio',
+    setup: { root: 7, scale: 'major', prog: 'I – IV – V – I', style: 'rock', bpm: 80 },
+    idea: 'La 3ra de un acorde dice si es mayor o menor: es la nota con más información. Si la tocás justo cuando cambia el acorde, cualquiera escucha la armonía aunque no haya banda.',
+    think: 'Mirá el próximo acorde ANTES de que llegue. Buscá su 3ra cerca de donde estás en el mástil y caé en ella en el tiempo 1.',
+    when: 'Progresiones con cambios claros: pop, rock, country, jazz.',
+    steps: [
+      '{c:0:maj} → {c:5:maj} → {c:7:maj} → {c:0:maj}. Sus 3ras: {4}, {9}, {11}, {4}.',
+      'Primero tocá SOLO la 3ra en cada tiempo 1. Nada más.',
+      'Después agregá 2 o 3 notas antes, que lleven hacia esa 3ra.',
+    ],
+    goals: [{ type: 'targetOnChange', target: 'third', count: 8, label: 'Cambios donde tu primera nota fue la 3ra' }],
+    debrief: 'Las 3ras dibujan la progresión. Con esta idea podés tocar sobre cualquier canción: primero los destinos, después el camino.',
+    reflect: {
+      q: '¿Por qué apuntar a la 3ra y no a la tónica del acorde?',
+      options: ['La tónica la toca el bajo; la 3ra dice si el acorde es mayor o menor', 'La tónica suena mal', 'La 3ra es más aguda', 'Da lo mismo'],
+      why: 'La tónica ya está en el bajo. La 3ra aporta la información que falta: el color del acorde. Por eso suena a "seguir los cambios".',
+    },
+  },
+  {
+    id: 'i2', level: 'intermedio', title: 'Tensión y resolución',
+    setup: { root: 0, scale: 'major', prog: 'I – IV – V – I', style: 'ballad', bpm: 70 },
+    idea: 'Una nota fuera del acorde no es un error: es tensión. Lo que la vuelve música es resolverla por grado conjunto a una nota del acorde.',
+    think: 'Sobre {c:0:maj}: {5} (4ª) quiere bajar a {4} (3ª); {11} (7ª) quiere subir a {0}; {2} (2ª) cae a {0} o sube a {4}. Tocá la tensión en tiempo fuerte, dejala sonar, y resolvé.',
+    when: 'Para darle intención y dirección a una frase; en baladas y melodías cantables.',
+    steps: [
+      'Tocá {5} sobre el tiempo 1, sostenela, y bajá a {4}.',
+      'Probá {11} → {0} y {2} → {0}.',
+      'Mezclalo en frases: la tensión siempre en lugar importante, la resolución después.',
+    ],
+    goals: [{ type: 'pair', pairs: [[5, 4], [11, 0], [2, 0], [2, 4], [9, 7]], count: 6, label: 'Tensiones resueltas por grado conjunto' }],
+    debrief: 'Tensión → resolución es el motor de la música tonal. Ahora la elegís vos, en lugar de que te pase por accidente.',
+    reflect: {
+      q: '¿Qué hace que una tensión "funcione"?',
+      options: ['Que se resuelva a una nota del acorde por medio tono o tono', 'Que se toque fuerte', 'Que se repita muchas veces', 'Que sea aguda'],
+      why: 'El oído acepta casi cualquier nota si después escucha hacia dónde iba. La resolución por grado conjunto hace que la tensión suene a decisión.',
+    },
+  },
+  {
+    id: 'i3', level: 'intermedio', title: 'Blues: la ♭3 que sube a la 3',
+    setup: { root: 9, scale: 'blues', prog: 'Blues 12 compases', style: 'shuffle', bpm: 85 },
+    idea: 'El sonido del blues es la ambigüedad entre mayor y menor: sobre {c:0:dom}, la ♭3 ({3}) roza y sube a la 3 ({4}).',
+    think: 'Sobre {c:0:dom}: {3} → {4} (o un bend de un cuarto de tono). Sobre {c:5:dom}, {3} es su ♭7: ya es nota del acorde. La misma nota cambia de función según el acorde.',
+    when: 'Blues, rock, funk y soul: sobre acordes dominantes.',
+    steps: [
+      'Sobre {c:0:dom} tocá {3} y deslizá (o hacé un bend) a {4}.',
+      'Cuando llega {c:5:dom}, quedate en {3}: ahora es nota del acorde.',
+      'Terminá frases en notas del acorde de cada momento.',
+    ],
+    goals: [
+      { type: 'pair', pairs: [[3, 4]], count: 5, label: '♭3 → 3 ({3} → {4})' },
+      { type: 'phraseEnd', target: 'chord', count: 6, label: 'Frases que terminan en el acorde' },
+    ],
+    debrief: 'Ese roce de ♭3 a 3 es "el" sonido del blues. Y viste algo clave: una nota no es buena o mala, depende del acorde.',
+    reflect: {
+      q: 'Sobre {c:5:dom} (el IV del blues), ¿qué es la nota {3}?',
+      options: ['Su ♭7: una nota del acorde', 'Una nota fuera del acorde', 'Su tónica', 'Su 3ª'],
+      why: '{c:5:dom} = {5} {9} {0} {3}. La ♭3 de la tonalidad es la ♭7 del IV: por eso la pentatónica menor suena tan bien en el IV del blues.',
+    },
+  },
+  {
+    id: 'i4', level: 'intermedio', title: 'Seguir el blues: la 3ra de cada acorde',
+    setup: { root: 9, scale: 'blues', prog: 'Blues 12 compases', style: 'shuffle', bpm: 80 },
+    idea: 'En un blues cada acorde tiene su 3ra: {c:0:dom} → {4}, {c:5:dom} → {9}, {c:7:dom} → {11}. Ninguna está en la pentatónica menor: por eso tocar solo "la escala" suena siempre igual.',
+    think: 'Pensá en el acorde, no en la escala: cuando llega {c:5:dom}, apuntá a {9}; cuando llega {c:7:dom}, a {11}. La pentatónica es el camino; la 3ra es el destino.',
+    when: 'Para que tu blues "diga" los cambios: es lo que separa un solo de principiante de uno que suena a disco.',
+    steps: [
+      'Ubicá {4}, {9} y {11} cerca de la caja 1.',
+      'En cada cambio, tu primera nota es la 3ra del acorde nuevo.',
+      'Entre cambios, usá la pentatónica libremente.',
+    ],
+    goals: [{ type: 'targetOnChange', target: 'third', count: 8, label: 'Cambios donde caíste en la 3ra' }],
+    debrief: 'Combinaste dos mundos: la pentatónica para frasear y las 3ras para marcar los cambios. Así piensan los grandes del blues.',
+    reflect: {
+      q: '¿Por qué la pentatónica menor sola no marca los cambios del blues?',
+      options: ['No contiene las 3ras mayores de los acordes dominantes', 'Tiene pocas notas', 'Es muy aguda', 'Sí los marca'],
+      why: 'La pentatónica menor de {0} tiene {3}, pero los acordes son dominantes con 3ras mayores ({4}, {9}, {11}). Sumarlas es lo que hace que se escuche la progresión.',
+    },
+  },
+  {
+    id: 'i5', level: 'intermedio', title: 'Elegir la escala sin tablas',
+    setup: { root: 9, scale: 'natural_minor', prog: 'i – VI – III – VII', style: 'rock', bpm: 85 },
+    idea: 'Para elegir escala no hace falta memorizar tablas: mirá los acordes. {c:0:min}, {c:8:maj}, {c:3:maj} y {c:10:maj} juntos dan exactamente {0} menor natural.',
+    think: 'Juntá las notas de todos los acordes: esa ES la escala. Si un acorde trae una nota que no estaba, la escala cambia mientras suena ese acorde (lo vas a ver en la pregunta final).',
+    when: 'Ante cualquier progresión nueva: primero las notas de los acordes, después la escala.',
+    steps: [
+      'Escribí (o pensá) las notas de cada acorde. ¿Cuántas notas distintas hay?',
+      'Improvisá con esas 7 notas.',
+      'Hacé sonar la ♭6 ({8}): es el color eólico, sobre todo en {c:8:maj}.',
+    ],
+    goals: [
+      { type: 'inSet', set: 'scale', min: 0.9, notes: 30, label: 'Notas de {0} menor natural' },
+      { type: 'count', ivs: [8], count: 4, label: 'Usaste la ♭6 ({8}), el color eólico' },
+      { type: 'phraseEnd', target: 'chord', count: 5, label: 'Frases que terminan en el acorde' },
+    ],
+    debrief: 'Deduciste la escala desde la armonía. Con este razonamiento no necesitás preguntar "¿qué escala va?": lo calculás.',
+    reflect: {
+      q: 'Si el último acorde fuera {c:7:dom} en vez de {c:10:maj}, ¿qué nota cambia en ese compás?',
+      options: ['Aparece {11}, la 3ª de {c:7:dom}: en ese compás suena menor armónica', 'Ninguna', 'Cambia la tónica', 'Toda la progresión pasa a escala mayor'],
+      why: '{c:7:dom} = {7} {11} {2} {5}. Su 3ra ({11}) no está en la menor natural: en ese compás se toca menor armónica. La armonía manda.',
+    },
+  },
+
+  // ── AVANZADO ─────────────────────────────────────
+  {
+    id: 'a1', level: 'avanzado', title: 'ii–V–I: la línea invisible',
+    setup: { root: 0, scale: 'major', prog: 'ii – V – I', style: 'bossa', bpm: 90 },
+    idea: 'En el ii–V–I la 7ª de cada acorde baja medio tono y se convierte en la 3ª del siguiente: {c:2:min7} ({0}) → {c:7:dom} ({11}); {c:7:dom} ({5}) → {c:0:maj7} ({4}). Es la línea que conecta la armonía.',
+    think: 'No pienses en tres escalas: pensá en dos líneas que bajan, {0}→{11} y {5}→{4}. Adorná alrededor, pero llegá a esas notas en cada cambio.',
+    when: 'Jazz, bossa, soul y cualquier cadencia V → I.',
+    steps: [
+      'Tocá solo notas guía (3ra o 7ma) en el tiempo 1 de cada acorde.',
+      'Uní la 7ma de un acorde con la 3ra del siguiente bajando medio tono.',
+      'Agregá notas de la escala entre medio sin perder esos destinos.',
+    ],
+    goals: [
+      { type: 'targetOnChange', target: 'guide', count: 8, label: 'Cambios donde caíste en 3ra o 7ma' },
+      { type: 'pair', pairs: [[0, 11], [5, 4]], count: 4, label: 'Conducción 7ma → 3ra por medio tono' },
+    ],
+    debrief: 'Encontraste la voz interna de la cadencia más usada del jazz. Con dos notas que bajan medio tono ya "se escuchan" los acordes.',
+    reflect: {
+      q: '¿Por qué la 7ª de {c:2:min7} ({0}) "quiere" ir a {11} en {c:7:dom}?',
+      options: ['Está a medio tono y {11} es la 3ª del acorde nuevo', 'Porque {0} es la tónica', 'Por la escala de blues', 'Porque {11} es más aguda'],
+      why: 'El movimiento de medio tono es el más suave que existe. Llegar por medio tono a la nota que define el acorde nuevo hace que el cambio suene inevitable.',
+    },
+  },
+  {
+    id: 'a2', level: 'avanzado', title: 'Color modal: hacer sonar el dórico',
+    setup: { root: 2, scale: 'dorian', prog: 'i7 – IV7 (vamp funk)', style: 'funk', bpm: 95 },
+    idea: 'Un modo no es "otra escala para memorizar": es la escala con UNA nota que le da carácter. En dórico es la 6ª mayor ({9} sobre {c:0:min7}).',
+    think: 'Si no tocás la nota característica, nadie distingue dórico de eólico. Hacela sonar en lugares importantes (tiempo fuerte, nota larga) y resolvé al acorde.',
+    when: 'Vamps de un acorde menor con IV mayor: funk, Santana, "So What", "Oye como va".',
+    steps: [
+      'Tocá {9} sobre {c:0:min7} como nota larga y escuchá el color.',
+      'Notá que {9} es también la 3ª de {c:5:dom}: aprovechala en el cambio.',
+      'Terminá frases en notas del acorde de cada momento.',
+    ],
+    goals: [
+      { type: 'count', ivs: [9], count: 6, label: 'Usaste la 6ª dórica ({9})' },
+      { type: 'phraseEnd', target: 'chord', count: 6, label: 'Frases que terminan en el acorde' },
+      { type: 'inSet', set: 'scale', min: 0.85, notes: 30, label: 'Notas dentro de {0} dórico' },
+    ],
+    debrief: 'Pensaste el modo como un color que se elige, no como un dibujo en el mástil. Lo mismo vale para lidio (#4), mixolidio (♭7) o frigio (♭2).',
+    reflect: {
+      q: '¿Qué escucharía alguien si tocás {0} dórico evitando siempre {9}?',
+      options: ['No podría distinguirlo de {0} menor natural', 'Sonaría a mayor', 'Sonaría desafinado', 'Sonaría a blues'],
+      why: 'Dórico y eólico solo difieren en la 6ª. Si no la tocás, el modo no "aparece": la nota característica es la que comunica el color.',
+    },
+  },
+  {
+    id: 'a3', level: 'avanzado', title: 'Aproximación cromática con intención',
+    setup: { root: 7, scale: 'major', prog: 'I – V – vi – IV', style: 'rock', bpm: 90 },
+    idea: 'Una nota fuera de la escala, medio tono abajo de una nota del acorde, suena intencional si resuelve enseguida: es una nota de aproximación.',
+    think: 'Elegí primero el destino (una nota del acorde que suena). Después llegá desde medio tono abajo. La nota de afuera es corta; la de llegada, larga.',
+    when: 'Para sonar más fluido en cualquier estilo. Con moderación: es condimento, no plato principal.',
+    steps: [
+      'Sobre {c:0:maj}: tocá {3} → {4} (la 3ª) o {6} → {7} (la 5ª).',
+      'Hacelo en cada acorde: medio tono abajo de una de sus notas.',
+      'Que la nota de llegada caiga en tiempo fuerte.',
+    ],
+    goals: [
+      { type: 'approach', count: 8, label: 'Aproximaciones cromáticas resueltas' },
+      { type: 'inSet', set: 'scale', min: 0.75, notes: 30, label: 'Sin perder la tonalidad (≥75% en escala)' },
+    ],
+    debrief: 'La "nota equivocada" pasó a ser un recurso. La diferencia está en el destino y en la resolución inmediata.',
+    reflect: {
+      q: '¿Qué diferencia una nota de aproximación de una nota equivocada?',
+      options: ['La resolución inmediata por semitono a una nota del acorde', 'Que sea aguda', 'Que esté en la escala', 'Ninguna'],
+      why: 'El oído juzga la nota por lo que viene después. Si resuelve por semitono a una nota del acorde, suena a decisión.',
+    },
+  },
+  {
+    id: 'a4', level: 'avanzado', title: 'La tensión del dominante en menor',
+    setup: { root: 9, scale: 'harmonic_minor', prog: 'i – iv – V7 – i', style: 'ballad', bpm: 70 },
+    idea: 'En menor, el V7 ({c:7:dom}) trae la sensible {11} (su 3ª), que no está en la menor natural, y su ♭9 es {8}, la ♭6 de la tonalidad. Esas dos notas generan la máxima tensión antes de volver al i.',
+    think: 'Sobre {c:7:dom}: tocá {8} y bajá a {7}, o tocá la sensible y subí a {0} cuando llega {c:0:min}. Tensión en el V, resolución en el i: ahí está el "cuándo".',
+    when: 'Flamenco, metal neoclásico, tango y jazz menor: cada vez que aparece V7 → i.',
+    steps: [
+      'Esperá al {c:7:dom}. Tocá {8} y resolvé a {7}.',
+      'Tocá la 3ª de {c:7:dom} y subí medio tono a {0} justo en el cambio a {c:0:min}.',
+      'Sobre los otros acordes usá la escala con calma: la tensión se guarda para el V.',
+    ],
+    goals: [{ type: 'pair', pairs: [[8, 7], [11, 0]], count: 5, label: 'Tensiones del V resueltas (♭6→5, sensible→tónica)' }],
+    debrief: 'Usaste la tensión en el lugar donde la armonía la pide. Eso es tocar "con la armonía" y no "encima" de ella.',
+    reflect: {
+      q: '¿Por qué la sensible suena bien sobre {c:7:dom} pero mal sobre {c:0:min}?',
+      options: ['Es la 3ª de {c:7:dom}, pero sobre {c:0:min} roza la tónica a medio tono', 'Siempre suena mal', 'Porque es tecla negra', 'Porque es aguda'],
+      why: 'La misma nota cambia de función: en el V es nota del acorde; en el i es una tensión que pide resolver a {0}.',
+    },
+  },
+  {
+    id: 'a5', level: 'avanzado', title: 'Motivo y desarrollo',
+    setup: { root: 9, scale: 'dorian', prog: 'i7 – IV7 (vamp funk)', style: 'funk', bpm: 90 },
+    idea: 'Los grandes solos no son una lluvia de notas: toman una idea corta (un motivo) y la repiten variándola. Eso es lo que el oyente recuerda.',
+    think: 'Inventá un motivo de 3 o 4 notas. Repetilo con el mismo ritmo y la misma forma, adaptalo al acorde nuevo, y recién después cambialo.',
+    when: 'Para construir un solo con principio, desarrollo y final; sobre todo en vamps largos.',
+    steps: [
+      'Tocá un motivo de 3–4 notas y callate.',
+      'Repetilo con la misma forma (sube/baja igual), aunque empiece en otra nota para encajar en el acorde.',
+      'Después de 3 o 4 repeticiones, variá una sola cosa: el ritmo o la última nota.',
+    ],
+    goals: [
+      { type: 'motif', count: 4, label: 'Repeticiones de tu motivo (misma forma)' },
+      { type: 'phraseEnd', target: 'chord', count: 5, label: 'Frases que terminan en el acorde' },
+    ],
+    debrief: 'Le diste una historia al solo: una idea, su desarrollo y un cierre. Esta es la herramienta que más se nota en un solo de verdad.',
+    reflect: {
+      q: '¿Qué conviene variar primero de un motivo para que siga siendo reconocible?',
+      options: ['La altura (transponerlo), manteniendo el ritmo y la forma', 'Todo a la vez', 'Nada: repetirlo siempre igual', 'El tempo de la banda'],
+      why: 'El oído reconoce un motivo sobre todo por su ritmo y su contorno. Si eso se mantiene, podés moverlo a otras notas y sigue siendo "tu" idea.',
+    },
+  },
+];
+
+const COURSE_PROGRESS_KEY = 'escalaimprov:course';
+let courseLessonIdx = 0;
+let lessonRootOffset = 0;   // "Otra tonalidad": semitones away from the lesson's written key
+const lessonRun = {
+  active: false, goals: [], phrase: [], prevPhrase: null, prevNote: null, lastNoteAt: 0,
+  gapTimer: null, completed: false, reflectAnswer: null, lastHeard: null,
+};
+let jamChordSerial = 0;     // bumps on every chord change heard in the jam (for "first note after the change")
+
+function getCourseProgress() {
+  try { return JSON.parse(localStorage.getItem(COURSE_PROGRESS_KEY) || '{}') || {}; } catch (_) { return {}; }
+}
+function markLessonDone(id) {
+  const progress = getCourseProgress();
+  progress[id] = new Date().toISOString();
+  try { localStorage.setItem(COURSE_PROGRESS_KEY, JSON.stringify(progress)); } catch (_) {}
+}
+
+function lessonRoot() {
+  return (COURSE[courseLessonIdx].setup.root + lessonRootOffset) % 12;
+}
+
+// Semitones from the tonic down to the parent major key, to know if the key is written with flats.
+const PARENT_MAJOR_OFFSET = {
+  major: 0, pentatonic_major: 0, lydian: 7, mixolydian: 5, dorian: 10, phrygian: 8, locrian: 1,
+  natural_minor: 3, harmonic_minor: 3, melodic_minor: 3, pentatonic_minor: 3, blues: 3,
+};
+const FLAT_MAJOR_KEYS = new Set([5, 10, 3, 8, 1]); // F B♭ E♭ A♭ D♭
+
+function lessonUsesFlats() {
+  const { scale } = COURSE[courseLessonIdx].setup;
+  return FLAT_MAJOR_KEYS.has((lessonRoot() + (PARENT_MAJOR_OFFSET[scale] ?? 0)) % 12);
+}
+
+// Fill {n} and {c:n:type} relative to the lesson tonic, spelled with the key's accidentals.
+function fillLesson(text) {
+  const root = lessonRoot();
+  const names = lessonUsesFlats() ? NOTES_FLAT : NOTES_SHARP;
+  return text
+    .replace(/\{c:(\d+):(\w+)\}/g, (_, n, type) => names[(root + Number(n)) % 12] + (QUALITY_SUFFIX[type] ?? ''))
+    .replace(/\{(\d+)\}/g, (_, n) => names[(root + Number(n)) % 12]);
+}
+
+function renderCourse() {
+  const progress = getCourseProgress();
+  const doneCount = COURSE.filter(l => progress[l.id]).length;
+  const nextIdx = COURSE.findIndex(l => !progress[l.id]);
+  document.getElementById('courseProgress').innerHTML = `<b>${doneCount} / ${COURSE.length}</b>lecciones completas`;
+  document.getElementById('courseMap').innerHTML = COURSE_LEVELS.map(level => `
+    <div class="course-level">
+      <div class="course-level-name">${level.name}</div>
+      <div class="course-level-desc">${level.desc}</div>
+      ${COURSE.map((l, i) => l.level !== level.id ? '' : `
+        <button type="button" class="lesson-pill${progress[l.id] ? ' done' : ''}${i === nextIdx ? ' next' : ''}${i === courseLessonIdx ? ' active' : ''}" data-lesson-idx="${i}">
+          <span class="lp-num">${i + 1}</span>${l.title}<span class="lp-state">${progress[l.id] ? '✓' : i === nextIdx ? '→' : ''}</span>
+        </button>`).join('')}
+    </div>`).join('');
+  renderLesson();
+}
+
+function goalLabel(g) { return fillLesson(g.label); }
+
+function goalProgress(g) {
+  if (g.type === 'inSet') {
+    const ratio = g.total ? g.hits / g.total : 0;
+    return { pct: Math.min(1, g.total / g.notes) * Math.min(1, ratio / g.min), text: `${Math.round(ratio * 100)}% (${g.total}/${g.notes} notas, meta ${Math.round(g.min * 100)}%)` };
+  }
+  if (g.type === 'targetOnChange') {
+    return { pct: Math.min(1, g.hits / g.count), text: `${g.hits}/${g.count}${g.total ? ` · ${g.hits} de ${g.total} cambios` : ''}` };
+  }
+  return { pct: Math.min(1, g.hits / g.count), text: `${g.hits}/${g.count}` };
+}
+
+function renderLessonGoals() {
+  const el = document.getElementById('lessonGoals');
+  if (!el) return;
+  const goals = lessonRun.goals.length ? lessonRun.goals : COURSE[courseLessonIdx].goals.map(g => ({ ...g, hits: 0, total: 0, done: false }));
+  el.innerHTML = goals.map(g => {
+    const p = goalProgress(g);
+    return `<div class="lesson-goal${g.done ? ' done' : ''}">
+      <span>${g.done ? '✓ ' : ''}${goalLabel(g)}</span><span class="lg-val">${p.text}</span>
+      <div class="lg-bar"><div class="lg-fill" style="width:${(p.pct * 100).toFixed(0)}%"></div></div>
+    </div>`;
+  }).join('');
+}
+
+function renderLesson() {
+  const lesson = COURSE[courseLessonIdx];
+  const level = COURSE_LEVELS.find(l => l.id === lesson.level);
+  const scale = SCALES.find(s => s.id === lesson.setup.scale);
+  const style = JAM_STYLES[lesson.setup.style];
+  const done = !!getCourseProgress()[lesson.id];
+  const reflect = lesson.reflect;
+  const answered = lessonRun.reflectAnswer;
+  const reflectHtml = (lessonRun.completed || done) ? `
+    <div class="lesson-done"><b>${lessonRun.completed ? '¡Lección completa!' : 'Ya completaste esta lección.'}</b> ${fillLesson(lesson.debrief)}</div>
+    <div class="lesson-reflect">
+      <div class="lesson-card think"><h4>Para pensar</h4><p class="lesson-reflect-q">${fillLesson(reflect.q)}</p></div>
+      <div class="trainer-answer-grid wide">
+        ${reflect.options.map((o, i) => `<button type="button" class="answer-btn${answered === null ? '' : i === 0 ? (answered === 0 ? ' correct' : ' reveal') : i === answered ? ' wrong' : ''}" data-reflect="${i}" ${answered === null ? '' : 'disabled'}>${fillLesson(o)}</button>`)
+          // Options are written with the right answer first; shuffle them deterministically per lesson.
+          .map((html, i, all) => all[(i * 3 + courseLessonIdx) % all.length]).join('')}
+      </div>
+      ${answered === null ? '' : `<div class="lesson-why">${answered === 0 ? '✓ ' : '✗ '}${fillLesson(reflect.why)}</div>`}
+    </div>` : '';
+
+  document.getElementById('lessonView').innerHTML = `
+    <div>
+      <div class="lesson-kicker">${level.name} · Lección ${courseLessonIdx + 1} de ${COURSE.length}${lessonRootOffset ? ' · transpuesta' : ''}</div>
+      <div class="lesson-title">${lesson.title}</div>
+    </div>
+    <div class="lesson-cards">
+      <div class="lesson-card"><h4>La idea</h4><p>${fillLesson(lesson.idea)}</p></div>
+      <div class="lesson-card think"><h4>Cómo pensarlo</h4><p>${fillLesson(lesson.think)}</p></div>
+      <div class="lesson-card"><h4>Cuándo usarlo</h4><p>${fillLesson(lesson.when)}</p></div>
+    </div>
+    <div>
+      <h3 class="sec">En la guitarra</h3>
+      <ol class="lesson-steps">${lesson.steps.map(st => `<li>${fillLesson(st)}</li>`).join('')}</ol>
+    </div>
+    <div class="lesson-setup">Backing: <b>${fillLesson('{0}')} ${scale.name}</b> · <b>${lesson.setup.prog}</b> · ${style.name} · ${lesson.setup.bpm} BPM</div>
+    <div class="pr-row">
+      <button type="button" class="btn-accent" id="lessonPlayBtn">${jamRunning ? '⏹ Parar backing' : '▶ Preparar y tocar'}</button>
+      <button type="button" class="track-btn${lessonRun.active ? ' on' : ''}" id="lessonEvalBtn">${lessonRun.active ? '🎤 Escuchando… (detener)' : '🎤 Evaluar con micrófono'}</button>
+      <button type="button" id="lessonTransposeBtn" title="La misma lección en otro tono: el razonamiento se transfiere, la digitación no">🔀 Otra tonalidad</button>
+      ${done || lessonRun.completed ? '' : '<button type="button" id="lessonSelfBtn" title="Si no podés usar el micrófono">Lo hice sin micrófono</button>'}
+    </div>
+    <div class="lesson-live">
+      <div class="lesson-now" id="lessonNow"><small>Dale play al backing</small></div>
+      <div>
+        <div class="lesson-goals" id="lessonGoals"></div>
+        <div class="lesson-heard" id="lessonHeard" style="margin-top:8px;"></div>
+      </div>
+    </div>
+    ${reflectHtml}
+    <div class="lesson-nav">
+      <button type="button" id="lessonPrevBtn" ${courseLessonIdx === 0 ? 'disabled' : ''}>← Anterior</button>
+      <button type="button" id="lessonNextBtn" ${courseLessonIdx === COURSE.length - 1 ? 'disabled' : ''}>Siguiente →</button>
+    </div>`;
+  renderLessonGoals();
+  updateLessonNow();
+}
+
+function updateLessonNow() {
+  const el = document.getElementById('lessonNow');
+  if (!el) return;
+  if (!jamRunning || !currentChordPcs.length) {
+    el.innerHTML = `<small>${jamRunning ? 'Contando…' : 'Dale play al backing'}</small>`;
+    return;
+  }
+  const beat = playerBeats[shownBeat];
+  if (!beat) return;
+  const ivs = CHORD_INTERVALS[beat.chordType] || CHORD_INTERVALS.maj;
+  const third = ivs.length > 2 ? noteName((beat.chordPc + ivs[1]) % 12) : noteName(beat.chordPc);
+  el.innerHTML = `${beat.chordName}<small>3ra: ${third} · sigue ${document.getElementById('jamNext')?.textContent || ''}</small>`;
+}
+
+function selectLesson(idx) {
+  if (lessonRun.active) stopLessonEval();
+  courseLessonIdx = Math.max(0, Math.min(COURSE.length - 1, idx));
+  lessonRootOffset = 0;
+  lessonRun.completed = false;
+  lessonRun.reflectAnswer = null;
+  lessonRun.goals = [];
+  renderCourse();
+}
+
+// Load the lesson's key, scale, progression, groove and tempo into the jam, and play.
+function prepareLessonBacking() {
+  const { setup } = COURSE[courseLessonIdx];
+  rootIdx = lessonRoot();
+  // Write the whole app in the lesson key's accidentals, so the backing matches the texts.
+  notation = lessonUsesFlats() ? 'flat' : 'sharp';
+  document.getElementById('notationSel').value = notation;
+  scaleIdx = Math.max(0, SCALES.findIndex(s => s.id === setup.scale));
+  render();
+  const progIdx = getProgressions().findIndex(p => p.name === setup.prog);
+  currentProgIdx = progIdx >= 0 ? progIdx : 0;
+  jamStyle = setup.style;
+  setBpm(setup.bpm);
+  renderJamControls();
+  renderProgPlayer();
+  if (!jamRunning) startPlayer();
+  renderLesson();
+}
+
+// ── Live evaluation ────────────────────────────────────────────
+function lessonTargetHit(target, note, ivs) {
+  const rel = (note.pc - rootIdx + 12) % 12;
+  if (target === 'root') return rel === 0;
+  if (target === 'ivs') return ivs.includes(rel);
+  if (!note.chordPcs.length) return false;
+  if (target === 'chord') return note.chordPcs.includes(note.pc);
+  const chordIvs = CHORD_INTERVALS[note.chordType] || CHORD_INTERVALS.maj;
+  const third = chordIvs.length > 2 ? (note.chordPc + chordIvs[1]) % 12 : null;
+  const seventh = chordIvs.length > 3 ? (note.chordPc + chordIvs[3]) % 12 : null;
+  if (target === 'third') return note.pc === third;
+  if (target === 'guide') return note.pc === third || note.pc === seventh;
+  return false;
+}
+
+function contour(phrase) {
+  return phrase.slice(0, 4).map((n, i, a) => i ? Math.sign(n.midi - a[i - 1].midi) : null).slice(1).join(',');
+}
+
+function closeLessonPhrase() {
+  const phrase = lessonRun.phrase;
+  if (!phrase.length) return;
+  lessonRun.phrase = [];
+  const last = phrase[phrase.length - 1];
+  lessonRun.goals.forEach(g => {
+    const okLen = phrase.length >= (g.minLen || 1) && (!g.maxLen || phrase.length <= g.maxLen);
+    if (g.type === 'phraseEnd' && okLen && lessonTargetHit(g.target, last, g.ivs || [])) g.hits++;
+    if (g.type === 'phrases' && okLen) g.hits++;
+    if (g.type === 'motif' && phrase.length >= 3 && lessonRun.prevPhrase && lessonRun.prevPhrase.length >= 3
+      && contour(phrase) === contour(lessonRun.prevPhrase)) g.hits++;
+  });
+  lessonRun.prevPhrase = phrase;
+  checkLessonGoals();
+}
+
+function onLessonPitch(r) {
+  if (!lessonRun.active) return;
+  if (!r) { closeLessonPhrase(); return; }
+  if (!r.isNew) return;
+  const now = performance.now();
+  if (lessonRun.phrase.length && now - lessonRun.lastNoteAt > 1300) closeLessonPhrase();
+  const beat = playerBeats[shownBeat];
+  const note = {
+    pc: r.midi % 12, midi: r.midi, serial: jamChordSerial,
+    chordPcs: jamRunning ? currentChordPcs.slice() : [],
+    chordPc: beat ? beat.chordPc : null, chordType: beat ? beat.chordType : null,
+  };
+  const prev = lessonRun.prevNote && now - lessonRun.lastNoteAt < 1500 ? lessonRun.prevNote : null;
+  const rel = pc => (pc - rootIdx + 12) % 12;
+  const scalePcs = new Set(SCALES[scaleIdx].intervals.map(i => (rootIdx + i) % 12));
+
+  lessonRun.goals.forEach(g => {
+    if (g.type === 'inSet') {
+      g.total++;
+      const inside = g.set === 'chord' ? note.chordPcs.includes(note.pc)
+        : g.set === 'scale' ? scalePcs.has(note.pc)
+        : g.ivs.includes(rel(note.pc));
+      if (inside) g.hits++;
+    }
+    if (g.type === 'targetOnChange' && jamChordSerial > 0 && note.serial !== g.lastSerial) {
+      g.lastSerial = note.serial; // only the first note after each chord change counts
+      g.total++;
+      if (lessonTargetHit(g.target, note, [])) g.hits++;
+    }
+    if (g.type === 'pair' && prev && g.pairs.some(([a, b]) => rel(prev.pc) === a && rel(note.pc) === b)) g.hits++;
+    if (g.type === 'approach' && prev && prev.pc === (note.pc + 11) % 12
+      && note.chordPcs.includes(note.pc) && !prev.chordPcs.includes(prev.pc)) g.hits++;
+    if (g.type === 'count' && g.ivs.includes(rel(note.pc))) g.hits++;
+  });
+
+  lessonRun.phrase.push(note);
+  lessonRun.prevNote = note;
+  lessonRun.lastNoteAt = now;
+  const inChord = note.chordPcs.includes(note.pc);
+  const heard = document.getElementById('lessonHeard');
+  if (heard) heard.innerHTML = `Última nota: <b>${noteName(note.pc)}</b> <span class="${inChord ? 'ok' : scalePcs.has(note.pc) ? '' : 'no'}">${inChord ? 'del acorde' : scalePcs.has(note.pc) ? 'de la escala' : 'fuera'}</span>`;
+  checkLessonGoals();
+}
+
+function checkLessonGoals() {
+  lessonRun.goals.forEach(g => {
+    g.done = g.type === 'inSet' ? g.total >= g.notes && g.hits / g.total >= g.min : g.hits >= g.count;
+  });
+  renderLessonGoals();
+  if (lessonRun.goals.length && lessonRun.goals.every(g => g.done)) {
+    stopLessonEval();
+    lessonRun.completed = true;
+    markLessonDone(COURSE[courseLessonIdx].id);
+    renderCourse();
+  }
+}
+
+async function startLessonEval() {
+  if (!jamRunning) prepareLessonBacking();
+  Object.assign(lessonRun, {
+    active: true, completed: false, phrase: [], prevPhrase: null, prevNote: null, lastNoteAt: 0,
+    goals: COURSE[courseLessonIdx].goals.map(g => ({ ...g, hits: 0, total: 0, done: false, lastSerial: jamChordSerial })),
+  });
+  if (!await pitchMicSubscribe(onLessonPitch)) {
+    lessonRun.active = false;
+    renderLesson();
+    document.getElementById('lessonHeard').textContent = 'No pude acceder al micrófono. Revisá el permiso, o usá "Lo hice sin micrófono".';
+    return;
+  }
+  // A phrase also ends after a long gap, even if the string keeps ringing.
+  lessonRun.gapTimer = setInterval(() => {
+    if (lessonRun.phrase.length && performance.now() - lessonRun.lastNoteAt > 1300) closeLessonPhrase();
+  }, 250);
+  renderLesson();
+}
+
+function stopLessonEval() {
+  lessonRun.active = false;
+  clearInterval(lessonRun.gapTimer);
+  pitchMicUnsubscribe(onLessonPitch);
+}
+
+document.getElementById('tab-panel-course').addEventListener('click', e => {
+  const pill = e.target.closest('[data-lesson-idx]');
+  if (pill) { selectLesson(parseInt(pill.dataset.lessonIdx, 10)); return; }
+  const reflectBtn = e.target.closest('[data-reflect]');
+  if (reflectBtn) { lessonRun.reflectAnswer = parseInt(reflectBtn.dataset.reflect, 10); renderLesson(); return; }
+  const id = e.target.closest('button')?.id;
+  if (id === 'lessonPlayBtn') { if (jamRunning) { stopPlayer(); renderLesson(); } else prepareLessonBacking(); }
+  if (id === 'lessonEvalBtn') { if (lessonRun.active) { stopLessonEval(); renderLesson(); } else startLessonEval(); }
+  if (id === 'lessonTransposeBtn') {
+    let offset;
+    do { offset = Math.floor(Math.random() * 12); } while (offset === lessonRootOffset);
+    lessonRootOffset = offset;
+    if (jamRunning) prepareLessonBacking(); else renderLesson();
+  }
+  if (id === 'lessonSelfBtn') {
+    if (lessonRun.active) stopLessonEval();
+    lessonRun.completed = true;
+    markLessonDone(COURSE[courseLessonIdx].id);
+    renderCourse();
+  }
+  if (id === 'lessonPrevBtn') selectLesson(courseLessonIdx - 1);
+  if (id === 'lessonNextBtn') selectLesson(courseLessonIdx + 1);
+});
+
 // INIT
 (function initUiMode() {
   const saved = localStorage.getItem(UI_MODE_STORAGE_KEY);
@@ -7409,7 +8166,7 @@ const listenerState = {
 })();
 (function initTab() {
   const t = localStorage.getItem(ACTIVE_TAB_KEY);
-  if (t === 'guitar' || t === 'circle' || t === 'ref' || t === 'trainer' || t === 'builder' || t === 'minors' || t === 'harm' || t === 'listener' || t === 'practice') setTab(t);
+  if (t === 'guitar' || t === 'circle' || t === 'ref' || t === 'trainer' || t === 'builder' || t === 'minors' || t === 'harm' || t === 'listener' || t === 'practice' || t === 'course') setTab(t);
   else setTab('ref');
 })();
 

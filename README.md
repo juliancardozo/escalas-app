@@ -24,6 +24,11 @@ npm run build-linux  # Linux .AppImage
 
 ## Funcionalidades
 
+- **Curso "improvisar razonando"** (pestaña 🎓 Curso): 15 lecciones de básico a avanzado para aprender *qué, cómo y cuándo* tocar, no a memorizar escalas.
+  - Cada lección explica la idea, cómo pensarla y cuándo usarla, con pasos concretos en la guitarra
+  - Se toca sobre un backing preparado por la lección; el micrófono evalúa **decisiones**: terminar frases en la tónica o en el acorde, dejar espacio, caer en la 3ra en cada cambio, resolver tensiones, aproximaciones cromáticas, nota característica del modo, repetir un motivo
+  - "Otra tonalidad" transpone la lección completa (textos incluidos) para razonar en vez de repetir digitaciones
+  - Pregunta de reflexión al terminar y progreso guardado; opción "Lo hice sin micrófono"
 - **Modo jam con backing track** (visible en Estudio y en Jam):
   - batería, bajo y acordes sintetizados con 6 grooves: rock, funk, blues shuffle, bossa nova, balada y metrónomo
   - scheduler sobre el reloj de Web Audio: tempo estable y BPM que cambia sin cortar el loop
