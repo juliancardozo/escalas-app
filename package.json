@@ -19,7 +19,10 @@
       "target": "nsis"
     },
     "mac": {
-      "target": "dmg"
+      "target": "dmg",
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "La app escucha tu guitarra para afinar, corregir ejercicios y mostrarte si la nota que tocás está en el acorde."
+      }
     },
     "linux": {
       "target": "AppImage"

@@ -100,6 +100,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      backgroundThrottling: false, // keep the jam's audio scheduler running when the window is in the background
     },
     titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default',
   })

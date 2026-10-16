@@ -24,6 +24,22 @@ npm run build-linux  # Linux .AppImage
 
 ## Funcionalidades
 
+- **Modo jam con backing track** (visible en Estudio y en Jam):
+  - batería, bajo y acordes sintetizados con 6 grooves: rock, funk, blues shuffle, bossa nova, balada y metrónomo
+  - scheduler sobre el reloj de Web Audio: tempo estable y BPM que cambia sin cortar el loop
+  - tap tempo, cuenta de entrada, volumen por pista y cambio de tonalidad en vivo
+  - acordes con 7mas/9nas diatónicas en funk, bossa y balada
+  - panel "Ahora / Sigue" con las notas del acorde y la nota objetivo (3ra)
+  - rotación automática de tonalidad (por cuartas, quintas, medio tono o al azar) y tiempo practicado por día
+  - blues de 12 compases (clásico, quick change y menor) con los acordes correctos
+  - "Escuchar mi guitarra": te dice si la nota que tocás está en el acorde, en la escala o afuera
+  - link de jam compartido, con arranque sincronizado por reloj
+- **Posiciones reales en el diapasón**: las 5 cajas de la pentatónica (y del blues, con la blue note) con su forma CAGED, y 3 notas por cuerda en escalas de 7 notas. Con el jam sonando, la guitarra sigue el acorde actual.
+- **Pestaña Práctica**:
+  - *Afinador* cromático con aguja en cents, cuerda detectada y notas de referencia
+  - *Entrenador de velocidad*: sube el BPM cada N vueltas hasta tu objetivo, botón "Me trabé" y récord de BPM limpio por escala y progresión
+  - *Ejercicios con micrófono*: escala sube/baja, terceras, grupos de 3, arpegios de cuatriadas por grado y notas guía del ii–V–I; la app escucha y avanza nota por nota, con tiempo, errores y récord
+- **Entrenador de teoría**: además de intervalos, preguntas de *escalas y modos* (notas, armaduras, relativas, color modal, escala madre) y de *armonía* (cuatriadas diatónicas, funciones, V7, ii–V–I, notas del acorde, qué modo tocar sobre cada acorde, dominantes secundarios), con notas escritas con la ortografía correcta de cada tonalidad y explicación en cada respuesta
 - **Entrenador de intervalos** con 3 tipos de ejercicio:
   - *Identificar*: "¿qué intervalo hay entre Do y Lab?"
   - *Construir*: "dame la 6ª menor de Mi"
@@ -57,3 +73,9 @@ escalas-app/
 ├── package.json
 └── README.md
 ```
+
+## Notas
+
+- **Micrófono**: usá auriculares para que no escuche la pista. En la web necesita HTTPS (Netlify ya lo da).
+- **Jam compartido desde la app de escritorio**: configurá `SHARE_BASE_URL` en `index.html` con la URL pública de la app web.
+- **Sincronizado por reloj**: requiere la hora automática activada en cada dispositivo. La rotación de tonalidad no se sincroniza.
