@@ -138,33 +138,6 @@
     .scale-name { font-size: 12px; color: var(--text); }
     .scale-cat { font-size: 9px; color: var(--muted); margin-top: 2px; letter-spacing: 0.08em; }
 
-    /* Wishlist */
-    .wishlist-box {
-      background: var(--s2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .wishlist-copy { font-size: 10px; color: var(--muted); line-height: 1.55; }
-    .wishlist-form { display: flex; gap: 6px; }
-    .wishlist-input {
-      flex: 1;
-      min-width: 0;
-      background: var(--s1);
-      border: 1px solid var(--border2);
-      border-radius: 6px;
-      color: var(--text);
-      font-family: var(--mono);
-      font-size: 11px;
-      padding: 7px 8px;
-      outline: none;
-    }
-    .wishlist-input:focus { border-color: var(--accent); }
-    .wishlist-msg { font-size: 10px; min-height: 14px; color: var(--muted); }
-    .wishlist-msg.ok { color: var(--green); }
 
     /* Feedback modal (5 min) */
     .feedback-backdrop {
@@ -1217,8 +1190,6 @@
       }
       select, button { min-height: 40px; }
       .root-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
-      .wishlist-form { flex-direction: column; }
-      .wishlist-form button { width: 100%; }
       .scale-full-name { font-size: 17px; }
       .main-scroll { padding: 12px; gap: 14px; }
       .piano-wrap { padding: 12px; }
@@ -1945,27 +1916,6 @@
         <div class="scale-list" id="scaleList"></div>
       </div>
 
-      <div class="study-only">
-        <div class="section-title">Wishlist producto real</div>
-        <div class="wishlist-box">
-          <div class="wishlist-copy">
-            Salida estimada: <strong>Junio 2026</strong>.<br>
-            Sumate para recibir novedades por correo.
-          </div>
-          <form class="wishlist-form" id="wishlistForm">
-            <input
-              type="email"
-              class="wishlist-input"
-              id="wishlistEmail"
-              placeholder="tu-email@ejemplo.com"
-              required
-            >
-            <button type="submit">Unirme</button>
-          </form>
-          <div class="wishlist-msg" id="wishlistMsg"></div>
-          <div class="label-sm">Suscriptos (local): <span id="wishlistCount">0</span></div>
-        </div>
-      </div>
 
     </aside>
 
@@ -2712,7 +2662,6 @@ let rootIdx = 0;      // 0=C, 1=C#/Db ...
 let scaleIdx = 0;
 let notation = 'sharp';
 let octaves = 2;
-const WISHLIST_STORAGE_KEY = 'escalaimprov:wishlist';
 const FEEDBACK_API_URL = 'http://127.0.0.1:47321/api/feedback';
 const FEEDBACK_PROMPT_DELAY_MS = 5 * 60 * 1000;
 const FEEDBACK_FALLBACK_STORAGE_KEY = 'escalaimprov:feedback-pending';
@@ -2851,36 +2800,13 @@ function formatNoteList(list) {
   return list.filter(Boolean).join(' · ');
 }
 
-function getWishlist() {
-  try {
-    const data = JSON.parse(localStorage.getItem(WISHLIST_STORAGE_KEY) || '[]');
-    return Array.isArray(data) ? data : [];
-  } catch (_) {
-    return [];
-  }
-}
-
-function setWishlist(list) {
-  localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(list));
-}
-
-function renderWishlistCount() {
-  const countEl = document.getElementById('wishlistCount');
-  countEl.textContent = String(getWishlist().length);
-}
 
 function getCurrentUserEmail() {
-  // Prioridad: acceso de landing, luego último de wishlist.
+  // Email del acceso demo de la landing, si existe.
   try {
     const access = JSON.parse(localStorage.getItem('escalaimprov:lastAccess') || 'null');
     if (access && access.email) return String(access.email).trim().toLowerCase();
   } catch (_) {}
-
-  const list = getWishlist();
-  if (list.length > 0) {
-    const latest = list[list.length - 1];
-    if (latest && latest.email) return String(latest.email).trim().toLowerCase();
-  }
   return '';
 }
 
@@ -7206,27 +7132,6 @@ document.getElementById('volSlider').addEventListener('input', e => {
 
 document.getElementById('btnMute').addEventListener('click', toggleMute);
 
-document.getElementById('wishlistForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const emailInput = document.getElementById('wishlistEmail');
-  const msg = document.getElementById('wishlistMsg');
-  const email = emailInput.value.trim().toLowerCase();
-  if (!email) return;
-
-  const list = getWishlist();
-  if (list.some(item => item.email === email)) {
-    msg.textContent = 'Ese correo ya estaba en la wishlist.';
-    msg.classList.remove('ok');
-    return;
-  }
-
-  list.push({ email, at: new Date().toISOString(), source: 'app-wishlist' });
-  setWishlist(list);
-  renderWishlistCount();
-  msg.textContent = 'Listo. Te avisaremos para el lanzamiento de junio 2026.';
-  msg.classList.add('ok');
-  emailInput.value = '';
-});
 
 document.getElementById('feedbackSkip').addEventListener('click', () => {
   closeFeedbackModal();
@@ -7244,15 +7149,6 @@ document.getElementById('feedbackForm').addEventListener('submit', async e => {
 
   try {
     const result = await submitFeedback(comment);
-    const sentEmail = document.getElementById('feedbackEmail').value.trim().toLowerCase();
-    if (sentEmail) {
-      const list = getWishlist();
-      if (!list.some(item => item.email === sentEmail)) {
-        list.push({ email: sentEmail, at: new Date().toISOString(), source: 'app-feedback-email' });
-        setWishlist(list);
-        renderWishlistCount();
-      }
-    }
     statusEl.textContent = result.mode === 'server'
       ? 'Gracias. Tu comentario fue guardado en servidor.'
       : 'Comentario guardado localmente (modo web).';
@@ -7526,7 +7422,6 @@ initTrainerFilter();
 render();
 loadPractice();
 if (sharedJam) document.getElementById('shareMsg').textContent = 'Jam compartido cargado: dale Play cuando la banda esté lista.';
-renderWishlistCount();
 scheduleFeedbackPrompt();
 
 // ── Audio helpers ────────────────────────────────────────────────
