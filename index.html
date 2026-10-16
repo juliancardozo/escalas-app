@@ -1693,133 +1693,27 @@
     }
     .listener-status-row strong { color: var(--text); display: block; margin-bottom: 4px; font-size: 14px; }
 
-    /* Toolbar */
-    .harm-toolbar {
-      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-      background: var(--s1); border-radius: 10px; padding: 12px 14px; border: 1px solid var(--border);
+    /* Curso de armonía */
+    .harm-lessons { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px; }
+    .harm-prog { display: grid; grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: 8px; }
+    .harm-chord {
+      display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 6px 6px;
+      background: var(--s2); border: 1px solid var(--border); border-top: 3px solid var(--muted); border-radius: 10px;
+      cursor: pointer; transition: border-color 0.12s, transform 0.12s;
     }
-    .harm-title { font-family: var(--display); font-size: 18px; font-weight: 700; flex: 1; min-width: 140px; }
-    .harm-title em { color: var(--muted); font-style: normal; font-size: 14px; }
-    .harm-toggle-group { display: flex; border: 1px solid var(--border2); border-radius: 7px; overflow: hidden; }
-    .harm-toggle-btn {
-      border: none; border-radius: 0; padding: 7px 14px; font-size: 11px; cursor: pointer;
-      background: var(--s2); color: var(--muted); font-family: var(--mono); transition: all 0.12s;
-    }
-    .harm-toggle-btn.active { background: var(--blue); color: #000; font-weight: 700; }
-    .harm-bpm-wrap { display: flex; align-items: center; gap: 6px; }
-    .harm-bpm-label { font-size: 10px; color: var(--muted); font-family: var(--mono); }
-    .harm-bpm-slider { width: 80px; }
-    .harm-bpm-val { font-size: 10px; color: var(--text); font-family: var(--mono); min-width: 28px; }
-    .harm-play-all-btn {
-      padding: 8px 16px; border-radius: 7px; border: none; cursor: pointer;
-      background: var(--accent); color: #000; font-family: var(--mono); font-size: 11px; font-weight: 700;
-      display: flex; align-items: center; gap: 5px; transition: all 0.12s;
-    }
-    .harm-play-all-btn:hover { background: var(--accent2); }
-    .harm-play-all-btn.playing { background: var(--s3); color: var(--text); border: 1px solid var(--border2); }
-    .harm-stop-btn {
-      padding: 8px 12px; border-radius: 7px; border: 1px solid var(--border2); cursor: pointer;
-      background: var(--s2); color: var(--muted); font-family: var(--mono); font-size: 11px;
-    }
-    .harm-stop-btn:hover { color: var(--text); }
-
-    /* Chord cards grid */
-    .harm-cards-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 8px;
-    }
-    @media (max-width: 900px) {
-      .harm-cards-grid { grid-template-columns: repeat(4, 1fr); }
-    }
-    @media (max-width: 560px) {
-      .harm-cards-grid { grid-template-columns: repeat(3, 1fr) !important; }
-    }
-    .harm-card {
-      background: var(--s1); border: 1px solid var(--border); border-radius: 11px;
-      padding: 12px 8px 10px; display: flex; flex-direction: column; gap: 7px;
-      align-items: center; text-align: center; cursor: pointer;
-      transition: border-color 0.12s, background 0.12s;
-      position: relative;
-    }
-    .harm-card:hover { border-color: var(--border2); background: var(--s2); }
-    .harm-card.playing-card { border-color: var(--accent2); background: rgba(255,179,71,0.06); }
-
-    /* Degree roman numeral */
-    .harm-degree {
-      font-family: var(--display); font-size: 20px; font-weight: 700; line-height: 1;
-      color: var(--text);
-    }
-
-    /* Chord name big */
-    .harm-chord-name {
-      font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--text);
-      line-height: 1.1;
-    }
-
-    /* Functional role badge */
-    .harm-func-badge {
-      font-size: 8px; font-family: var(--mono); font-weight: 700;
-      padding: 2px 7px; border-radius: 4px; letter-spacing: 0.07em;
-      text-transform: uppercase; white-space: nowrap;
-    }
-    .func-tonica   { background: rgba(91,255,160,0.14); color: var(--green);   border: 1px solid rgba(91,255,160,0.3); }
-    .func-subdom   { background: rgba(91,168,255,0.14); color: var(--blue);    border: 1px solid rgba(91,168,255,0.3); }
-    .func-dom      { background: rgba(255,107,53,0.16); color: var(--accent);  border: 1px solid rgba(255,107,53,0.35); }
-    .func-sensible { background: rgba(255,107,53,0.1);  color: var(--accent2); border: 1px solid rgba(255,107,53,0.28); }
-    .func-neutral  { background: var(--s3);             color: var(--muted);   border: 1px solid var(--hint); }
-
-    /* Notes row inside card */
-    .harm-card-notes { font-size: 9px; color: var(--muted); font-family: var(--mono); line-height: 1.4; }
-
-    /* Individual play btn */
-    .harm-card-play {
-      margin-top: 2px; font-size: 10px; background: var(--s2); border: 1px solid var(--border);
-      color: var(--muted); border-radius: 5px; padding: 3px 9px; cursor: pointer;
-      font-family: var(--mono); transition: all 0.1s;
-    }
-    .harm-card-play:hover { background: var(--s3); color: var(--text); }
-
-    /* Seventh chord extra label */
-    .harm-seventh-label {
-      font-size: 8px; color: var(--purple); font-family: var(--mono);
-      border: 1px solid rgba(179,136,255,0.28); padding: 1px 5px; border-radius: 4px;
-      background: rgba(179,136,255,0.07);
-    }
-
-    /* Row label of notes */
-    .harm-note-pills { display: flex; flex-wrap: wrap; gap: 2px; justify-content: center; margin-top: 2px; }
-    .harm-note-pill { font-size: 8px; color: var(--text); background: var(--s3); border-radius: 3px; padding: 1px 4px; font-family: var(--mono); }
-    .harm-note-pill.root-pill { color: var(--accent2); font-weight: 700; }
-
-    /* Functional group legend */
-    .harm-legend {
-      display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
-      padding: 10px 14px; background: var(--s1); border-radius: 8px; border: 1px solid var(--border);
-    }
-    .harm-legend-item { display: flex; align-items: center; gap: 5px; font-size: 9px; color: var(--muted); font-family: var(--mono); }
-    .harm-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
-    .ld-tonica  { background: var(--green); }
-    .ld-subdom  { background: var(--blue); }
-    .ld-dom     { background: var(--accent); }
-    .ld-neutral { background: var(--muted); }
-
-    /* Preset progressions */
-    .harm-progs-section { display: flex; flex-direction: column; gap: 10px; }
-    .harm-progs-title { font-size: 10px; color: var(--muted); font-family: var(--mono); letter-spacing: 0.07em; text-transform: uppercase; }
-    .harm-progs-row { display: flex; flex-wrap: wrap; gap: 8px; }
-    .harm-prog-btn {
-      padding: 7px 14px; border-radius: 7px; font-size: 10px; font-family: var(--mono);
-      background: var(--s2); border: 1px solid var(--border); color: var(--text); cursor: pointer;
-      display: flex; align-items: center; gap: 6px; transition: all 0.12s;
-    }
-    .harm-prog-btn:hover { border-color: var(--border2); background: var(--s3); }
-    .harm-prog-btn.playing-prog { border-color: var(--accent); color: var(--accent); }
-    .harm-prog-name { font-weight: 700; }
-    .harm-prog-desc { color: var(--muted); font-size: 9px; }
-
-    /* Card highlighted when in progression */
-    .harm-card.prog-active { border-color: var(--accent2); box-shadow: 0 0 0 2px rgba(255,179,71,0.25); }
+    .harm-chord:hover { border-color: var(--border2); }
+    .harm-chord.playing { transform: translateY(-3px); border-color: var(--accent2); box-shadow: 0 6px 18px rgba(255,179,71,0.18); }
+    .harm-chord.fn-T { border-top-color: var(--green); }
+    .harm-chord.fn-SD { border-top-color: var(--blue); }
+    .harm-chord.fn-D { border-top-color: var(--accent); }
+    .harm-chord.fn-sec { border-top-color: var(--accent2); }
+    .harm-chord.fn-bor { border-top-color: var(--purple); }
+    .harm-chord.fn-sub { border-top-color: #ff6767; }
+    .harm-rn { font-size: 10px; color: var(--muted); font-family: var(--mono); }
+    .harm-name { font-family: var(--display); font-size: 16px; font-weight: 700; color: var(--text); }
+    .harm-fn { font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    .chord-box { width: 100%; max-width: 116px; height: auto; margin-top: 4px; }
+    .lesson-heard .ok { color: var(--green); }
 
     /* ── QUINTAS TAB REDESIGN ─────────────────────── */
     .circle-tab-wrap { display: flex; flex-direction: column; gap: 24px; padding: 4px 0; }
@@ -3133,6 +3027,10 @@ function setTab(tab) {
   // Liberar micrófono siempre al salir del tab listener
   if (tab !== 'listener') listenerStop();
   if (tab !== 'course' && lessonRun.active) stopLessonEval();
+  if (tab !== 'harm') {
+    stopHarmCheck();
+    if (!jamRunning) clearHarmJam();
+  }
   if (tab !== 'practice') {
     // Release the mic used by the tuner and drills.
     if (pitchMic.subs.has(onTunerPitch)) toggleTuner();
@@ -4214,7 +4112,8 @@ function toggleMute() {
 // ══════════════════════════════════════════════
 function getProgressions() {
   const scale = SCALES[scaleIdx];
-  return PROGRESSIONS_BY_SCALE[scale.id] || PROGRESSIONS_BY_SCALE._generic;
+  const base = PROGRESSIONS_BY_SCALE[scale.id] || PROGRESSIONS_BY_SCALE._generic;
+  return jamCustomProg ? [jamCustomProg, ...base] : base;
 }
 
 function resolvePatternChord(item, scale) {
@@ -4409,6 +4308,7 @@ function showPlayerBeat(idx) {
   if (!prev || prev.chordIdx !== beat.chordIdx || prev.chordPc !== beat.chordPc) {
     setChordHighlight(chordPcs(beat.chordPc, beat.chordType));
     jamChordSerial++;
+    harmOnChordChange();
     // Mirror the sounding chord on the guitar tab (also non-diatonic ones, e.g. the IV7 of a blues).
     const note = noteName(beat.chordPc);
     playerChord = { key: '__player__', note, type: beat.chordType, degree: '', label: beat.chordName, notes: chordNotes(note, beat.chordType) };
@@ -4551,6 +4451,7 @@ function stopPlayer() {
   updatePlayButton();
   if (speedState.active) endSpeedTrainer();
   if (activeTab === 'course') renderLesson();
+  if (activeTab === 'harm') { stopHarmCheck(); renderHarmonization(); }
 }
 
 function togglePlay() {
@@ -5901,314 +5802,555 @@ function renderMinors() {
 }
 
 // ══════════════════════════════════════════════
-// ARMONIZACIÓN POR GRADOS
+// ARMONÍA APLICADA A LA GUITARRA (curso intermedio)
 // ══════════════════════════════════════════════
 
-// Seventh chord intervals (complete set)
-const HARM_SEVENTH_IVS = {
-  maj7:    [0, 4, 7, 11],
-  m7:      [0, 3, 7, 10],
-  dom7:    [0, 4, 7, 10],
-  mM7:     [0, 3, 7, 11],
-  hdim7:   [0, 3, 6, 10],
-  dim7:    [0, 3, 6, 9],
-  augM7:   [0, 4, 8, 11],
-  aug7:    [0, 4, 8, 10],
+// ── Chord shapes on the neck ───────────────────────────────────
+// Barre forms as fret offsets from the root fret, strings low E → high e (null = muted).
+const E_FORM = {
+  maj: [0,2,2,1,0,0], min: [0,2,2,0,0,0], dom: [0,2,0,1,0,0], min7: [0,2,0,0,0,0],
+  maj7: [0,null,1,1,0,null], hdim: [0,null,0,0,-1,null], dim: [0,null,2,0,-1,null], aug: [0,null,2,1,1,null],
+};
+const A_FORM = {
+  maj: [null,0,2,2,2,0], min: [null,0,2,2,1,0], dom: [null,0,2,0,2,0], min7: [null,0,2,0,1,0],
+  maj7: [null,0,2,1,2,0], hdim: [null,0,1,0,1,null], dim: [null,0,1,2,1,null], aug: [null,0,3,2,2,null],
+};
+const IV_LABEL = { 0: 'R', 1: '♭9', 2: '9', 3: '♭3', 4: '3', 5: '4', 6: '♭5', 7: '5', 8: '♯5', 9: '6', 10: '♭7', 11: '7' };
+const VOICING_MODES = {
+  barre: 'Cejilla (forma E / forma A)',
+  triads: 'Tríadas en cuerdas 3-2-1',
+  shells: 'Shells: raíz + 3ª + 7ª',
 };
 
-// Determine seventh chord type from triad quality + 7th semitone above root
-function getSeventhChordType(triadType, seventhInterval) {
-  if (triadType === 'maj') return seventhInterval === 11 ? 'maj7' : 'dom7';
-  if (triadType === 'min') return seventhInterval === 11 ? 'mM7'  : 'm7';
-  if (triadType === 'dim') return seventhInterval === 9  ? 'dim7' : 'hdim7';
-  if (triadType === 'aug') return seventhInterval === 11 ? 'augM7': 'aug7';
-  return 'm7';
+function voicingFromFrets(frets, pc) {
+  const midis = [];
+  const labels = frets.map((f, s) => {
+    if (f === null) return null;
+    const midi = GUITAR_OPEN_MIDI[s] + f;
+    midis.push(midi);
+    return IV_LABEL[(midi - pc + 120) % 12];
+  });
+  const fretted = frets.filter(f => f !== null && f > 0);
+  const avg = fretted.length ? fretted.reduce((a, b) => a + b, 0) / fretted.length : 0;
+  return { frets, labels, midis, avg };
 }
 
-// Human-readable suffix for seventh chords
-const HARM_7_SUFFIX = {
-  maj7:  'maj7', m7: 'm7', dom7: '7', mM7: 'm(maj7)',
-  hdim7: 'ø7',  dim7: '°7', augM7: '+(maj7)', aug7: '+7',
-};
+// Every candidate voicing of a chord for the given mode.
+function voicingCandidates(pc, type, mode) {
+  const ivs = CHORD_INTERVALS[type] || CHORD_INTERVALS.maj;
+  const out = [];
+  if (mode === 'barre') {
+    [[E_FORM, 0], [A_FORM, 1]].forEach(([form, rootString]) => {
+      const shape = form[type] || form.maj;
+      const base = (pc - GUITAR_OPEN_MIDI[rootString] + 120) % 12;
+      [base, base + 12].forEach(r => {
+        const frets = shape.map(o => (o === null ? null : r + o));
+        if (frets.every(f => f === null || (f >= 0 && f <= 17))) out.push(voicingFromFrets(frets, pc));
+      });
+    });
+  } else if (mode === 'triads') {
+    // Close triads on G-B-e: one chord tone per string, any inversion, within a 4-fret span.
+    const triad = new Set(ivs.slice(0, 3).map(iv => (pc + iv) % 12));
+    const fretsFor = s => { const r = []; for (let f = 0; f <= 15; f++) if (triad.has((GUITAR_OPEN_MIDI[s] + f) % 12)) r.push(f); return r; };
+    const [g, b, e] = [3, 4, 5].map(fretsFor);
+    g.forEach(fg => b.forEach(fb => e.forEach(fe => {
+      const pcs = new Set([fg + GUITAR_OPEN_MIDI[3], fb + GUITAR_OPEN_MIDI[4], fe + GUITAR_OPEN_MIDI[5]].map(m => m % 12));
+      if (pcs.size === 3 && Math.max(fg, fb, fe) - Math.min(fg, fb, fe) <= 3) out.push(voicingFromFrets([null, null, null, fg, fb, fe], pc));
+    })));
+  } else if (ivs.length < 4) {
+    // A shell needs a 7th: triads fall back to their close voicing on the top strings.
+    return voicingCandidates(pc, type, 'triads');
+  } else {
+    // Shells: R-7-3 with the root on the 6th string, R-3-7 with the root on the 5th.
+    const third = (pc + ivs[1]) % 12;
+    const top = (pc + ivs[3]) % 12;
+    [[0, [2, top], [3, third]], [1, [2, third], [3, top]]].forEach(([rootString, [s1, pc1], [s2, pc2]]) => {
+      const base = (pc - GUITAR_OPEN_MIDI[rootString] + 120) % 12;
+      [base, base + 12].forEach(r => {
+        const near = (s, target) => { for (let f = Math.max(0, r - 2); f <= r + 3; f++) if ((GUITAR_OPEN_MIDI[s] + f) % 12 === target) return f; return null; };
+        const f1 = near(s1, pc1), f2 = near(s2, pc2);
+        if (f1 === null || f2 === null || r > 15) return;
+        const frets = [null, null, null, null, null, null];
+        frets[rootString] = r; frets[s1] = f1; frets[s2] = f2;
+        out.push(voicingFromFrets(frets, pc));
+      });
+    });
+  }
+  return out;
+}
 
-// Harmonic function per scale type and degree index
-const HARM_FUNC_MAP = {
-  major:       ['tonica','subdom','tonica','subdom','dom','tonica','sensible'],
-  natural_minor:  ['tonica','subdom','tonica','subdom','neutral','subdom','neutral'],
-  harmonic_minor: ['tonica','subdom','tonica','subdom','dom','subdom','sensible'],
-  melodic_minor:  ['tonica','subdom','tonica','dom','dom','subdom','sensible'],
-  dorian:      ['tonica','subdom','neutral','subdom','dom','subdom','neutral'],
-  phrygian:    ['tonica','neutral','neutral','subdom','neutral','neutral','neutral'],
-  lydian:      ['tonica','dom','tonica','sensible','dom','tonica','subdom'],
-  mixolydian:  ['tonica','subdom','sensible','subdom','tonica','neutral','dom'],
-  _default:    ['tonica','neutral','neutral','subdom','dom','neutral','neutral'],
-};
+// Voice a whole progression, each chord as close as possible to the previous one:
+// on the guitar that means the hand barely moves (voice leading you can feel).
+function voiceProgression(chords, mode) {
+  let ref = mode === 'triads' ? 7 : 5;
+  return chords.map(ch => {
+    const cands = voicingCandidates(ch.pc, ch.type, mode);
+    if (!cands.length) return null;
+    const best = cands.reduce((a, c) => (Math.abs(c.avg - ref) < Math.abs(a.avg - ref) ? c : a));
+    ref = best.avg || ref;
+    return best;
+  });
+}
 
-// Degree name per index
-const HARM_DEG_NAMES = [
-  'Tónica','Supertónica','Mediante','Subdominante','Dominante','Superdominante','Sensible',
+// SVG chord box: strings vertical (low E on the left), frets horizontal.
+function chordBoxSvg(v) {
+  const fretted = v.frets.filter(f => f !== null && f > 0);
+  const maxF = fretted.length ? Math.max(...fretted) : 0;
+  const start = maxF <= 4 ? 1 : Math.min(...fretted);
+  const x = s => 18 + s * 16, y = k => 26 + k * 22; // k = fret row (0 = top line)
+  let svg = `<svg viewBox="0 0 116 150" class="chord-box" role="img">`;
+  for (let s = 0; s < 6; s++) svg += `<line x1="${x(s)}" y1="${y(0)}" x2="${x(s)}" y2="${y(5)}" stroke="#6b665e" stroke-width="${1 + (5 - s) * 0.18}"/>`;
+  for (let k = 0; k <= 5; k++) svg += `<line x1="${x(0)}" y1="${y(k)}" x2="${x(5)}" y2="${y(k)}" stroke="#4a4640" stroke-width="${k === 0 && start === 1 ? 4 : 1}"/>`;
+  if (start > 1) svg += `<text x="4" y="${y(0) + 15}" font-size="9" fill="var(--muted)" font-family="var(--mono)">${start}</text>`;
+  v.frets.forEach((f, s) => {
+    if (f === null) { svg += `<text x="${x(s)}" y="18" text-anchor="middle" font-size="10" fill="var(--muted)">×</text>`; return; }
+    if (f === 0) { svg += `<circle cx="${x(s)}" cy="14" r="4" fill="none" stroke="var(--muted)"/>`; return; }
+    const cy = y(f - start) + 11;
+    const isRoot = v.labels[s] === 'R';
+    svg += `<circle cx="${x(s)}" cy="${cy}" r="7.5" fill="${isRoot ? 'var(--accent2)' : 'var(--accent)'}"/>`;
+    svg += `<text x="${x(s)}" y="${cy + 3}" text-anchor="middle" font-size="7" font-weight="700" fill="#000" font-family="var(--mono)">${v.labels[s]}</text>`;
+  });
+  return svg + '</svg>';
+}
+
+function strumVoicing(v, time, vol = 0.32) {
+  if (!audioCtx || !v) return;
+  [...v.midis].sort((a, b) => a - b).forEach((m, i) => playPlucked(midiToHz(m), time + i * 0.025, 1.8, vol));
+}
+
+// ── Lessons ────────────────────────────────────────────────────
+// Progressions use {s: semitones over the tonic, t: chord type, b: beats, rn: roman numeral, fn: function}.
+// fn: T tónica · SD subdominante · D dominante · sec dominante secundario · bor préstamo · sub sustituto
+const HARM_FN = { T: 'Tónica', SD: 'Subdominante', D: 'Dominante', sec: 'Dom. secundario', bor: 'Préstamo', sub: 'Sustituto' };
+
+const HARMONY_COURSE = [
+  {
+    id: 'h1', title: 'Armonizar la escala en el mástil', mode: 'major', voicing: 'barre', style: 'ballad', bpm: 80,
+    prog: [
+      { s: 0, t: 'maj', rn: 'I', fn: 'T' }, { s: 2, t: 'min', rn: 'ii', fn: 'SD' }, { s: 4, t: 'min', rn: 'iii', fn: 'T' },
+      { s: 5, t: 'maj', rn: 'IV', fn: 'SD' }, { s: 7, t: 'maj', rn: 'V', fn: 'D' }, { s: 9, t: 'min', rn: 'vi', fn: 'T' },
+      { s: 11, t: 'dim', rn: 'vii°', fn: 'D' }, { s: 0, t: 'maj', rn: 'I', fn: 'T' },
+    ],
+    theory: 'Si apilás terceras sobre cada nota de la escala mayor, siempre sale el mismo patrón: I mayor, ii menor, iii menor, IV mayor, V mayor, vi menor, vii° disminuido. No hace falta memorizar los acordes de cada tonalidad: alcanza con la fórmula y la escala.',
+    guitar: 'Con dos formas de cejilla tocás cualquier acorde: raíz en la 6ª cuerda (forma E) o en la 5ª (forma A). Elegí siempre la forma que te deje más cerca del acorde anterior: así la mano casi no se mueve.',
+    think: 'Para encontrar un acorde de la tonalidad: 1) ¿qué grado es? 2) ¿qué calidad le toca por la fórmula? 3) ¿dónde está su raíz, en la 6ª o en la 5ª cuerda, más cerca de donde estoy?',
+    quiz: { q: 'En {0} mayor, ¿qué calidad tiene el acorde sobre la 6ª nota ({9})?', options: ['Menor: {c:9:min}', 'Mayor: {c:9:maj}', 'Disminuido', 'Dominante'], why: 'La fórmula mayor es M m m M M m °: el vi siempre es menor. Por eso {c:9:min} es la relativa menor de {0}.' },
+  },
+  {
+    id: 'h2', title: 'Funciones: tónica, subdominante, dominante', mode: 'major', voicing: 'barre', style: 'rock', bpm: 88,
+    prog: [
+      { s: 0, t: 'maj', rn: 'I', fn: 'T' }, { s: 9, t: 'min', rn: 'vi', fn: 'T' },
+      { s: 2, t: 'min', rn: 'ii', fn: 'SD' }, { s: 7, t: 'dom', rn: 'V7', fn: 'D' },
+    ],
+    theory: 'Los acordes se agrupan por lo que hacen. Tónica (I, iii, vi): reposo. Subdominante (ii, IV): alejarse del centro. Dominante (V, vii°): tensión que pide volver. Acordes que comparten dos notas comparten función y se pueden sustituir.',
+    guitar: 'Tocá {c:0:maj} y {c:9:min} seguidos: comparten {0} y {4}, y {c:9:min} suena a "un I más triste". Lo mismo pasa con {c:5:maj} y {c:2:min} (comparten {5} y {9}).',
+    think: 'El esqueleto de casi toda la música es T → SD → D → T. Si una progresión te pide IV, probá ii: misma función, otro color. Si te pide I en el medio de una frase, probá vi.',
+    quiz: { q: '¿Por qué {c:2:min} puede reemplazar a {c:5:maj}?', options: ['Comparten dos notas ({5} y {9}) y la función subdominante', 'Porque están a una 4ª de distancia', 'Porque los dos son acordes menores', 'No pueden reemplazarse'], why: '{c:2:min} = {2} {5} {9} y {c:5:maj} = {5} {9} {0}. Dos notas en común hacen que cumplan el mismo rol: preparar la dominante.' },
+  },
+  {
+    id: 'h3', title: 'Tríadas e inversiones: mover la mano lo mínimo', mode: 'major', voicing: 'triads', style: 'funk', bpm: 92,
+    prog: [
+      { s: 0, t: 'maj', rn: 'I', fn: 'T' }, { s: 5, t: 'maj', rn: 'IV', fn: 'SD' },
+      { s: 7, t: 'maj', rn: 'V', fn: 'D' }, { s: 0, t: 'maj', rn: 'I', fn: 'T' },
+      { s: 9, t: 'min', rn: 'vi', fn: 'T' }, { s: 5, t: 'maj', rn: 'IV', fn: 'SD' },
+      { s: 7, t: 'maj', rn: 'V', fn: 'D' }, { s: 0, t: 'maj', rn: 'I', fn: 'T' },
+    ],
+    theory: 'Una tríada tiene tres notas y se puede ordenar de tres formas: fundamental (la raíz abajo), 1ª inversión (la 3ª abajo) y 2ª inversión (la 5ª abajo). Es el mismo acorde con otro color y, sobre todo, en otro lugar del mástil.',
+    guitar: 'En las cuerdas 3-2-1 cada acorde tiene tres formas a lo largo del mástil. Los diagramas eligen la inversión más cercana al acorde anterior: las notas en común se quedan quietas y las demás se mueven un tono o medio tono. Ideal para funk y para acompañar sin pisar al bajo.',
+    think: 'Antes de cambiar de acorde preguntate: ¿qué notas tienen en común? Esas no se mueven. ¿Qué nota cambia, y dónde está la más cercana?',
+    quiz: { q: 'De {c:0:maj} a {c:5:maj}, ¿qué nota se queda quieta?', options: ['{0}', '{4}', '{7}', 'Ninguna'], why: '{0} está en los dos acordes (raíz de {c:0:maj}, 5ª de {c:5:maj}). Las otras se mueven por grado: {4} → {5} y {7} → {9}.' },
+  },
+  {
+    id: 'h4', title: 'Cadencias: cómo se cierra una frase', mode: 'major', voicing: 'barre', style: 'ballad', bpm: 76, earQuiz: true,
+    prog: [
+      { s: 0, t: 'maj', rn: 'I', fn: 'T' }, { s: 5, t: 'maj', rn: 'IV', fn: 'SD' }, { s: 7, t: 'dom', rn: 'V7', fn: 'D' }, { s: 0, t: 'maj', rn: 'I', fn: 'T' },
+      { s: 2, t: 'min', rn: 'ii', fn: 'SD' }, { s: 7, t: 'dom', rn: 'V7', fn: 'D' }, { s: 9, t: 'min', rn: 'vi', fn: 'T' },
+      { s: 5, t: 'maj', rn: 'IV', fn: 'SD' }, { s: 0, t: 'maj', rn: 'I', fn: 'T' },
+    ],
+    theory: 'Una cadencia es la forma en que termina una frase. Auténtica: V → I, cierre total. Plagal: IV → I, cierre suave ("amén"). Rota: V → vi, esperás el I y llega otro acorde. Semicadencia: la frase termina en V y queda en suspenso.',
+    guitar: 'La progresión tiene una auténtica (V7 → I), una rota (V7 → vi) y una plagal (IV → I). Acentuá el acorde de llegada y escuchá cuánto cierra cada una.',
+    think: 'Acompañá pensando en frases de 4 compases: ¿quiero cerrar (V → I), sorprender (V → vi), suavizar (IV → I) o dejar abierto (terminar en V)?',
+    quiz: { q: '{c:7:dom} → {c:9:min}: ¿qué cadencia es?', options: ['Rota (engañosa)', 'Auténtica', 'Plagal', 'Semicadencia'], why: 'El V crea la expectativa de volver al I. {c:9:min} comparte dos notas con {c:0:maj} y "engaña" al oído: la música sigue en vez de cerrar.' },
+  },
+  {
+    id: 'h5', title: 'Cuatriadas con shells (3 notas)', mode: 'major', voicing: 'shells', style: 'bossa', bpm: 90,
+    prog: [
+      { s: 0, t: 'maj7', rn: 'Imaj7', fn: 'T' }, { s: 9, t: 'min7', rn: 'vi7', fn: 'T' },
+      { s: 2, t: 'min7', rn: 'ii7', fn: 'SD' }, { s: 7, t: 'dom', rn: 'V7', fn: 'D' },
+    ],
+    theory: 'Las cuatriadas suman la 7ª: Imaj7 ii7 iii7 IVmaj7 V7 vi7 viiø7. La 3ª dice si el acorde es mayor o menor; la 7ª, si es maj7, 7 o m7. La 5ª casi no aporta información: se puede omitir.',
+    guitar: 'Shell voicings: raíz + 3ª + 7ª. Con la raíz en la 6ª cuerda la forma es R-7-3; con la raíz en la 5ª, R-3-7. Entre maj7, 7 y m7 cambia un solo dedo, un traste.',
+    think: 'Para armar cualquier cuatriada: raíz → ¿3ª mayor o menor? → ¿7ª mayor o menor? Tres decisiones, tres notas.',
+    quiz: { q: '¿Qué diferencia a {c:7:dom} de {c:7:maj7}?', options: ['La 7ª: menor en el 7, mayor en el maj7', 'La 3ª', 'La 5ª', 'La raíz'], why: '{c:7:dom} tiene ♭7 ({5}) y {c:7:maj7} tiene 7 mayor ({6}). Esa nota sola cambia la función: el 7 pide resolver, el maj7 reposa.' },
+  },
+  {
+    id: 'h6', title: 'ii–V–I: las voces que bajan', mode: 'major', voicing: 'shells', style: 'bossa', bpm: 95,
+    prog: [
+      { s: 2, t: 'min7', rn: 'ii7', fn: 'SD' }, { s: 7, t: 'dom', rn: 'V7', fn: 'D' },
+      { s: 0, t: 'maj7', rn: 'Imaj7', fn: 'T', b: 8 },
+    ],
+    theory: 'En el ii–V–I la 7ª de cada acorde baja medio tono y se convierte en la 3ª del siguiente: {c:2:min7} → {c:7:dom} ({0} → {11}) y {c:7:dom} → {c:0:maj7} ({5} → {4}).',
+    guitar: 'Alterná la cuerda de la raíz: ii con raíz en la 5ª, V en la 6ª, I en la 5ª. En los diagramas vas a ver que de un acorde al otro casi solo se mueve un dedo, medio traste.',
+    think: 'No pienses tres acordes sueltos: pensá dos líneas que bajan por semitono. Si tocás solo la 3ª y la 7ª, la progresión ya se entiende.',
+    quiz: { q: 'En {c:7:dom} → {c:0:maj7}, ¿a qué nota resuelve la 7ª del dominante ({5})?', options: ['{4}, la 3ª de {c:0:maj7}', '{0}', '{7}', '{11}'], why: 'La ♭7 del V baja medio tono a la 3ª del I. Junto con la 3ª del V (la sensible {11}) que sube a {0}, forman la resolución del tritono.' },
+  },
+  {
+    id: 'h7', title: 'Dominantes secundarios', mode: 'major', voicing: 'barre', style: 'ballad', bpm: 80,
+    prog: [
+      { s: 0, t: 'maj', rn: 'I', fn: 'T' }, { s: 4, t: 'dom', rn: 'V7/vi', fn: 'sec' }, { s: 9, t: 'min', rn: 'vi', fn: 'T' },
+      { s: 2, t: 'dom', rn: 'V7/V', fn: 'sec' }, { s: 7, t: 'dom', rn: 'V7', fn: 'D' }, { s: 0, t: 'maj', rn: 'I', fn: 'T' },
+    ],
+    theory: 'Cualquier acorde de la tonalidad (menos el vii°) puede tener su propio dominante: el acorde una 5ª justa arriba, con 3ª mayor y 7ª menor. Ese V7/x apunta al acorde x como si fuera una tónica pasajera.',
+    guitar: '{c:4:dom} (V7/vi) tiene {8}, una nota que no está en {0} mayor: es la sensible de {9}. Fijate en el diagrama: es la nota que queda medio traste abajo de la raíz del acorde siguiente.',
+    think: 'Para llegar con más fuerza a un acorde X: tocá antes el acorde una 5ª arriba de X convertido en dominante. ¿Cuál es el destino? → subo una 5ª → lo hago 7.',
+    quiz: { q: '¿Cuál es el dominante secundario que lleva a {c:2:min} (V7/ii)?', options: ['{c:9:dom}', '{c:7:dom}', '{c:5:dom}', '{c:2:dom}'], why: 'Una 5ª justa arriba de {2} es {9}. Como dominante: {c:9:dom}. Su 3ª ({1}) es la sensible de {2}.' },
+  },
+  {
+    id: 'h8', title: 'Préstamo modal: ♭VII, ♭VI y iv', mode: 'major', voicing: 'barre', style: 'rock', bpm: 92,
+    prog: [
+      { s: 0, t: 'maj', rn: 'I', fn: 'T' }, { s: 10, t: 'maj', rn: '♭VII', fn: 'bor' }, { s: 5, t: 'maj', rn: 'IV', fn: 'SD' }, { s: 0, t: 'maj', rn: 'I', fn: 'T' },
+      { s: 8, t: 'maj', rn: '♭VI', fn: 'bor' }, { s: 10, t: 'maj', rn: '♭VII', fn: 'bor' }, { s: 5, t: 'maj', rn: 'IV', fn: 'SD' },
+      { s: 5, t: 'min', rn: 'iv', fn: 'bor' }, { s: 0, t: 'maj', rn: 'I', fn: 'T' },
+    ],
+    theory: 'Estando en {0} mayor podés tomar prestados acordes de {0} menor: ♭VII ({c:10:maj}), ♭VI ({c:8:maj}) e iv ({c:5:min}). Aportan oscuridad o épica sin cambiar de tonalidad, porque la tónica sigue siendo la misma.',
+    guitar: 'Las formas de cejilla no cambian: cambia la raíz. El iv ({c:5:min}) es el IV con la 3ª medio traste abajo: un dedo de diferencia y el color pasa de luminoso a melancólico.',
+    think: '¿Querés que suene más rock, épico o melancólico? Cambiá un acorde por su versión de la tonalidad menor paralela. El oído lo acepta porque casa sigue estando en {0}.',
+    quiz: { q: 'En {0} mayor, ¿de dónde viene el acorde {c:10:maj}?', options: ['De {0} menor: es el ♭VII prestado', 'De la escala de {0} mayor', 'Es un error de la progresión', 'Es un dominante secundario'], why: '{c:10:maj} tiene {10}, que no está en {0} mayor pero sí en {0} menor. Es el sonido rock/épico de "I – ♭VII – IV".' },
+  },
+  {
+    id: 'h9', title: 'Armonía en menor: por qué el V es mayor', mode: 'minor', voicing: 'barre', style: 'ballad', bpm: 76,
+    prog: [
+      { s: 0, t: 'min', rn: 'i', fn: 'T' }, { s: 8, t: 'maj', rn: '♭VI', fn: 'SD' }, { s: 2, t: 'hdim', rn: 'iiø7', fn: 'SD' }, { s: 7, t: 'dom', rn: 'V7', fn: 'D' },
+      { s: 0, t: 'min', rn: 'i', fn: 'T' }, { s: 5, t: 'min', rn: 'iv', fn: 'SD' }, { s: 7, t: 'dom', rn: 'V7', fn: 'D' }, { s: 0, t: 'min', rn: 'i', fn: 'T' },
+    ],
+    theory: 'La menor natural no tiene sensible: su v es menor y no empuja hacia la tónica. Por eso el V7 se toma de la menor armónica (3ª mayor = sensible). El resto de los acordes suele venir de la natural: i, iiø7, ♭III, iv, V7, ♭VI, ♭VII.',
+    guitar: 'Compará {c:7:min} con {c:7:dom}: cambia una sola nota, {10} → {11}. Ese medio traste es la sensible que resuelve a {0}. El iiø7 ({c:2:hdim}) es la forma con la 5ª bemol: suena oscuro y prepara el V7.',
+    think: 'En menor, si querés volver a casa con fuerza, el V tiene que ser mayor. Si buscás un sonido más modal y suave, usá v menor o ♭VII.',
+    quiz: { q: '¿Por qué en {0} menor se usa {c:7:dom} y no {c:7:min}?', options: ['Porque su 3ª ({11}) es la sensible que resuelve a {0}', 'Porque es más fácil de tocar', 'Por la escala pentatónica', 'No hay diferencia'], why: '{c:7:min} tiene {10}, a un tono de {0}: no hay atracción. {c:7:dom} tiene {11}, a medio tono: es la sensible y "tira" hacia la tónica.' },
+  },
+  {
+    id: 'h10', title: 'Sustitución tritonal', mode: 'major', voicing: 'shells', style: 'bossa', bpm: 90,
+    prog: [
+      { s: 2, t: 'min7', rn: 'ii7', fn: 'SD' }, { s: 1, t: 'dom', rn: '♭II7', fn: 'sub' },
+      { s: 0, t: 'maj7', rn: 'Imaj7', fn: 'T', b: 8 },
+    ],
+    theory: '{c:7:dom} y {c:1:dom} comparten el tritono: {11} y {5}, que en uno son 3ª y 7ª y en el otro 7ª y 3ª. Por eso uno reemplaza al otro, y el bajo baja por semitonos: {2} → {1} → {0}.',
+    guitar: 'Mirá los shells: las dos notas de arriba de {c:1:dom} son las mismas que las de {c:7:dom}, en otro orden. Solo cambia la raíz.',
+    think: 'Si un V7 te suena previsible, probá el acorde a un tritono de distancia. Funciona porque la tensión (el tritono) es la misma, y el bajo cromático le da fluidez.',
+    quiz: { q: '¿Qué tienen en común {c:7:dom} y {c:1:dom}?', options: ['El tritono: sus 3ª y 7ª son las mismas notas', 'La raíz', 'La 5ª', 'Nada'], why: '{c:7:dom}: 3ª {11} y ♭7 {5}. {c:1:dom}: 3ª {5} y ♭7 {11} (enarmónica). Mismas dos notas = misma tensión = misma resolución.' },
+  },
 ];
-const HARM_DEG_ALT_NAMES = {
-  natural_minor: ['Tónica','Supertónica','Mediante','Subdominante','Dominante','Superdominante','Subtónica'],
-};
 
-// Functional group display
-const HARM_FUNC_INFO = {
-  tonica:   { label: 'Tónica',        cls: 'func-tonica',   role: 'Reposo · estabilidad' },
-  subdom:   { label: 'Subdominante',  cls: 'func-subdom',   role: 'Pre-dominante · movimiento' },
-  dom:      { label: 'Dominante',     cls: 'func-dom',      role: 'Tensión · quiere resolver' },
-  sensible: { label: 'Sensible',      cls: 'func-sensible', role: 'Tensión extrema · medio tono al I' },
-  neutral:  { label: 'Color modal',   cls: 'func-neutral',  role: 'Función modal · color' },
-};
-
-// Preset progressions (degree indexes 0-based)
-const HARM_PRESETS = [
-  { name: 'I – IV – V – I',    desc: 'Clásica',         pattern: [0,3,4,0] },
-  { name: 'I – V – vi –  IV',  desc: 'Pop',             pattern: [0,4,5,3] },
-  { name: 'ii – V – I',        desc: 'Jazz',            pattern: [1,4,0]   },
-  { name: 'I – vi – IV – V',   desc: '50s',             pattern: [0,5,3,4] },
-  { name: 'i – iv – V – i',    desc: 'Cadencia menor',  pattern: [0,3,4,0] },
-  { name: 'i – VI – III – VII',desc: 'Rock alterno',    pattern: [0,5,2,6] },
-  { name: 'I – III – IV – V',  desc: 'Ascendente',      pattern: [0,2,3,4] },
-  { name: 'All (I→VII)',        desc: 'Todos los grados',pattern: [0,1,2,3,4,5,6] },
-];
-
-// State for armonización
+const HARMONY_PROGRESS_KEY = 'escalaimprov:harmony-course';
 const harmState = {
-  useSevenths: false,
-  bpm: 82,
-  playing: false,
-  playingProg: null,
-  progTimer: null,
+  lessonIdx: 0, voicing: null, playTimers: [], quizAnswer: null, earQuiz: null,
+  check: { active: false, total: 0, hits: 0, serial: -1, segmentHit: false, lastDetected: null, savedTracks: null },
 };
+let jamCustomProg = null; // progression injected into the jam by a harmony lesson
+
+function getHarmonyProgress() {
+  try { return JSON.parse(localStorage.getItem(HARMONY_PROGRESS_KEY) || '{}') || {}; } catch (_) { return {}; }
+}
+function markHarmonyDone(id) {
+  const p = getHarmonyProgress();
+  p[id] = new Date().toISOString();
+  try { localStorage.setItem(HARMONY_PROGRESS_KEY, JSON.stringify(p)); } catch (_) {}
+}
+
+function harmLesson() { return HARMONY_COURSE[harmState.lessonIdx]; }
+function harmUsesFlats() {
+  return FLAT_MAJOR_KEYS.has((rootIdx + (harmLesson().mode === 'minor' ? 3 : 0)) % 12);
+}
+function harmName(pc) { return (harmUsesFlats() ? NOTES_FLAT : NOTES_SHARP)[((pc % 12) + 12) % 12]; }
+function harmFill(text) {
+  return text
+    .replace(/\{c:(\d+):(\w+)\}/g, (_, n, type) => harmName(rootIdx + Number(n)) + (QUALITY_SUFFIX[type] ?? ''))
+    .replace(/\{(\d+)\}/g, (_, n) => harmName(rootIdx + Number(n)));
+}
+function harmChords() {
+  return harmLesson().prog.map(c => ({ ...c, pc: (rootIdx + c.s) % 12, name: harmName(rootIdx + c.s) + (QUALITY_SUFFIX[c.t] ?? '') }));
+}
 
 function cancelHarmPlay() {
-  if (harmState.progTimer) { clearTimeout(harmState.progTimer); harmState.progTimer = null; }
-  harmState.playing = false;
-  harmState.playingProg = null;
-  // Clear any card highlights
-  document.querySelectorAll('.harm-card.playing-card').forEach(c => c.classList.remove('playing-card'));
-  document.querySelectorAll('.harm-prog-btn.playing-prog').forEach(b => b.classList.remove('playing-prog'));
+  harmState.playTimers.forEach(clearTimeout);
+  harmState.playTimers = [];
+  document.querySelectorAll('.harm-chord.playing').forEach(el => el.classList.remove('playing'));
 }
 
-// Play a chord via arpeggio (piano style)
-function playHarmChord(notePcs, startTime, duration) {
-  if (!audioCtx || isMuted) return;
-  // Lay notes across octave 3, voice-lead within ~1.5 octave range
-  notePcs.forEach((pc, i) => {
-    const baseMidi = 48 + pc; // C3 = 48
-    const midi     = baseMidi + (baseMidi < 48 ? 12 : 0);
-    const arpDelay = i * 0.032;
-    playPlucked(midiToHz(midi), startTime + arpDelay, duration * 0.88, 0.32 - i * 0.03);
-  });
-}
-
-// Compute beat duration in seconds from BPM (1 chord = 1 bar = 4 beats)
-function harmBeatDur() { return (60 / harmState.bpm) * 4; }
-
-// Play a sequence of degree indexes
-function playHarmSequence(chordData, pattern) {
+// Play the progression with the voicings shown in the diagrams.
+function playHarmProgression(voicings, chords, beatsEach) {
   cancelHarmPlay();
-  if (!audioCtx) { initAudio(); }
+  initAudio();
   resumeAudio();
-  harmState.playing = true;
-  harmState.playingProg = pattern;
-
-  const beatDur  = harmBeatDur();
-  const now      = audioCtx.currentTime + 0.05;
-
-  // Schedule audio immediately for all chords
-  pattern.forEach((degIdx, step) => {
-    const cd = chordData[degIdx];
-    if (!cd) return;
-    playHarmChord(cd.notePcs, now + step * beatDur, beatDur);
+  const beatDur = 60 / harmLesson().bpm;
+  let t = 0;
+  chords.forEach((ch, i) => {
+    const dur = (ch.b || beatsEach) * beatDur;
+    strumVoicing(voicings[i], audioCtx.currentTime + 0.05 + t);
+    harmState.playTimers.push(setTimeout(() => {
+      document.querySelectorAll('.harm-chord.playing').forEach(el => el.classList.remove('playing'));
+      document.querySelector(`.harm-chord[data-harm-idx="${i}"]`)?.classList.add('playing');
+    }, t * 1000));
+    t += dur;
   });
-
-  // Visual: highlight each card in turn using setTimeout
-  let stepIdx = 0;
-  function tick() {
-    if (stepIdx > 0) {
-      const prev = chordData[pattern[stepIdx - 1]];
-      if (prev) prev.cardEl && prev.cardEl.classList.remove('playing-card');
-    }
-    if (stepIdx >= pattern.length) {
-      harmState.playing = false;
-      harmState.playingProg = null;
-      document.querySelectorAll('.harm-prog-btn.playing-prog').forEach(b => b.classList.remove('playing-prog'));
-      return;
-    }
-    const cur = chordData[pattern[stepIdx]];
-    if (cur) cur.cardEl && cur.cardEl.classList.add('playing-card');
-    stepIdx++;
-    harmState.progTimer = setTimeout(tick, beatDur * 1000);
-  }
-  tick();
+  harmState.playTimers.push(setTimeout(cancelHarmPlay, t * 1000));
 }
 
+// Load the lesson progression into the jam (as a custom progression) and play it.
+function playHarmWithBand() {
+  const lesson = harmLesson();
+  jamCustomProg = {
+    name: `Armonía: ${lesson.title}`,
+    desc: lesson.prog.map(c => c.rn).join(' – '),
+    pattern: lesson.prog.map(c => ({ s: c.s, t: c.t, b: c.b || 4 })),
+  };
+  currentProgIdx = 0;
+  schedBeat = 0;
+  jamStyle = lesson.style;
+  setBpm(lesson.bpm);
+  renderJamControls();
+  renderProgPlayer();
+  if (!jamRunning) startPlayer();
+  renderHarmonization();
+}
+
+function clearHarmJam() {
+  if (!jamCustomProg) return;
+  jamCustomProg = null;
+  currentProgIdx = 0;
+  renderProgPlayer();
+}
+
+// ── Chord check: does the chord you strum match the one the band is on? ──
+// Uses its own analyser (bigger FFT for chroma); the jam drops bass and chords meanwhile
+// so the mic only hears your guitar (headphones still recommended).
+const chordMic = { stream: null, analyser: null, timer: null, history: [] };
+
+function chromaMatchesChord(chroma, pc, type) {
+  const ivs = CHORD_INTERVALS[type] || CHORD_INTERVALS.maj;
+  const tones = ivs.map(iv => (pc + iv) % 12);
+  const third = (pc + ivs[1]) % 12;
+  const wrongThird = (pc + (ivs[1] === 4 ? 3 : 4)) % 12;
+  const total = chroma.reduce((a, b) => a + b, 0) || 1;
+  const onChord = tones.reduce((a, t) => a + chroma[t], 0);
+  return chroma[pc] >= 0.3 && chroma[third] >= 0.3 && chroma[third] > chroma[wrongThird] && onChord / total >= 0.55;
+}
+
+function onChordMicFrame() {
+  const N = chordMic.analyser.frequencyBinCount;
+  const freq = new Float32Array(N);
+  chordMic.analyser.getFloatFrequencyData(freq);
+  const c = harmState.check;
+  if (listenerComputeRMS(freq) < 0.0008) { c.lastDetected = null; renderHarmCheck(); return; }
+  chordMic.history.push(listenerExtractChroma(freq, audioCtx.sampleRate));
+  if (chordMic.history.length > 4) chordMic.history.shift();
+  const chroma = listenerSmoothChroma(chordMic.history);
+  const detected = listenerDetectChord(chroma);
+  c.lastDetected = detected ? detected.label : null;
+  const beat = playerBeats[shownBeat];
+  if (beat && jamRunning && countInLeft === 0 && chromaMatchesChord(chroma, beat.chordPc, beat.chordType)) c.segmentHit = true;
+  renderHarmCheck();
+}
+
+// Called by the jam on every chord change: closes the previous chord's window.
+function harmOnChordChange() {
+  const c = harmState.check;
+  if (!c.active) return;
+  if (c.serial >= 0) {
+    c.total++;
+    if (c.segmentHit) c.hits++;
+  }
+  c.serial = jamChordSerial;
+  c.segmentHit = false;
+  if (c.total >= 8 && c.hits / c.total >= 0.8) {
+    stopHarmCheck();
+    markHarmonyDone(harmLesson().id);
+    renderHarmonization();
+    return;
+  }
+  renderHarmCheck();
+}
+
+async function startHarmCheck() {
+  initAudio();
+  resumeAudio();
+  let stream;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
+  } catch (_) {
+    document.getElementById('harmCheckStatus').textContent = 'No pude acceder al micrófono. Revisá el permiso y probá de nuevo.';
+    return;
+  }
+  chordMic.stream = stream;
+  chordMic.analyser = audioCtx.createAnalyser();
+  chordMic.analyser.fftSize = 8192;
+  chordMic.analyser.smoothingTimeConstant = 0.6;
+  audioCtx.createMediaStreamSource(stream).connect(chordMic.analyser);
+  chordMic.history = [];
+  chordMic.timer = setInterval(onChordMicFrame, 150);
+  const c = harmState.check;
+  Object.assign(c, { active: true, total: 0, hits: 0, serial: -1, segmentHit: false, lastDetected: null, savedTracks: { ...jamTracks } });
+  jamTracks.bass = false;
+  jamTracks.chords = false;
+  playHarmWithBand();
+}
+
+function stopHarmCheck() {
+  const c = harmState.check;
+  if (!c.active) return;
+  c.active = false;
+  clearInterval(chordMic.timer);
+  chordMic.stream?.getTracks().forEach(t => t.stop());
+  Object.assign(chordMic, { stream: null, analyser: null, timer: null, history: [] });
+  if (c.savedTracks) { jamTracks = c.savedTracks; c.savedTracks = null; renderJamControls(); }
+}
+
+function renderHarmCheck() {
+  const el = document.getElementById('harmCheckStatus');
+  if (!el) return;
+  const c = harmState.check;
+  if (!c.active) return;
+  const beat = playerBeats[shownBeat];
+  el.innerHTML = `Ahora: <b>${beat && countInLeft === 0 ? beat.chordName : '…'}</b> · detecto: <b>${c.lastDetected || '—'}</b> ${c.segmentHit ? '<span class="ok">✓</span>' : ''}
+    · aciertos <b>${c.hits}/${c.total}</b> cambios (meta: 8 cambios con 80%)`;
+}
+
+// ── Ear quiz: which cadence did you hear? ──────────────────────
+const CADENCES = [
+  { name: 'Auténtica (V → I)', seq: [[0,'maj'],[5,'maj'],[7,'dom'],[0,'maj']], why: 'El V7 resuelve al I: cierre total.' },
+  { name: 'Plagal (IV → I)', seq: [[0,'maj'],[7,'maj'],[5,'maj'],[0,'maj']], why: 'Llega al I desde el IV: cierre suave, sin la tensión del dominante.' },
+  { name: 'Rota (V → vi)', seq: [[0,'maj'],[5,'maj'],[7,'dom'],[9,'min']], why: 'El V7 promete el I, pero llega el vi: la frase sigue abierta.' },
+  { name: 'Semicadencia (termina en V)', seq: [[0,'maj'],[9,'min'],[5,'maj'],[7,'dom']], why: 'La frase se detiene en el V: queda en suspenso, pidiendo continuación.' },
+];
+
+function playEarQuiz() {
+  const k = Math.floor(Math.random() * CADENCES.length);
+  harmState.earQuiz = { k, answer: null };
+  const chords = CADENCES[k].seq.map(([s, t]) => ({ pc: (rootIdx + s) % 12, t, b: 3 }));
+  const voicings = voiceProgression(chords.map(c => ({ pc: c.pc, type: c.t })), 'barre');
+  initAudio(); resumeAudio();
+  const beat = 60 / 90;
+  chords.forEach((c, i) => strumVoicing(voicings[i], audioCtx.currentTime + 0.05 + i * 3 * beat));
+  renderHarmonization();
+}
+
+// ── Render ─────────────────────────────────────────────────────
 function renderHarmonization() {
   const wrap = document.getElementById('harmWrap');
   if (!wrap) return;
-
-  const scale    = SCALES[scaleIdx];
-  const rootPc   = ((rootIdx % 12) + 12) % 12;
-  const noteArr  = notation === 'flat' ? NOTES_FLAT : NOTES_SHARP;
-  const rootLbl  = noteArr[rootPc];
-
-  // Build chords can't work without chordTypes
-  if (!scale.chordTypes) {
-    wrap.innerHTML = `<div style="color:var(--muted);font-size:12px;padding:24px 16px">
-      La escala <strong style="color:var(--text)">${rootLbl} ${scale.name}</strong> no tiene acordes diatónicos definidos (escala no diatónica).
-    </div>`;
-    return;
-  }
-
-  const sNotes  = scaleNotes(scale, rootPc);
-  const funcMap = HARM_FUNC_MAP[scale.id] || HARM_FUNC_MAP._default;
-  const degNames = HARM_DEG_ALT_NAMES[scale.id] || HARM_DEG_NAMES;
-  const useSevenths = harmState.useSevenths;
-
-  // Build chord data objects
-  const chordData = scale.chordTypes.map((triadType, i) => {
-    const degRootPc = (rootPc + scale.intervals[i]) % 12;
-    const triadIvs  = CHORD_INTERVALS[triadType] || [0,3,7];
-    const notePcs   = triadIvs.map(iv => (degRootPc + iv) % 12);
-
-    // Seventh chord
-    let seventhType = null;
-    let seventhIvs  = triadIvs;
-    if (useSevenths && scale.intervals.length >= 7) {
-      const seventhScaleInterval = scale.intervals[(i + 3) % 7];
-      const seventhInterval      = ((seventhScaleInterval - scale.intervals[i]) + 12) % 12;
-      seventhType = getSeventhChordType(triadType, seventhInterval);
-      seventhIvs  = HARM_SEVENTH_IVS[seventhType] || triadIvs;
-    }
-    const playIvs    = useSevenths ? seventhIvs : triadIvs;
-    const playNotePcs = playIvs.map(iv => (degRootPc + iv) % 12);
-
-    const triadSuffix = triadType === 'maj' ? '' : triadType === 'min' ? 'm' : triadType === 'dim' ? '°' : triadType === 'aug' ? '+' : '7';
-    const chordName   = noteArr[degRootPc] + (useSevenths && seventhType ? HARM_7_SUFFIX[seventhType] : triadSuffix);
-    const funcKey     = funcMap[i] || 'neutral';
-    const funcInfo    = HARM_FUNC_INFO[funcKey];
-    const degree      = scale.degrees[i] || (i + 1);
-
-    return { i, degree, triadType, chordName, degRootPc, notePcs: playNotePcs, funcKey, funcInfo, degName: degNames[i] || '', cardEl: null };
-  });
-
-  // Build card HTML
-  const cardsHTML = chordData.map((cd, i) => {
-    const noteLabels = cd.notePcs.map((pc, j) =>
-      `<span class="harm-note-pill${j === 0 ? ' root-pill' : ''}">${noteArr[pc]}</span>`
-    ).join('');
-    return `<div class="harm-card" id="harm-card-${i}" data-harm-deg="${i}" title="${cd.degName} · ${cd.funcInfo.role}">
-      <div class="harm-degree">${cd.degree}</div>
-      <div class="harm-chord-name">${cd.chordName}</div>
-      <span class="harm-func-badge ${cd.funcInfo.cls}">${cd.funcInfo.label}</span>
-      <div class="harm-note-pills">${noteLabels}</div>
-      <div class="harm-card-notes">${cd.degName}</div>
-      <button type="button" class="harm-card-play" data-harm-play="${i}">▶</button>
-    </div>`;
-  }).join('');
-
-  // Build preset progression buttons
-  const progsHTML = HARM_PRESETS.map((p, pi) => {
-    // Validate pattern doesn't exceed 7 degrees
-    const validPattern = p.pattern.filter(d => d < scale.chordTypes.length);
-    return `<button type="button" class="harm-prog-btn" data-harm-prog="${pi}">
-      <span class="harm-prog-name">${p.name}</span>
-      <span class="harm-prog-desc">${p.desc}</span>
-      <span>▶</span>
-    </button>`;
-  }).join('');
+  const lesson = harmLesson();
+  const progress = getHarmonyProgress();
+  const doneCount = HARMONY_COURSE.filter(l => progress[l.id]).length;
+  const mode = harmState.voicing || lesson.voicing;
+  const chords = harmChords();
+  const voicings = voiceProgression(chords.map(c => ({ pc: c.pc, type: c.t })), mode);
+  const keyName = `${harmName(rootIdx)} ${lesson.mode === 'minor' ? 'menor' : 'mayor'}`;
+  const quiz = lesson.quiz;
+  const qa = harmState.quizAnswer;
+  const order = quiz.options.map((_, i) => i).sort((a, b) => ((a * 7 + harmState.lessonIdx) % 5) - ((b * 7 + harmState.lessonIdx) % 5));
+  const ear = harmState.earQuiz;
+  const c = harmState.check;
 
   wrap.innerHTML = `
-    <div class="harm-toolbar">
-      <div class="harm-title">${rootLbl} <em>${scale.name}</em></div>
-      <div class="harm-toggle-group">
-        <button type="button" class="harm-toggle-btn${!useSevenths ? ' active' : ''}" id="harmBtnTriads">Tríadas</button>
-        <button type="button" class="harm-toggle-btn${useSevenths ? ' active' : ''}" id="harmBtnSevenths">Séptimas</button>
+    <div class="course-head">
+      <div>
+        <h3 class="sec">Armonía aplicada a la guitarra · Intermedio</h3>
+        <div class="course-sub">Entender los acordes <b>en el mástil</b>: qué función cumplen, cómo conectarlos moviendo la mano lo mínimo y cómo enriquecer una progresión. Todo en <b>${keyName}</b> (cambiá la tónica en el panel lateral y las lecciones se transponen).</div>
       </div>
-      <div class="harm-bpm-wrap">
-        <span class="harm-bpm-label">BPM</span>
-        <input type="range" class="harm-bpm-slider" id="harmBpmSlider" min="40" max="160" value="${harmState.bpm}">
-        <span class="harm-bpm-val" id="harmBpmVal">${harmState.bpm}</span>
+      <div class="course-progress"><b>${doneCount} / ${HARMONY_COURSE.length}</b>lecciones completas</div>
+    </div>
+    <div class="harm-lessons">
+      ${HARMONY_COURSE.map((l, i) => `<button type="button" class="lesson-pill${progress[l.id] ? ' done' : ''}${i === harmState.lessonIdx ? ' active' : ''}" data-harm-lesson="${i}">
+        <span class="lp-num">${i + 1}</span>${l.title}<span class="lp-state">${progress[l.id] ? '✓' : ''}</span></button>`).join('')}
+    </div>
+    <div class="lesson">
+      <div>
+        <div class="lesson-kicker">Lección ${harmState.lessonIdx + 1} de ${HARMONY_COURSE.length} · ${keyName}</div>
+        <div class="lesson-title">${lesson.title}</div>
       </div>
-      <button type="button" class="harm-play-all-btn" id="harmPlayAll">▶ Escuchar</button>
-      <button type="button" class="harm-stop-btn" id="harmStop">■ Stop</button>
-    </div>
-
-    <div class="harm-cards-grid" id="harmCardsGrid">${cardsHTML}</div>
-
-    <div class="harm-legend">
-      <span class="harm-legend-item"><span class="harm-legend-dot ld-tonica"></span>Función tónica (reposo)</span>
-      <span class="harm-legend-item"><span class="harm-legend-dot ld-subdom"></span>Función subdominante (pre-dom)</span>
-      <span class="harm-legend-item"><span class="harm-legend-dot ld-dom"></span>Función dominante (tensión)</span>
-      <span class="harm-legend-item"><span class="harm-legend-dot ld-neutral"></span>Color modal</span>
-    </div>
-
-    <div class="harm-progs-section">
-      <div class="harm-progs-title">Progresiones rápidas</div>
-      <div class="harm-progs-row" id="harmProgsRow">${progsHTML}</div>
-    </div>
-  `;
-
-  // Store cardEl references for visual sync
-  chordData.forEach((cd, i) => { cd.cardEl = document.getElementById('harm-card-' + i); });
-
-  // Wire events
-  document.getElementById('harmBtnTriads').addEventListener('click', () => {
-    harmState.useSevenths = false; cancelHarmPlay(); renderHarmonization();
-  });
-  document.getElementById('harmBtnSevenths').addEventListener('click', () => {
-    harmState.useSevenths = true; cancelHarmPlay(); renderHarmonization();
-  });
-  document.getElementById('harmBpmSlider').addEventListener('input', e => {
-    harmState.bpm = +e.target.value;
-    document.getElementById('harmBpmVal').textContent = harmState.bpm;
-  });
-  document.getElementById('harmPlayAll').addEventListener('click', () => {
-    if (harmState.playing) { cancelHarmPlay(); return; }
-    initAudio();
-    playHarmSequence(chordData, [0,1,2,3,4,5,6]);
-  });
-  document.getElementById('harmStop').addEventListener('click', () => {
-    cancelHarmPlay();
-  });
-
-  // Individual card play
-  document.getElementById('harmCardsGrid').addEventListener('click', e => {
-    const playBtn = e.target.closest('[data-harm-play]');
-    const card    = e.target.closest('[data-harm-deg]');
-    if (playBtn) {
-      e.stopPropagation();
-      const idx = +playBtn.dataset.harmPlay;
-      initAudio(); resumeAudio();
-      playHarmChord(chordData[idx].notePcs, audioCtx.currentTime + 0.04, harmBeatDur() * 0.9);
-      // quick highlight
-      chordData[idx].cardEl && chordData[idx].cardEl.classList.add('playing-card');
-      setTimeout(() => chordData[idx].cardEl && chordData[idx].cardEl.classList.remove('playing-card'), harmBeatDur() * 900);
-    } else if (card) {
-      const idx = +card.dataset.harmDeg;
-      initAudio(); resumeAudio();
-      playHarmChord(chordData[idx].notePcs, audioCtx.currentTime + 0.04, harmBeatDur() * 0.9);
-      chordData[idx].cardEl && chordData[idx].cardEl.classList.add('playing-card');
-      setTimeout(() => chordData[idx].cardEl && chordData[idx].cardEl.classList.remove('playing-card'), harmBeatDur() * 900);
-    }
-  });
-
-  // Progression buttons
-  document.getElementById('harmProgsRow').addEventListener('click', e => {
-    const btn = e.target.closest('[data-harm-prog]');
-    if (!btn) return;
-    const pi = +btn.dataset.harmProg;
-    const preset = HARM_PRESETS[pi];
-    const validPattern = preset.pattern.filter(d => d < chordData.length);
-    if (!validPattern.length) return;
-    if (harmState.playing) { cancelHarmPlay(); return; }
-    btn.classList.add('playing-prog');
-    initAudio();
-    playHarmSequence(chordData, validPattern);
-  });
+      <div class="lesson-cards">
+        <div class="lesson-card"><h4>La teoría</h4><p>${harmFill(lesson.theory)}</p></div>
+        <div class="lesson-card"><h4>En la guitarra</h4><p>${harmFill(lesson.guitar)}</p></div>
+        <div class="lesson-card think"><h4>Cómo pensarlo</h4><p>${harmFill(lesson.think)}</p></div>
+      </div>
+      <div class="pr-row">
+        <span class="label-sm">Formas</span>
+        ${Object.entries(VOICING_MODES).map(([k, label]) => `<button type="button" class="track-btn${k === mode ? ' on' : ''}" data-harm-voicing="${k}">${label}</button>`).join('')}
+      </div>
+      <div class="harm-prog">
+        ${chords.map((ch, i) => `<button type="button" class="harm-chord fn-${ch.fn}" data-harm-idx="${i}" title="Tocar">
+          <span class="harm-rn">${ch.rn}</span>
+          <span class="harm-name">${ch.name}</span>
+          <span class="harm-fn">${HARM_FN[ch.fn]}</span>
+          ${voicings[i] ? chordBoxSvg(voicings[i]) : '<span class="harm-fn">sin forma</span>'}
+        </button>`).join('')}
+      </div>
+      <div class="pr-copy">Las formas se eligen para que cada acorde quede lo más cerca posible del anterior. Los números en los puntos son los intervalos: R = raíz.</div>
+      <div class="pr-row">
+        <button type="button" id="harmListenBtn">▶ Escuchar con estas formas</button>
+        <button type="button" class="btn-accent" id="harmBandBtn">${jamRunning && jamCustomProg ? '⏹ Parar la banda' : '🥁 Tocar con la banda'}</button>
+        <button type="button" class="track-btn${c.active ? ' on' : ''}" id="harmCheckBtn">${c.active ? '🎤 Verificando… (detener)' : '🎤 Verificar mis acordes'}</button>
+        ${progress[lesson.id] ? '<span class="lesson-heard"><span class="ok">✓ Lección completa</span></span>' : '<button type="button" id="harmSelfBtn">Marcar como hecha</button>'}
+      </div>
+      <div class="lesson-heard" id="harmCheckStatus">${c.active ? '' : 'Verificar: tocá cada acorde cuando la banda llega a él (con auriculares). Mientras verificás, la banda toca solo batería. Se completa con 8 cambios y 80% de aciertos.'}</div>
+      ${lesson.earQuiz ? `
+      <div class="lesson-reflect">
+        <div class="lesson-card think"><h4>Entrená el oído</h4><p class="lesson-reflect-q">Escuchá cuatro acordes y decí qué cadencia cierra la frase.</p></div>
+        <div class="pr-row"><button type="button" id="harmEarBtn">▶ ${ear ? 'Otra cadencia' : 'Escuchar una cadencia'}</button></div>
+        ${ear ? `<div class="trainer-answer-grid wide">${CADENCES.map((cd, i) => `<button type="button" class="answer-btn${ear.answer === null ? '' : i === ear.k ? (ear.answer === i ? ' correct' : ' reveal') : i === ear.answer ? ' wrong' : ''}" data-harm-ear="${i}" ${ear.answer === null ? '' : 'disabled'}>${cd.name}</button>`).join('')}</div>
+        ${ear.answer === null ? '' : `<div class="lesson-why">${ear.answer === ear.k ? '✓' : '✗'} ${CADENCES[ear.k].name}: ${CADENCES[ear.k].why}</div>`}` : ''}
+      </div>` : ''}
+      <div class="lesson-reflect">
+        <div class="lesson-card think"><h4>Para pensar</h4><p class="lesson-reflect-q">${harmFill(quiz.q)}</p></div>
+        <div class="trainer-answer-grid wide">
+          ${order.map(i => `<button type="button" class="answer-btn${qa === null ? '' : i === 0 ? (qa === 0 ? ' correct' : ' reveal') : i === qa ? ' wrong' : ''}" data-harm-quiz="${i}" ${qa === null ? '' : 'disabled'}>${harmFill(quiz.options[i])}</button>`).join('')}
+        </div>
+        ${qa === null ? '' : `<div class="lesson-why">${qa === 0 ? '✓' : '✗'} ${harmFill(quiz.why)}</div>`}
+      </div>
+      <div class="lesson-nav">
+        <button type="button" data-harm-lesson="${harmState.lessonIdx - 1}" ${harmState.lessonIdx === 0 ? 'disabled' : ''}>← Anterior</button>
+        <button type="button" data-harm-lesson="${harmState.lessonIdx + 1}" ${harmState.lessonIdx === HARMONY_COURSE.length - 1 ? 'disabled' : ''}>Siguiente →</button>
+      </div>
+    </div>`;
+  harmState.voicings = voicings;
+  renderHarmCheck();
 }
+
+document.getElementById('harmWrap').addEventListener('click', e => {
+  const lessonBtn = e.target.closest('[data-harm-lesson]');
+  if (lessonBtn && !lessonBtn.disabled) {
+    stopHarmCheck();
+    cancelHarmPlay();
+    harmState.lessonIdx = parseInt(lessonBtn.dataset.harmLesson, 10);
+    Object.assign(harmState, { voicing: null, quizAnswer: null, earQuiz: null });
+    if (jamRunning && jamCustomProg) playHarmWithBand(); else renderHarmonization();
+    return;
+  }
+  const voicingBtn = e.target.closest('[data-harm-voicing]');
+  if (voicingBtn) { harmState.voicing = voicingBtn.dataset.harmVoicing; renderHarmonization(); return; }
+  const chordBtn = e.target.closest('[data-harm-idx]');
+  if (chordBtn) {
+    initAudio(); resumeAudio();
+    strumVoicing(harmState.voicings[parseInt(chordBtn.dataset.harmIdx, 10)], audioCtx.currentTime + 0.02);
+    return;
+  }
+  const quizBtn = e.target.closest('[data-harm-quiz]');
+  if (quizBtn) { harmState.quizAnswer = parseInt(quizBtn.dataset.harmQuiz, 10); renderHarmonization(); return; }
+  const earBtn = e.target.closest('[data-harm-ear]');
+  if (earBtn && harmState.earQuiz) { harmState.earQuiz.answer = parseInt(earBtn.dataset.harmEar, 10); renderHarmonization(); return; }
+  const id = e.target.closest('button')?.id;
+  if (id === 'harmListenBtn') playHarmProgression(harmState.voicings, harmChords(), 4);
+  if (id === 'harmBandBtn') {
+    if (jamRunning && jamCustomProg) { stopHarmCheck(); stopPlayer(); clearHarmJam(); renderHarmonization(); }
+    else playHarmWithBand();
+  }
+  if (id === 'harmCheckBtn') {
+    if (harmState.check.active) { stopHarmCheck(); renderHarmonization(); }
+    else startHarmCheck();
+  }
+  if (id === 'harmSelfBtn') { markHarmonyDone(harmLesson().id); renderHarmonization(); }
+  if (id === 'harmEarBtn') playEarQuiz();
+});
 
 // ══════════════════════════════════════════════
 // CIRCLE TAB + INTERVAL GUIDE

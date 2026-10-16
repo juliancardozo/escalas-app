@@ -24,6 +24,10 @@ npm run build-linux  # Linux .AppImage
 
 ## Funcionalidades
 
+- **Armonía aplicada a la guitarra · Intermedio** (pestaña Armonía): 10 lecciones para entender y tocar acordes en el mástil
+  - armonizar la escala, funciones (T–SD–D) y sustituciones, inversiones de tríadas, cadencias (con quiz de oído), cuatriadas con shells, ii–V–I con conducción de voces, dominantes secundarios, préstamo modal, armonía en menor y sustitución tritonal
+  - diagramas de acordes generados en cualquier tonalidad, en tres tipos de forma (cejilla E/A, tríadas en cuerdas agudas, shells), eligiendo cada forma lo más cerca posible de la anterior
+  - tocar la progresión con la banda y verificar con el micrófono que cada acorde que rasgueás coincida con el que suena
 - **Curso "improvisar razonando"** (pestaña 🎓 Curso): 15 lecciones de básico a avanzado para aprender *qué, cómo y cuándo* tocar, no a memorizar escalas.
   - Cada lección explica la idea, cómo pensarla y cuándo usarla, con pasos concretos en la guitarra
   - Se toca sobre un backing preparado por la lección; el micrófono evalúa **decisiones**: terminar frases en la tónica o en el acorde, dejar espacio, caer en la 3ra en cada cambio, resolver tensiones, aproximaciones cromáticas, nota característica del modo, repetir un motivo
