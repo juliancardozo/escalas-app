@@ -1082,7 +1082,7 @@
   <div class="modal-backdrop" id="registerModal">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="registerTitle">
       <h3 id="registerTitle">Entrá a la demo</h3>
-      <p>Dejá tu email y te generamos acceso demo al instante. También te sumamos a la wishlist del producto real.</p>
+      <p>Dejá tu email y te generamos acceso demo al instante.</p>
       <form id="registerForm">
         <input id="registerEmail" type="email" required placeholder="tu-email@ejemplo.com" />
         <div class="modal-actions">
@@ -1184,12 +1184,6 @@
       const password = 'Escala2026!';
       const payload = { email, username, password, createdAt: new Date().toISOString() };
       localStorage.setItem('escalaimprov:lastAccess', JSON.stringify(payload));
-      const key = 'escalaimprov:wishlist';
-      const list = JSON.parse(localStorage.getItem(key) || '[]');
-      if (!list.some(item => item.email === email)) {
-        list.push({ email, source: 'landing-autoregistro', at: payload.createdAt });
-        localStorage.setItem(key, JSON.stringify(list));
-      }
       return payload;
     }
 
