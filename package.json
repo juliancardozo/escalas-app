@@ -1,6 +1,6 @@
 {
   "name": "escalas-improvisacion",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Referencia de escalas para músicos de improvisación",
   "main": "main.js",
   "scripts": {
