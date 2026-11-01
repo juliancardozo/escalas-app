@@ -3675,6 +3675,7 @@ const PROGRESSIONS_BY_SCALE = {
     { name: 'ii – V – I', desc: 'La progresión fundamental del jazz. Tensión perfecta → resolución.', pattern: [{d:1,b:4},{d:4,b:4},{d:0,b:8}] },
     { name: 'I – IV – vi – V', desc: 'Variación popular en baladas y pop contemporáneo.', pattern: [{d:0,b:4},{d:3,b:4},{d:5,b:4},{d:4,b:4}] },
     { name: 'I – iii – IV – V', desc: 'Progresión ascendente con movimiento natural. Épica y dinámica.', pattern: [{d:0,b:4},{d:2,b:4},{d:3,b:4},{d:4,b:4}] },
+    { name: 'Imaj7 – IVmaj7 anticipado ("Mil Cosas")', desc: 'El vamp de "Mil Cosas" (Martín Buscaglia), en Re a ~72 bpm. 3+3+2: el IVmaj7 entra en el tiempo 4 y el Imaj7 vuelve en el 7. Apuntá a la 7ma mayor de cada acorde.', flow: true, pattern: [{s:0,t:'maj7',b:3},{s:5,t:'maj7',b:3},{s:0,t:'maj7',b:2}] },
   ],
   natural_minor: [
     { name: 'i – VII – VI – VII', desc: 'La progresión más oscura del rock. Perfecta para metal y grunge.', pattern: [{d:0,b:4},{d:6,b:4},{d:5,b:4},{d:6,b:4}] },
@@ -4122,7 +4123,9 @@ function resolvePatternChord(item, scale) {
   return { pc, type: scale.chordTypes ? scale.chordTypes[item.d] : 'pow' };
 }
 
-function buildPlayerBeats(pattern) {
+// flow: the bar keeps running across chord changes (for anticipations like 3+3+2);
+// by default every chord starts a new bar.
+function buildPlayerBeats(pattern, flow = false) {
   const scale = SCALES[scaleIdx];
   const beats = [];
   let measureCount = 0;
@@ -4147,7 +4150,7 @@ function buildPlayerBeats(pattern) {
       });
       beatInMeasure++;
     }
-    if (beatInMeasure > 0) { measureCount++; beatInMeasure = 0; }
+    if (!flow && beatInMeasure > 0) { measureCount++; beatInMeasure = 0; }
   });
   return beats;
 }
@@ -4165,7 +4168,7 @@ function renderProgPlayer() {
   document.getElementById('progDesc').textContent = prog.desc;
 
   // Rebuilding while playing keeps the scheduler running on the new chords.
-  playerBeats = buildPlayerBeats(prog.pattern);
+  playerBeats = buildPlayerBeats(prog.pattern, prog.flow);
   if (schedBeat >= playerBeats.length) schedBeat = 0;
   shownBeat = -1;
   renderBeatGrid();
@@ -4542,7 +4545,8 @@ function onJamLoopEnd(nextLoopTime) {
   if (!practiceEvery || jamLoopCount % practiceEvery !== 0 || practiceNextRoot === null) return;
   rootIdx = practiceNextRoot;
   practiceNextRoot = pickNextPracticeRoot();
-  playerBeats = buildPlayerBeats(getProgressions()[currentProgIdx].pattern);
+  const prog = getProgressions()[currentProgIdx];
+  playerBeats = buildPlayerBeats(prog.pattern, prog.flow);
   const delayMs = Math.max(0, (nextLoopTime - audioCtx.currentTime) * 1000);
   setTimeout(() => { if (jamRunning) render(); }, delayMs);
 }
