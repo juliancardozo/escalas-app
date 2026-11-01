@@ -1713,6 +1713,90 @@
     .harm-name { font-family: var(--display); font-size: 16px; font-weight: 700; color: var(--text); }
     .harm-fn { font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
     .chord-box { width: 100%; max-width: 116px; height: auto; margin-top: 4px; }
+
+    /* Piano: acordes en el teclado */
+    .app.focus-piano .body { grid-template-columns: 1fr; }
+    .app.focus-piano .sidebar, .app.focus-piano .scale-info-bar { display: none; }
+    #kcWrap { gap: 14px; max-width: 1240px; width: 100%; margin: 0 auto; }
+    .kc-top { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+    .kc-brand { font-family: var(--display); font-size: 16px; font-weight: 700; color: var(--text); white-space: nowrap; }
+    .kc-brand span { font-family: var(--mono); font-size: 10px; font-weight: 400; color: var(--accent2); letter-spacing: 0.12em; text-transform: uppercase; margin-left: 6px; }
+    .kc-dots { display: flex; align-items: center; gap: 6px; flex: 1; flex-wrap: wrap; }
+    .kc-dot { width: 32px; height: 32px; padding: 0; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+    .kc-dot.done { border-color: rgba(91,255,160,0.5); color: var(--green); }
+    .kc-dot.active { background: var(--accent); border-color: var(--accent); color: #000; }
+    .kc-dots-count { font-size: 11px; color: var(--muted); margin-left: 6px; }
+    .kc-keysel { display: flex; align-items: center; gap: 8px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .kc-keysel select { font-size: 13px; text-transform: none; letter-spacing: 0; }
+    .kc-lesson { gap: 18px; padding: 20px 24px; }
+    .kc-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+    .kc-lesson .lesson-title { font-size: 28px; }
+    .kc-steps { display: flex; gap: 6px; background: var(--s2); border: 1px solid var(--border); border-radius: 12px; padding: 4px; }
+    .kc-step { display: flex; align-items: center; gap: 8px; border: none; background: transparent; font-size: 13px; padding: 8px 14px; border-radius: 9px; color: var(--muted); }
+    .kc-step span { width: 20px; height: 20px; border-radius: 50%; border: 1px solid currentColor; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; }
+    .kc-step small { font-size: 10px; color: var(--green); }
+    .kc-step.past { color: var(--text); }
+    .kc-step.active { background: var(--accent); color: #000; font-weight: 700; }
+    .kc-step.active span { border-color: #000; }
+    .kc-step.active small { color: #000; }
+    .kc-body { min-height: 300px; }
+    .kc-foot { display: flex; justify-content: space-between; gap: 10px; border-top: 1px solid var(--border); padding-top: 14px; }
+    .kc-foot button { font-size: 13px; padding: 10px 18px; }
+    .kc-learn { display: grid; grid-template-columns: minmax(280px, 0.9fr) minmax(320px, 1.1fr); gap: 18px; align-items: start; }
+    .kc-text { display: flex; flex-direction: column; gap: 10px; }
+    #kcWrap .lesson-card h4 { font-size: 10px; }
+    #kcWrap .lesson-card p { font-size: 14px; line-height: 1.65; }
+    .kc-side { display: flex; flex-direction: column; gap: 12px; }
+    .kc-prog { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+    .kc-prog .harm-name { font-size: 20px; }
+    .kc-prog .harm-rn, .kc-prog .harm-fn { font-size: 10px; }
+    .kc-mini { width: 100%; max-width: 260px; height: auto; margin: 4px 0 2px; }
+    .kc-link { background: none; border: none; color: var(--muted); text-decoration: underline; font-size: 11px; }
+    .kc-drill { display: flex; flex-direction: column; gap: 14px; }
+    .kc-drill-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+    .kc-target { font-family: var(--display); font-size: clamp(28px, 4vw, 42px); font-weight: 700; color: var(--accent2); line-height: 1.1; }
+    .kc-target.solved { color: var(--green); }
+    .kc-target-sub { font-size: 12px; color: var(--muted); margin-top: 6px; }
+    .kc-score { min-width: 220px; }
+    .kc-score-num { font-size: 12px; color: var(--muted); margin-bottom: 6px; text-align: right; }
+    .kc-score-num b { font-family: var(--display); font-size: 22px; color: var(--text); }
+    .kc-segs { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; }
+    .kc-segs span { height: 8px; border-radius: 4px; background: var(--s3); }
+    .kc-segs span.on { background: var(--green); }
+    .kc-feedback { font-size: 15px; min-height: 22px; color: var(--muted); }
+    .kc-feedback .ok { color: var(--green); font-weight: 700; }
+    .kc-feedback .no { color: #ff6767; }
+    .kc-done { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; background: rgba(91,255,160,0.08); border: 1px solid rgba(91,255,160,0.35); border-radius: 10px; padding: 10px 14px; font-size: 14px; color: var(--text); }
+    .kc-kbd { position: relative; width: 100%; height: clamp(150px, 26vh, 230px); }
+    .kc-key {
+      position: absolute; top: 0; cursor: pointer; user-select: none; -webkit-user-select: none; box-sizing: border-box;
+      display: flex; flex-direction: column; align-items: center; justify-content: space-between; font-family: var(--mono); transition: background 0.08s, transform 0.08s;
+    }
+    .kc-key.w { height: 100%; padding: 8px 0 10px; background: #f0ede8; border: 1px solid #aaa; border-radius: 0 0 7px 7px; z-index: 1; font-size: 12px; color: #555; }
+    .kc-key.b { height: 62%; padding: 6px 0 8px; background: #1a1a1a; border: 1px solid #000; border-radius: 0 0 5px 5px; z-index: 2; font-size: 10px; color: #bbb; }
+    .kc-key.w:hover { background: #e2ddd5; }
+    .kc-key.b:hover { background: #333; }
+    .kc-key:active { transform: translateY(2px); }
+    .kc-key.on { background: var(--accent) !important; color: #000; }
+    .kc-key.good { background: var(--green) !important; color: #000; }
+    .kc-key.hint { box-shadow: inset 0 -16px 0 var(--green); }
+    .kc-key .kc-nm { font-weight: 700; }
+    .kc-key .kc-pc { font-size: 9px; opacity: 0.45; }
+    .kc-key.on .kc-pc, .kc-key.good .kc-pc { opacity: 0.7; }
+    .kc-tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .kc-tools button { font-size: 12px; }
+    .kc-tools-sep { flex: 1; }
+    .kc-pc-help { font-size: 11px; color: var(--muted); }
+    #kcWrap kbd { font-family: var(--mono); font-size: 10px; border: 1px solid var(--border2); border-bottom-width: 2px; border-radius: 4px; padding: 0 4px; margin: 0 1px; color: var(--text); }
+    .kc-think { display: flex; flex-direction: column; gap: 14px; max-width: 860px; }
+    .kc-quiz-q { font-family: var(--display); font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.3; }
+    .kc-think .answer-btn { font-size: 14px; padding: 14px; }
+    .kc-think .lesson-why { font-size: 14px; line-height: 1.6; }
+    @media (max-width: 900px) {
+      .kc-learn { grid-template-columns: 1fr; }
+      .kc-lesson { padding: 16px; }
+      .kc-lesson .lesson-title { font-size: 22px; }
+    }
     .lesson-heard .ok { color: var(--green); }
 
     /* ── QUINTAS TAB REDESIGN ─────────────────────── */
@@ -1894,6 +1978,7 @@
         <button type="button" class="tab-btn" role="tab" id="tabBtnBuilder" data-tab="builder" aria-selected="false">Constructor</button>
         <button type="button" class="tab-btn" role="tab" id="tabBtnMinors" data-tab="minors" aria-selected="false">Menores</button>
         <button type="button" class="tab-btn" role="tab" id="tabBtnHarm" data-tab="harm" aria-selected="false">Armonía</button>
+        <button type="button" class="tab-btn" role="tab" id="tabBtnPiano" data-tab="piano" aria-selected="false">🎹 Piano</button>
         <button type="button" class="tab-btn" role="tab" id="tabBtnListener" data-tab="listener" aria-selected="false">🎙 Escuchar</button>
         <button type="button" class="tab-btn" role="tab" id="tabBtnPractice" data-tab="practice" aria-selected="false">Práctica</button>
       </div>
@@ -2178,6 +2263,12 @@
         <div class="tab-panel" id="tab-panel-harm" data-tab-panel="harm" hidden>
           <div class="harm-wrap" id="harmWrap">
             <!-- populated by renderHarmonization() -->
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-panel-piano" data-tab-panel="piano" hidden>
+          <div class="harm-wrap" id="kcWrap">
+            <!-- populated by renderKeysCourse() -->
           </div>
         </div>
 
@@ -3023,6 +3114,7 @@ function renderJamPanel() {
 function setTab(tab) {
   cancelTrainerTimer();
   cancelHarmPlay();
+  cancelKcPlay();
   cancelMinorsPlay();
   // Liberar micrófono siempre al salir del tab listener
   if (tab !== 'listener') listenerStop();
@@ -3036,8 +3128,10 @@ function setTab(tab) {
     if (pitchMic.subs.has(onTunerPitch)) toggleTuner();
     if (drillState.active) { stopDrill(); renderDrill(); }
   }
-  activeTab = tab === 'guitar' || tab === 'circle' || tab === 'trainer' || tab === 'builder' || tab === 'minors' || tab === 'harm' || tab === 'listener' || tab === 'practice' || tab === 'course' ? tab : 'ref';
+  activeTab = tab === 'guitar' || tab === 'circle' || tab === 'trainer' || tab === 'builder' || tab === 'minors' || tab === 'harm' || tab === 'listener' || tab === 'practice' || tab === 'course' || tab === 'piano' ? tab : 'ref';
   localStorage.setItem(ACTIVE_TAB_KEY, activeTab);
+  // The piano course only needs the tonic (chosen inside the lesson): hide the scale sidebar.
+  document.querySelector('.app').classList.toggle('focus-piano', activeTab === 'piano');
   document.querySelectorAll('.tab-btn').forEach(b => {
     const on = b.dataset.tab === activeTab;
     b.classList.toggle('active', on);
@@ -3054,6 +3148,7 @@ function setTab(tab) {
   if (activeTab === 'listener') renderListener();
   if (activeTab === 'practice') { renderDrill(); renderSpeed(); }
   if (activeTab === 'course') renderCourse();
+  if (activeTab === 'piano') renderKeysCourse();
 }
 
 function renderGuitarPositionButtons() {
@@ -4455,6 +4550,7 @@ function stopPlayer() {
   if (speedState.active) endSpeedTrainer();
   if (activeTab === 'course') renderLesson();
   if (activeTab === 'harm') { stopHarmCheck(); renderHarmonization(); }
+  if (activeTab === 'piano') renderKeysCourse();
 }
 
 function togglePlay() {
@@ -5375,6 +5471,7 @@ function render() {
   if (activeTab === 'builder') renderBuilder();
   if (activeTab === 'minors') renderMinors();
   if (activeTab === 'harm') renderHarmonization();
+  if (activeTab === 'piano') renderKeysCourse();
 }
 
 // ══════════════════════════════════════════════
@@ -6355,6 +6452,677 @@ document.getElementById('harmWrap').addEventListener('click', e => {
   if (id === 'harmSelfBtn') { markHarmonyDone(harmLesson().id); renderHarmonization(); }
   if (id === 'harmEarBtn') playEarQuiz();
 });
+
+// ══════════════════════════════════════════════
+// PIANO TAB: acordes básicos en el teclado
+// ══════════════════════════════════════════════
+// Lessons: prog items {s: semitones over the tonic, t: chord type, rn: label, inv?: fixed inversion, b?: beats}.
+// voicing: root (fundamental) · inv (item.inv) · lead (closest to previous chord) · lh (left-hand bass + right-hand lead)
+// drill: random (random roots, given types) · key (diatonic degrees) · inv (chords in a given inversion) · prog (follow the lesson progression)
+const KC_COURSE = [
+  {
+    id: 'k1', title: 'Ubicarse y la tríada mayor', voicing: 'root', band: true, style: 'rock', bpm: 84,
+    prog: [{ s: 0, t: 'maj', rn: 'I' }, { s: 5, t: 'maj', rn: 'IV' }, { s: 7, t: 'maj', rn: 'V' }, { s: 0, t: 'maj', rn: 'I' }],
+    theory: 'De una tecla a la siguiente (blanca o negra) hay un semitono. Las negras vienen en grupos de 2 y de 3: la blanca a la izquierda del grupo de 2 es C. Una tríada mayor tiene tres notas: la raíz, 4 semitonos más arriba la 3ª mayor y 3 semitonos más la 5ª.',
+    keys: 'Mano derecha: pulgar (1) en la raíz, medio (3) en la 3ª y meñique (5) en la 5ª. En {c:0:maj}: desde {0} contá 4 semitonos hasta {4} y 3 más hasta {7}. La forma "tecla sí, tecla no" solo funciona con teclas blancas en C, F y G; contar semitonos funciona siempre.',
+    think: 'Para cualquier acorde mayor: 1) encontrá la raíz, 2) contá 4 semitonos, 3) contá 3 más. Con la práctica la mano reconoce la forma sin contar.',
+    drill: { kind: 'random', types: ['maj'] },
+    quiz: { q: '¿Cuántos semitonos hay entre la raíz y la 5ª de un acorde mayor?', options: ['7', '5', '4', '8'], why: '4 (raíz → 3ª mayor) + 3 (3ª → 5ª) = 7 semitonos, una 5ª justa. En {c:0:maj}: {0} → {4} → {7}.' },
+  },
+  {
+    id: 'k2', title: 'La tríada menor: bajar la 3ª', voicing: 'root',
+    prog: [{ s: 0, t: 'maj', rn: 'Mayor' }, { s: 0, t: 'min', rn: 'Menor' }, { s: 9, t: 'min', rn: 'vi' }, { s: 2, t: 'min', rn: 'ii' }],
+    theory: 'La tríada menor tiene las mismas raíz y 5ª que la mayor; solo cambia la 3ª, que está medio tono más abajo. Mayor = 4 + 3 semitonos, menor = 3 + 4. Esa sola tecla cambia el carácter: de luminoso a melancólico.',
+    keys: 'Tocá {c:0:maj} y, sin mover el pulgar ni el meñique, bajá el dedo medio una tecla: sale {c:0:min}. Ida y vuelta varias veces escuchando el cambio. Los dedos siguen siendo 1-3-5.',
+    think: 'Para un acorde menor podés contar 3 + 4, o armar el mayor y bajar la 3ª. La segunda forma es más rápida mientras aprendés.',
+    drill: { kind: 'random', types: ['maj', 'min'] },
+    quiz: { q: '¿Qué nota cambia entre {c:0:maj} y {c:0:min}?', options: ['La 3ª: baja medio tono', 'La raíz', 'La 5ª', 'Cambian todas'], why: 'Mayor = 4 + 3 y menor = 3 + 4. La raíz y la 5ª quedan quietas; solo la 3ª baja una tecla.' },
+  },
+  {
+    id: 'k3', title: 'Las cuatro tríadas: disminuida y aumentada', voicing: 'root',
+    prog: [{ s: 0, t: 'maj', rn: 'Mayor · 4+3' }, { s: 0, t: 'min', rn: 'Menor · 3+4' }, { s: 0, t: 'dim', rn: 'Dism. · 3+3' }, { s: 0, t: 'aug', rn: 'Aum. · 4+4' }],
+    theory: 'Apilando dos terceras salen cuatro tríadas: mayor (4+3), menor (3+4), disminuida (3+3: la 5ª baja medio tono) y aumentada (4+4: la 5ª sube medio tono). Las dos primeras son las más usadas; la disminuida aparece como acorde de tensión y la aumentada como color de paso.',
+    keys: 'Partí siempre de {c:0:maj}: bajá la 3ª para el menor, bajá además la 5ª para el disminuido, o subí solo la 5ª para el aumentado. La raíz (pulgar) no se mueve nunca.',
+    think: 'Pensá cada tríada como "mayor con cambios": ¿qué se mueve, la 3ª, la 5ª o las dos? Así reconocés la calidad mirando la mano.',
+    drill: { kind: 'random', types: ['maj', 'min', 'dim', 'aug'] },
+    quiz: { q: 'Un acorde disminuido se arma con…', options: ['Dos 3ªs menores (3 + 3)', 'Dos 3ªs mayores (4 + 4)', '3ª mayor + 3ª menor (4 + 3)', '3ª menor + 3ª mayor (3 + 4)'], why: 'Disminuido = 3 + 3, con la 5ª a 6 semitonos de la raíz. Aumentado = 4 + 4, mayor = 4 + 3 y menor = 3 + 4. En {0}: {c:0:dim} = {0} – {3} – {6}.' },
+  },
+  {
+    id: 'k4', title: 'Los acordes de la tonalidad', voicing: 'root', band: true, style: 'ballad', bpm: 80,
+    prog: [
+      { s: 0, t: 'maj', rn: 'I' }, { s: 2, t: 'min', rn: 'ii' }, { s: 4, t: 'min', rn: 'iii' }, { s: 5, t: 'maj', rn: 'IV' },
+      { s: 7, t: 'maj', rn: 'V' }, { s: 9, t: 'min', rn: 'vi' }, { s: 11, t: 'dim', rn: 'vii°' },
+    ],
+    theory: 'Si tocás una tríada sobre cada nota de la escala mayor usando solo notas de la escala, siempre sale el mismo patrón: I mayor, ii menor, iii menor, IV mayor, V mayor, vi menor y vii° disminuido. Con esos siete acordes se tocan miles de canciones.',
+    keys: 'En C mayor es solo con teclas blancas: la mano mantiene la forma 1-3-5 y se desliza de a una tecla. En {0} mayor la forma es la misma, pero algunas notas caen en negras. Usá la fórmula (M m m M M m °) para saber qué calidad le toca a cada grado.',
+    think: 'Para encontrar un acorde de la tonalidad: 1) ¿qué grado es? 2) ¿qué calidad le da la fórmula? 3) armalo desde su raíz.',
+    drill: { kind: 'key' },
+    quiz: { q: 'En {0} mayor, ¿qué acorde se arma sobre la 2ª nota de la escala ({2})?', options: ['{c:2:min}', '{c:2:maj}', '{c:2:dim}', '{c:2:aug}'], why: 'La fórmula de la escala mayor es M m m M M m °: el ii siempre es menor. Con las notas de {0} mayor, sobre {2} sale {c:2:min}.' },
+  },
+  {
+    id: 'k5', title: 'Inversiones: el mismo acorde en otro orden', voicing: 'inv',
+    prog: [
+      { s: 0, t: 'maj', rn: 'Fundamental', inv: 0 }, { s: 0, t: 'maj', rn: '1ª inversión', inv: 1 }, { s: 0, t: 'maj', rn: '2ª inversión', inv: 2 },
+      { s: 9, t: 'min', rn: 'Fundamental', inv: 0 }, { s: 9, t: 'min', rn: '1ª inversión', inv: 1 }, { s: 9, t: 'min', rn: '2ª inversión', inv: 2 },
+    ],
+    theory: 'Una tríada se puede ordenar de tres formas: fundamental (raíz abajo), 1ª inversión (la 3ª abajo) y 2ª inversión (la 5ª abajo). Son las mismas notas: el acorde no cambia de nombre, solo de color. Se escribe con barra: {c:0:maj}/{4} es {c:0:maj} con {4} en el bajo.',
+    keys: 'Para invertir, pasá la nota de abajo una octava arriba. Digitación de la mano derecha: fundamental 1-3-5, 1ª inversión 1-2-5 y 2ª inversión 1-3-5. Mirá la forma: en las inversiones aparece una 4ª (un hueco más grande) entre dos dedos, y la nota de arriba de ese hueco es la raíz.',
+    think: 'Para reconocer una inversión, buscá el hueco de 4ª: la nota de arriba es la raíz. Para armar una, pensá primero "¿qué nota tiene que ir abajo?" y apilá las otras dos encima.',
+    drill: { kind: 'inv' },
+    quiz: { q: 'Si tocás {4} – {7} – {0} (de abajo hacia arriba), ¿qué acorde es?', options: ['{c:0:maj} en 1ª inversión', '{c:4:min}', '{c:0:maj} en 2ª inversión', '{c:7:maj}'], why: 'Son las notas de {c:0:maj} con la 3ª ({4}) abajo: 1ª inversión, {c:0:maj}/{4}. El hueco de 4ª está entre {7} y {0}, y {0} es la raíz.' },
+  },
+  {
+    id: 'k6', title: 'Conducción de voces: I – IV – V – I sin saltar', voicing: 'lead', band: true, style: 'ballad', bpm: 76,
+    prog: [{ s: 0, t: 'maj', rn: 'I' }, { s: 5, t: 'maj', rn: 'IV' }, { s: 7, t: 'maj', rn: 'V' }, { s: 0, t: 'maj', rn: 'I' }],
+    theory: 'Si todos los acordes van en fundamental, la mano salta de un lado a otro. Con inversiones, cada acorde queda pegado al anterior: las notas en común se quedan quietas y las demás se mueven una o dos teclas. Así suena "ligado", como un pianista.',
+    keys: 'De {c:0:maj} a {c:5:maj}/{0}: {0} se queda y las otras dos suben. De ahí a {c:7:maj}/{11}: el pulgar baja a {11}. Y de vuelta a {c:0:maj}. La mano casi no se mueve de lugar.',
+    think: 'Antes de cada cambio preguntate: ¿qué nota tienen en común los dos acordes? Esa no se mueve. ¿Cuál es la tecla más cercana para cada una de las otras?',
+    drill: { kind: 'prog' },
+    quiz: { q: 'De {c:0:maj} a {c:5:maj}/{0}, ¿qué hace la mano?', options: ['{0} queda quieta; {4} sube a {5} y {7} sube a {9}', 'Toda la mano salta hasta {5}', 'Solo se mueve el pulgar', 'Nada: son el mismo acorde'], why: 'La nota común ({0}) se queda y las otras dos suben por grado conjunto. Por eso los acordes suenan ligados.' },
+  },
+  {
+    id: 'k7', title: 'Las dos manos: bajo y acorde', voicing: 'lh', band: true, style: 'ballad', bpm: 80,
+    prog: [{ s: 0, t: 'maj', rn: 'I' }, { s: 7, t: 'maj', rn: 'V' }, { s: 9, t: 'min', rn: 'vi' }, { s: 5, t: 'maj', rn: 'IV' }],
+    theory: 'La forma más común de acompañar: la mano izquierda toca la raíz en el registro grave y la derecha toca la tríada en la inversión más cercana. Como el bajo ya marca la raíz, la derecha puede estar invertida y el acorde se escucha igual en fundamental.',
+    keys: 'Izquierda: la raíz con el meñique (5), una octava o dos por debajo de la derecha. Derecha: las inversiones de la lección anterior. Progresión I – V – vi – IV en {0}: {c:0:maj}, {c:7:maj}, {c:9:min}, {c:5:maj}.',
+    think: 'Dividí el trabajo: la izquierda piensa "¿cuál es la raíz?" y la derecha "¿cuál es la inversión más cercana?". Empezá con manos separadas y después juntalas, primero lento.',
+    drill: { kind: 'prog', bass: true },
+    quiz: { q: 'En {c:7:maj}, ¿qué toca la mano izquierda?', options: ['La raíz: {7}', 'La 3ª: {11}', 'La 5ª: {2}', 'El acorde completo'], why: 'La izquierda marca la raíz (el bajo) y la derecha toca la tríada en la inversión más cercana. Así el acorde suena completo y estable.' },
+  },
+  {
+    id: 'k8', title: 'Acordes de séptima', voicing: 'inv', band: true, style: 'bossa', bpm: 88,
+    prog: [{ s: 2, t: 'min7', rn: 'ii7', inv: 0 }, { s: 7, t: 'dom', rn: 'V7', inv: 2 }, { s: 0, t: 'maj7', rn: 'Imaj7', inv: 0, b: 8 }],
+    theory: 'Sumando otra 3ª arriba de la tríada sale la cuatriada. Las tres más usadas: maj7 (mayor + 7ª mayor, 11 semitonos), 7 o dominante (mayor + 7ª menor, 10) y m7 (menor + 7ª menor, 10). La 7ª da color: el maj7 suena suave, el 7 pide resolver y el m7 suena relajado.',
+    keys: 'En fundamental, digitación 1-2-3-5. Para el ii – V – I conviene invertir: {c:2:min7} en fundamental, {c:7:dom} con {2} abajo y {c:0:maj7} en fundamental. Así, de un acorde al otro se mueven solo una o dos teclas.',
+    think: 'Para cualquier cuatriada: raíz → ¿3ª mayor o menor? → ¿7ª mayor o menor? Tres decisiones. Un truco: la 7ª mayor está una tecla debajo de la raíz de arriba; la 7ª menor, dos teclas debajo.',
+    drill: { kind: 'random', types: ['maj7', 'dom', 'min7'] },
+    quiz: { q: '¿Qué diferencia a {c:7:dom} de {c:7:maj7}?', options: ['La 7ª: menor en el 7, mayor en el maj7', 'La 3ª', 'La 5ª', 'La raíz'], why: '{c:7:dom} tiene la 7ª menor ({5}) y {c:7:maj7} la 7ª mayor ({6}): una tecla de diferencia, y cambia la función. El 7 pide resolver; el maj7 reposa.' },
+  },
+];
+
+const KC_PROGRESS_KEY = 'escalaimprov:piano-course';
+const KC_GOAL = 8;
+const KC_LOW = 48, KC_HIGH = 83; // practice keyboard C3–B5
+const KC_INV_NAMES = ['fundamental', '1ª inversión', '2ª inversión', '3ª inversión'];
+const KC_IV_LABEL = { 0: 'R', 3: '♭3', 4: '3', 6: '♭5', 7: '5', 8: '#5', 10: '♭7', 11: '7' };
+const KC_IV_ROLE = { 0: 'la raíz', 3: 'la 3ª', 4: 'la 3ª', 6: 'la 5ª', 7: 'la 5ª', 8: 'la 5ª', 10: 'la 7ª', 11: 'la 7ª' };
+const KC_TYPE_NAME = { maj: 'mayor', min: 'menor', dim: 'disminuido', aug: 'aumentado', dom: 'dominante (7)', min7: 'menor 7', maj7: 'mayor 7' };
+const KC_IS_BLACK = [false, true, false, true, false, false, true, false, true, false, true, false];
+
+const kcState = {
+  lessonIdx: 0, quizAnswer: null, playTimers: [], voicings: [],
+  drill: { target: null, pressed: new Set(), hits: 0, solved: false, revealed: false, msg: '', progIdx: 0, rootIdx: null, nextTimer: null },
+  midi: { access: null, status: '' },
+};
+
+function getKcProgress() {
+  try { return JSON.parse(localStorage.getItem(KC_PROGRESS_KEY) || '{}') || {}; } catch (_) { return {}; }
+}
+function markKcDone(id) {
+  const p = getKcProgress();
+  if (p[id]) return;
+  p[id] = new Date().toISOString();
+  try { localStorage.setItem(KC_PROGRESS_KEY, JSON.stringify(p)); } catch (_) {}
+}
+function kcLesson() { return KC_COURSE[kcState.lessonIdx]; }
+
+// Spelling: names inside the lesson key follow the key; chord tones follow the chord's own root.
+function kcKeyName(pc) { return (FLAT_MAJOR_KEYS.has(rootIdx) ? NOTES_FLAT : NOTES_SHARP)[((pc % 12) + 12) % 12]; }
+function kcParentFlats(pc, t) {
+  const off = { min: 3, min7: 3, dom: 5, dim: 1, hdim: 1 }[t] || 0;
+  return FLAT_MAJOR_KEYS.has((pc + off) % 12);
+}
+function kcRootName(pc, t) { return (kcParentFlats(pc, t) ? NOTES_FLAT : NOTES_SHARP)[pc % 12]; }
+function kcToneName(pc, rootName, t, rootPc) {
+  const flats = rootName.includes('b') ? true : rootName.includes('#') ? false : kcParentFlats(rootPc, t);
+  return (flats ? NOTES_FLAT : NOTES_SHARP)[((pc % 12) + 12) % 12];
+}
+function kcFill(text) {
+  return text
+    .replace(/\{c:(\d+):(\w+)\}/g, (_, n, type) => kcKeyName(rootIdx + Number(n)) + (QUALITY_SUFFIX[type] ?? ''))
+    .replace(/\{(\d+)\}/g, (_, n) => kcKeyName(rootIdx + Number(n)));
+}
+
+// ── Voicings ───────────────────────────────────────────────────
+function kcRootPos(pc, t) {
+  let r = 60 + pc;
+  if (r > 67) r -= 12;
+  return (CHORD_INTERVALS[t] || CHORD_INTERVALS.maj).map(iv => r + iv);
+}
+function kcInvert(notes, k) {
+  const n = [...notes];
+  for (let i = 0; i < k; i++) n.push(n.shift() + 12);
+  if (n[0] > 67) return n.map(m => m - 12);
+  return n;
+}
+// The inversion/octave of the chord that moves the hand the least from prev.
+function kcClosest(pc, t, prev) {
+  const base = kcRootPos(pc, t);
+  let best = null, bestCost = Infinity;
+  for (let k = 0; k < base.length; k++) {
+    for (const shift of [-12, 0, 12]) {
+      const v = kcInvert(base, k).map(m => m + shift);
+      if (v[0] < 53 || v[v.length - 1] > 81) continue;
+      const cost = v.reduce((a, m) => a + Math.min(...prev.map(p => Math.abs(m - p))), 0)
+        + prev.reduce((a, p) => a + Math.min(...v.map(m => Math.abs(m - p))), 0);
+      const center = Math.abs(v.reduce((a, m) => a + m, 0) / v.length - 64) * 0.01;
+      if (cost + center < bestCost) { bestCost = cost + center; best = v; }
+    }
+  }
+  return best || base;
+}
+function kcFingers(rh, pc) {
+  if (rh.length >= 4) return [1, 2, 3, 5];
+  const iv = ((rh[0] - pc) % 12 + 12) % 12;
+  return iv === 3 || iv === 4 ? [1, 2, 5] : [1, 3, 5];
+}
+// → [{ rh: [midi], lh: midi|null, fingers }]
+function kcVoiceLesson(lesson) {
+  let prev = null;
+  return lesson.prog.map(c => {
+    const pc = (rootIdx + c.s) % 12;
+    let rh;
+    if (lesson.voicing === 'inv') rh = kcInvert(kcRootPos(pc, c.t), c.inv || 0);
+    else if ((lesson.voicing === 'lead' || lesson.voicing === 'lh') && prev) rh = kcClosest(pc, c.t, prev);
+    else rh = kcRootPos(pc, c.t);
+    prev = rh;
+    let lh = null;
+    if (lesson.voicing === 'lh') { lh = 36 + pc; if (lh < 40) lh += 12; }
+    return { rh, lh, fingers: kcFingers(rh, pc) };
+  });
+}
+function kcChordLabel(c, v) {
+  const pc = (rootIdx + c.s) % 12;
+  const name = kcKeyName(pc) + (QUALITY_SUFFIX[c.t] ?? '');
+  const low = v.rh[0] % 12;
+  return v.lh === null && low !== pc ? `${name}/${kcToneName(low, kcKeyName(pc), c.t, pc)}` : name;
+}
+
+// ── Sound: simple electric-piano voice ─────────────────────────
+function playKeysNote(midi, time, dur = 1.6, vol = 0.16) {
+  if (!audioCtx || isMuted) return;
+  const f = midiToHz(midi);
+  const out = audioCtx.createGain();
+  out.gain.setValueAtTime(0, time);
+  out.gain.linearRampToValueAtTime(vol, time + 0.008);
+  out.gain.exponentialRampToValueAtTime(vol * 0.35, time + 0.3);
+  out.gain.exponentialRampToValueAtTime(0.0005, time + dur);
+  const lp = audioCtx.createBiquadFilter();
+  lp.type = 'lowpass';
+  lp.frequency.setValueAtTime(Math.min(9000, f * 9), time);
+  lp.frequency.exponentialRampToValueAtTime(Math.max(400, f * 2), time + dur);
+  [[1, 'triangle', 1], [2, 'sine', 0.3], [4, 'sine', 0.06]].forEach(([mult, type, amp]) => {
+    const o = audioCtx.createOscillator();
+    o.type = type;
+    o.frequency.value = f * mult;
+    const g = audioCtx.createGain();
+    g.gain.value = amp;
+    o.connect(g); g.connect(lp);
+    o.start(time); o.stop(time + dur + 0.05);
+  });
+  lp.connect(out); out.connect(masterGain);
+}
+function playKeysChord(midis, time, dur = 1.8) {
+  midis.forEach(m => playKeysNote(m, time, dur, 0.5 / Math.max(3, midis.length)));
+}
+function kcVoicingMidis(v) { return v.lh === null ? v.rh : [v.lh, ...v.rh]; }
+
+function cancelKcPlay() {
+  kcState.playTimers.forEach(clearTimeout);
+  kcState.playTimers = [];
+  document.querySelectorAll('.kc-chord.playing').forEach(el => el.classList.remove('playing'));
+}
+function playKcProgression() {
+  cancelKcPlay();
+  initAudio(); resumeAudio();
+  const lesson = kcLesson();
+  const beatDur = 60 / (lesson.bpm || 80);
+  let t = 0;
+  lesson.prog.forEach((c, i) => {
+    const dur = (c.b || 4) * beatDur;
+    playKeysChord(kcVoicingMidis(kcState.voicings[i]), audioCtx.currentTime + 0.05 + t, Math.min(dur, 2.4));
+    kcState.playTimers.push(setTimeout(() => {
+      document.querySelectorAll('.kc-chord.playing').forEach(el => el.classList.remove('playing'));
+      document.querySelector(`.kc-chord[data-kc-idx="${i}"]`)?.classList.add('playing');
+    }, t * 1000));
+    t += dur;
+  });
+  kcState.playTimers.push(setTimeout(cancelKcPlay, t * 1000));
+}
+
+function playKcWithBand() {
+  const lesson = kcLesson();
+  jamCustomProg = {
+    name: `Piano: ${lesson.title}`,
+    desc: lesson.prog.map(c => c.rn).join(' – '),
+    pattern: lesson.prog.map(c => ({ s: c.s, t: c.t, b: c.b || 4 })),
+  };
+  currentProgIdx = 0;
+  schedBeat = 0;
+  jamStyle = lesson.style;
+  setBpm(lesson.bpm);
+  renderJamControls();
+  renderProgPlayer();
+  if (!jamRunning) startPlayer();
+  renderKeysCourse();
+}
+
+// ── Mini keyboard diagram (SVG) ────────────────────────────────
+// all: every note shown in the lesson, so all the diagrams share the same range.
+function kcMiniSvg(v, pc, all = kcVoicingMidis(v)) {
+  const lo = Math.floor(Math.min(...all) / 12) * 12;
+  let hi = Math.floor(Math.max(...all) / 12) * 12 + 11;
+  if (hi - lo < 23) hi = lo + 23;
+  const W = 11, H = 52, BW = 7, BH = 32;
+  const marks = new Map();
+  v.rh.forEach((m, i) => marks.set(m, { finger: v.fingers[i], lh: false }));
+  if (v.lh !== null) marks.set(v.lh, { finger: 5, lh: true });
+  const whites = [], blacks = [];
+  let wi = 0;
+  for (let m = lo; m <= hi; m++) {
+    if (KC_IS_BLACK[m % 12]) blacks.push({ m, x: wi * W - BW / 2 });
+    else whites.push({ m, x: wi++ * W });
+  }
+  const width = wi * W;
+  const dot = (m, cx, cy) => {
+    const mk = marks.get(m);
+    if (!mk) return '';
+    const iv = ((m - pc) % 12 + 12) % 12;
+    const fill = mk.lh ? 'var(--blue)' : iv === 0 ? 'var(--accent2)' : 'var(--accent)';
+    return `<circle cx="${cx}" cy="${cy}" r="4.6" fill="${fill}"/>
+      <text x="${cx}" y="${cy + 2}" text-anchor="middle" font-size="5.2" font-weight="700" fill="#000" font-family="var(--mono)">${KC_IV_LABEL[iv] || ''}</text>
+      <text x="${cx}" y="${H + 9}" text-anchor="middle" font-size="7" fill="${mk.lh ? 'var(--blue)' : 'var(--muted)'}" font-family="var(--mono)">${mk.finger}</text>`;
+  };
+  let svg = `<svg viewBox="-1 -1 ${width + 2} ${H + 12}" class="kc-mini" role="img">`;
+  whites.forEach(k => { svg += `<rect x="${k.x}" y="0" width="${W - 0.8}" height="${H}" rx="1.5" fill="#f0ede8" stroke="#999" stroke-width="0.5"/>`; });
+  blacks.forEach(k => { svg += `<rect x="${k.x}" y="0" width="${BW}" height="${BH}" rx="1" fill="#1a1a1a"/>`; });
+  whites.forEach(k => { svg += dot(k.m, k.x + W / 2 - 0.4, H - 8); });
+  blacks.forEach(k => { svg += dot(k.m, k.x + BW / 2, BH - 7); });
+  return svg + '</svg>';
+}
+
+// ── Drill: build the chord on the keyboard ─────────────────────
+function kcNewTarget() {
+  const d = kcState.drill;
+  clearTimeout(d.nextTimer);
+  const lesson = kcLesson();
+  const dr = lesson.drill;
+  const prevPc = d.target?.pc;
+  const randPc = () => { let p; do { p = Math.floor(Math.random() * 12); } while (p === prevPc); return p; };
+  let target;
+  if (dr.kind === 'random') {
+    const pc = randPc();
+    const t = dr.types[Math.floor(Math.random() * dr.types.length)];
+    const name = kcRootName(pc, t) + (QUALITY_SUFFIX[t] ?? '');
+    target = { pc, t, name, prompt: `Armá ${name}`, sub: KC_TYPE_NAME[t], reveal: kcRootPos(pc, t) };
+  } else if (dr.kind === 'key') {
+    let i;
+    do { i = Math.floor(Math.random() * lesson.prog.length); } while (lesson.prog.length > 1 && (rootIdx + lesson.prog[i].s) % 12 === prevPc);
+    const c = lesson.prog[i];
+    const pc = (rootIdx + c.s) % 12;
+    target = { pc, t: c.t, name: kcKeyName(pc) + (QUALITY_SUFFIX[c.t] ?? ''), prompt: `Armá el ${c.rn} de ${kcKeyName(rootIdx)} mayor`, sub: 'usá la fórmula M m m M M m °', hideName: true, reveal: kcRootPos(pc, c.t) };
+  } else if (dr.kind === 'inv') {
+    const pc = randPc();
+    const t = Math.random() < 0.5 ? 'maj' : 'min';
+    const inv = Math.floor(Math.random() * 3);
+    const name = kcRootName(pc, t) + (QUALITY_SUFFIX[t] ?? '');
+    const bass = (pc + CHORD_INTERVALS[t][inv]) % 12;
+    target = { pc, t, bass, name, prompt: `Armá ${name} en ${KC_INV_NAMES[inv]}`, sub: 'la nota más grave cuenta', reveal: kcInvert(kcRootPos(pc, t), inv) };
+  } else {
+    const i = d.progIdx % lesson.prog.length;
+    const c = lesson.prog[i];
+    const pc = (rootIdx + c.s) % 12;
+    const v = kcVoiceLesson(lesson)[i];
+    target = {
+      pc, t: c.t, name: kcKeyName(pc) + (QUALITY_SUFFIX[c.t] ?? ''),
+      bass: dr.bass ? pc : undefined,
+      prompt: `${c.rn}: ${kcKeyName(pc) + (QUALITY_SUFFIX[c.t] ?? '')}`,
+      sub: `acorde ${i + 1} de ${lesson.prog.length}${dr.bass ? ' · izquierda en la raíz, derecha en la inversión más cercana' : ' · en la inversión más cercana al anterior'}`,
+      reveal: kcVoicingMidis(v),
+    };
+  }
+  Object.assign(d, { target, pressed: new Set(), solved: false, revealed: false, msg: '', rootIdx });
+}
+
+function kcCheck() {
+  const d = kcState.drill;
+  const tg = d.target;
+  if (!tg || d.solved || !d.pressed.size) { d.msg = ''; return; }
+  const pcs = new Set([...d.pressed].map(m => m % 12));
+  const ivs = CHORD_INTERVALS[tg.t];
+  const tones = ivs.map(iv => (tg.pc + iv) % 12);
+  const missing = ivs.filter(iv => !pcs.has((tg.pc + iv) % 12));
+  const extra = [...pcs].filter(p => !tones.includes(p));
+  const low = Math.min(...d.pressed) % 12;
+  const bassOk = tg.bass === undefined || low === tg.bass;
+  const rootName = tg.hideName ? kcKeyName(tg.pc) : tg.name.match(/^[A-G][b#]?/)[0];
+  const nm = p => kcToneName(p, rootName, tg.t, tg.pc);
+  if (!missing.length && !extra.length && bassOk) {
+    d.solved = true;
+    if (!d.revealed) d.hits++;
+    const inv = ivs.indexOf(((low - tg.pc) % 12 + 12) % 12);
+    d.msg = `<span class="ok">✓ ${tg.name}${inv > 0 && tg.bass === undefined ? ` (${KC_INV_NAMES[inv]})` : ''}: ${tones.map(nm).join(' – ')}</span>${d.revealed ? ' · con ayuda, no suma' : ''}`;
+    initAudio(); resumeAudio();
+    playKeysChord([...d.pressed].sort((a, b) => a - b), audioCtx.currentTime + 0.12);
+    if (kcLesson().drill.kind === 'prog') d.progIdx++;
+    if (d.hits >= KC_GOAL) markKcDone(kcLesson().id);
+    d.nextTimer = setTimeout(() => { kcNewTarget(); renderKcDrill(); }, 1300);
+    return;
+  }
+  if (pcs.size < tones.length && !extra.length) { d.msg = ''; return; }
+  const parts = [];
+  if (missing.length) parts.push(`Falta ${missing.map(iv => `${KC_IV_ROLE[iv]} (${nm(tg.pc + iv)})`).join(' y ')}`);
+  if (extra.length) parts.push(`Sobra ${extra.map(nm).join(', ')}`);
+  if (!parts.length && !bassOk) parts.push(`Las notas están bien, pero la más grave tiene que ser ${nm(tg.bass)}`);
+  d.msg = `<span class="no">${parts.join(' · ')}</span>`;
+}
+
+function kcToggleKey(midi, on) {
+  const d = kcState.drill;
+  if (d.solved) return;
+  const add = on ?? !d.pressed.has(midi);
+  if (add) {
+    d.pressed.add(midi);
+    initAudio(); resumeAudio();
+    playKeysNote(midi, audioCtx.currentTime, 1.2, 0.2);
+  } else d.pressed.delete(midi);
+  kcCheck();
+  renderKcDrill();
+}
+
+async function kcConnectMidi() {
+  const m = kcState.midi;
+  if (!navigator.requestMIDIAccess) { m.status = 'Este navegador no soporta MIDI. Probá con Chrome o Edge.'; renderKcDrill(); return; }
+  try {
+    m.access = await navigator.requestMIDIAccess();
+  } catch (_) {
+    m.status = 'No se pudo acceder a MIDI. Revisá el permiso del navegador.';
+    renderKcDrill();
+    return;
+  }
+  const bind = () => {
+    const names = [];
+    m.access.inputs.forEach(inp => { inp.onmidimessage = onKcMidi; names.push(inp.name); });
+    m.status = names.length ? `🎹 Conectado: ${names.join(', ')}` : 'No encontré teclados MIDI. Conectá uno y se detecta solo.';
+    renderKcDrill();
+  };
+  m.access.onstatechange = bind;
+  bind();
+}
+function onKcMidi(e) {
+  if (activeTab !== 'piano') return;
+  const [status, note, vel] = e.data;
+  const cmd = status & 0xf0;
+  const d = kcState.drill;
+  if (cmd === 0x90 && vel > 0) {
+    if (d.solved) return;
+    d.pressed.add(note);
+    initAudio(); resumeAudio();
+    playKeysNote(note, audioCtx.currentTime, 1.2, 0.2);
+  } else if (cmd === 0x80 || cmd === 0x90) {
+    if (!d.pressed.delete(note) || d.solved) return;
+  } else return;
+  kcCheck();
+  renderKcDrill();
+}
+
+const KC_DRILL_HELP = {
+  random: 'Cualquier octava e inversión vale.',
+  key: 'Deducí la raíz y la calidad con la fórmula. Cualquier octava e inversión vale.',
+  inv: 'Importa el orden: la nota más grave define la inversión.',
+  prog: 'Tocá la progresión acorde por acorde, moviéndote lo mínimo.',
+};
+// Computer keyboard as a piano (by physical key, so it works with Spanish and US layouts).
+const KC_PC_KEYS = ['KeyA', 'KeyW', 'KeyS', 'KeyE', 'KeyD', 'KeyF', 'KeyT', 'KeyG', 'KeyY', 'KeyH', 'KeyU', 'KeyJ', 'KeyK', 'KeyO', 'KeyL', 'KeyP', 'Semicolon'];
+const KC_PC_LABELS = ['A', 'W', 'S', 'E', 'D', 'F', 'T', 'G', 'Y', 'H', 'U', 'J', 'K', 'O', 'L', 'P', 'Ñ'];
+const KC_STEPS = [['learn', 'Aprender'], ['practice', 'Practicar'], ['think', 'Pensar']];
+kcState.step = 'learn';
+kcState.pcBase = 60;
+
+function kcRootLabel(tg) { return tg.hideName ? kcKeyName(tg.pc) : tg.name.match(/^[A-G][b#]?/)[0]; }
+
+function renderKcDrill() {
+  const el = document.getElementById('kcDrill');
+  if (!el) return;
+  const d = kcState.drill;
+  const lesson = kcLesson();
+  if (!d.target || d.rootIdx !== rootIdx) kcNewTarget();
+  const tg = d.target;
+  const hint = new Set(d.revealed ? tg.reveal : []);
+  const nWhite = [...Array(KC_HIGH - KC_LOW + 1).keys()].filter(i => !KC_IS_BLACK[(KC_LOW + i) % 12]).length;
+  const ww = 100 / nWhite, bw = ww * 0.62;
+  let wi = 0, keys = '';
+  for (let m = KC_LOW; m <= KC_HIGH; m++) {
+    const black = KC_IS_BLACK[m % 12];
+    const left = black ? wi * ww - bw / 2 : wi * ww;
+    const on = d.pressed.has(m);
+    const pcIdx = m - kcState.pcBase;
+    const pcLabel = pcIdx >= 0 && pcIdx < KC_PC_LABELS.length ? KC_PC_LABELS[pcIdx] : '';
+    const label = on ? kcToneName(m, kcRootLabel(tg), tg.t, tg.pc) : m % 12 === 0 ? `C${m / 12 - 1}` : '';
+    keys += `<div class="kc-key ${black ? 'b' : 'w'}${on ? (d.solved ? ' good' : ' on') : ''}${hint.has(m) ? ' hint' : ''}" style="left:${left}%;width:${black ? bw : ww}%" data-kc-key="${m}"><span class="kc-pc">${pcLabel}</span><span class="kc-nm">${label}</span></div>`;
+    if (!black) wi++;
+  }
+  const done = !!getKcProgress()[lesson.id];
+  const hits = Math.min(d.hits, KC_GOAL);
+  el.innerHTML = `
+    <div class="kc-drill-top">
+      <div>
+        <div class="kc-target${d.solved ? ' solved' : ''}">${tg.prompt}</div>
+        <div class="kc-target-sub">${tg.sub} · ${KC_DRILL_HELP[lesson.drill.kind]}</div>
+      </div>
+      <div class="kc-score">
+        <div class="kc-score-num"><b>${hits}</b> / ${KC_GOAL} aciertos</div>
+        <div class="kc-segs">${Array.from({ length: KC_GOAL }, (_, i) => `<span class="${i < hits ? 'on' : ''}"></span>`).join('')}</div>
+      </div>
+    </div>
+    <div class="kc-feedback${d.solved ? ' ok' : d.msg ? ' no' : ''}">${d.msg || (d.pressed.size ? 'Seguí sumando notas…' : 'Tocá las notas del acorde: clic en las teclas, el teclado de la compu o un teclado MIDI.')}</div>
+    ${done && hits >= KC_GOAL ? `<div class="kc-done">🎉 ¡Lección completa! Seguí practicando o pasá a <button type="button" class="btn-accent" data-kc-step="think">Pensar →</button></div>` : ''}
+    <div class="kc-kbd">${keys}</div>
+    <div class="kc-tools">
+      <button type="button" id="kcClearBtn">Soltar todo <kbd>Esc</kbd></button>
+      <button type="button" id="kcRevealBtn" ${d.solved ? 'disabled' : ''}>💡 Mostrar respuesta</button>
+      <button type="button" id="kcSkipBtn">Otro acorde <kbd>↵</kbd></button>
+      <span class="kc-tools-sep"></span>
+      <span class="kc-pc-help">⌨️ Teclado de la compu: <kbd>A</kbd>–<kbd>Ñ</kbd> desde C${kcState.pcBase / 12 - 1} · <kbd>Z</kbd>/<kbd>X</kbd> octava</span>
+      <button type="button" class="track-btn${kcState.midi.access ? ' on' : ''}" id="kcMidiBtn">🎹 ${kcState.midi.access ? 'MIDI activo' : 'Usar MIDI'}</button>
+    </div>
+    ${kcState.midi.status ? `<div class="kc-target-sub">${kcState.midi.status}</div>` : ''}`;
+}
+
+function kcLearnHtml(lesson, voicings, allNotes, progress) {
+  const bandOn = jamRunning && jamCustomProg;
+  return `
+    <div class="kc-learn">
+      <div class="kc-text">
+        <div class="lesson-card"><h4>La teoría</h4><p>${kcFill(lesson.theory)}</p></div>
+        <div class="lesson-card"><h4>En el teclado</h4><p>${kcFill(lesson.keys)}</p></div>
+        <div class="lesson-card think"><h4>Cómo pensarlo</h4><p>${kcFill(lesson.think)}</p></div>
+      </div>
+      <div class="kc-side">
+        <div class="harm-prog kc-prog">
+          ${lesson.prog.map((c, i) => `<button type="button" class="harm-chord kc-chord" data-kc-idx="${i}" title="Tocar">
+            <span class="harm-rn">${c.rn}</span>
+            <span class="harm-name">${kcChordLabel(c, voicings[i])}</span>
+            ${kcMiniSvg(voicings[i], (rootIdx + c.s) % 12, allNotes)}
+            <span class="harm-fn">${voicings[i].lh !== null ? 'MI 5 · ' : ''}MD ${voicings[i].fingers.join('-')}</span>
+          </button>`).join('')}
+        </div>
+        <div class="pr-copy">Ámbar = raíz, naranja = otras notas${lesson.voicing === 'lh' ? ', azul = mano izquierda' : ''}. En el punto, el intervalo; debajo, el dedo (1 = pulgar). Tocá una tarjeta para escucharla.</div>
+        <div class="pr-row">
+          <button type="button" id="kcListenBtn">▶ Escuchar todo</button>
+          ${lesson.band ? `<button type="button" class="track-btn${bandOn ? ' on' : ''}" id="kcBandBtn">${bandOn ? '⏹ Parar la banda' : '🥁 Con la banda'}</button>` : ''}
+          ${progress[lesson.id] ? '' : '<button type="button" class="kc-link" id="kcSelfBtn">Ya lo sé: marcar como hecha</button>'}
+        </div>
+      </div>
+    </div>`;
+}
+
+function kcThinkHtml(lesson) {
+  const quiz = lesson.quiz;
+  const qa = kcState.quizAnswer;
+  const order = quiz.options.map((_, i) => i).sort((a, b) => ((a * 7 + kcState.lessonIdx) % 5) - ((b * 7 + kcState.lessonIdx) % 5));
+  return `
+    <div class="kc-think">
+      <div class="kc-quiz-q">${kcFill(quiz.q)}</div>
+      <div class="trainer-answer-grid wide">
+        ${order.map(i => `<button type="button" class="answer-btn${qa === null ? '' : i === 0 ? (qa === 0 ? ' correct' : ' reveal') : i === qa ? ' wrong' : ''}" data-kc-quiz="${i}" ${qa === null ? '' : 'disabled'}>${kcFill(quiz.options[i])}</button>`).join('')}
+      </div>
+      ${qa === null ? '' : `<div class="lesson-why">${qa === 0 ? '✓' : '✗'} ${kcFill(quiz.why)}</div>`}
+    </div>`;
+}
+
+function renderKeysCourse() {
+  const wrap = document.getElementById('kcWrap');
+  if (!wrap) return;
+  const lesson = kcLesson();
+  const progress = getKcProgress();
+  const doneCount = KC_COURSE.filter(l => progress[l.id]).length;
+  const voicings = kcVoiceLesson(lesson);
+  kcState.voicings = voicings;
+  const allNotes = voicings.flatMap(kcVoicingMidis);
+  const keyName = `${kcKeyName(rootIdx)} mayor`;
+  const step = kcState.step;
+  const stepIdx = KC_STEPS.findIndex(([k]) => k === step);
+  const last = kcState.lessonIdx === KC_COURSE.length - 1;
+  const hits = Math.min(kcState.drill.hits, KC_GOAL);
+  const stepBadge = { learn: '', practice: progress[lesson.id] ? ' ✓' : ` ${hits}/${KC_GOAL}`, think: kcState.quizAnswer === 0 ? ' ✓' : '' };
+  const prev = stepIdx > 0
+    ? `<button type="button" data-kc-step="${KC_STEPS[stepIdx - 1][0]}">← ${KC_STEPS[stepIdx - 1][1]}</button>`
+    : `<button type="button" data-kc-lesson="${kcState.lessonIdx - 1}" ${kcState.lessonIdx === 0 ? 'disabled' : ''}>← Lección anterior</button>`;
+  const next = stepIdx < KC_STEPS.length - 1
+    ? `<button type="button" class="btn-accent" data-kc-step="${KC_STEPS[stepIdx + 1][0]}">${KC_STEPS[stepIdx + 1][1]} →</button>`
+    : `<button type="button" class="btn-accent" data-kc-lesson="${kcState.lessonIdx + 1}" ${last ? 'disabled' : ''}>${last ? 'Fin del curso 🎉' : 'Siguiente lección →'}</button>`;
+
+  wrap.innerHTML = `
+    <div class="kc-top">
+      <div class="kc-brand">🎹 Acordes en el teclado <span>Básico</span></div>
+      <div class="kc-dots" role="list">
+        ${KC_COURSE.map((l, i) => `<button type="button" role="listitem" class="kc-dot${progress[l.id] ? ' done' : ''}${i === kcState.lessonIdx ? ' active' : ''}" data-kc-lesson="${i}" title="${i + 1}. ${l.title}">${progress[l.id] && i !== kcState.lessonIdx ? '✓' : i + 1}</button>`).join('')}
+        <span class="kc-dots-count">${doneCount}/${KC_COURSE.length}</span>
+      </div>
+      <label class="kc-keysel">Tonalidad
+        <select id="kcKeySel">${NOTES_SHARP.map((_, pc) => `<option value="${pc}"${pc === rootIdx ? ' selected' : ''}>${(FLAT_MAJOR_KEYS.has(pc) ? NOTES_FLAT : NOTES_SHARP)[pc]} mayor</option>`).join('')}</select>
+      </label>
+    </div>
+    <div class="lesson kc-lesson">
+      <div class="kc-head">
+        <div>
+          <div class="lesson-kicker">Lección ${kcState.lessonIdx + 1} de ${KC_COURSE.length} · ${keyName}</div>
+          <div class="lesson-title">${lesson.title}</div>
+        </div>
+        <div class="kc-steps">
+          ${KC_STEPS.map(([k, label], i) => `<button type="button" class="kc-step${k === step ? ' active' : ''}${i < stepIdx ? ' past' : ''}" data-kc-step="${k}"><span>${i + 1}</span>${label}<small>${stepBadge[k]}</small></button>`).join('')}
+        </div>
+      </div>
+      <div class="kc-body">
+        ${step === 'learn' ? kcLearnHtml(lesson, voicings, allNotes, progress) : step === 'practice' ? '<div class="kc-drill" id="kcDrill"></div>' : kcThinkHtml(lesson)}
+      </div>
+      <div class="kc-foot">${prev}${next}</div>
+    </div>`;
+  if (step === 'practice') renderKcDrill();
+}
+
+function kcSetStep(step) {
+  cancelKcPlay();
+  kcState.step = step;
+  renderKeysCourse();
+  document.getElementById('mainScroll')?.scrollTo({ top: 0 });
+}
+
+document.getElementById('kcWrap').addEventListener('click', e => {
+  const key = e.target.closest('[data-kc-key]');
+  if (key) { kcToggleKey(parseInt(key.dataset.kcKey, 10)); return; }
+  const stepBtn = e.target.closest('[data-kc-step]');
+  if (stepBtn) { kcSetStep(stepBtn.dataset.kcStep); return; }
+  const lessonBtn = e.target.closest('[data-kc-lesson]');
+  if (lessonBtn && !lessonBtn.disabled) {
+    cancelKcPlay();
+    kcState.lessonIdx = parseInt(lessonBtn.dataset.kcLesson, 10);
+    kcState.quizAnswer = null;
+    kcState.step = 'learn';
+    clearTimeout(kcState.drill.nextTimer);
+    Object.assign(kcState.drill, { target: null, hits: 0, progIdx: 0 });
+    if (jamRunning && jamCustomProg && kcLesson().band) playKcWithBand(); else renderKeysCourse();
+    document.getElementById('mainScroll')?.scrollTo({ top: 0 });
+    return;
+  }
+  const chordBtn = e.target.closest('[data-kc-idx]');
+  if (chordBtn) {
+    initAudio(); resumeAudio();
+    playKeysChord(kcVoicingMidis(kcState.voicings[parseInt(chordBtn.dataset.kcIdx, 10)]), audioCtx.currentTime + 0.02);
+    return;
+  }
+  const quizBtn = e.target.closest('[data-kc-quiz]');
+  if (quizBtn) { kcState.quizAnswer = parseInt(quizBtn.dataset.kcQuiz, 10); renderKeysCourse(); return; }
+  const id = e.target.closest('button')?.id;
+  if (id === 'kcListenBtn') playKcProgression();
+  if (id === 'kcBandBtn') {
+    if (jamRunning && jamCustomProg) { stopPlayer(); clearHarmJam(); renderKeysCourse(); }
+    else playKcWithBand();
+  }
+  if (id === 'kcSelfBtn') { markKcDone(kcLesson().id); renderKeysCourse(); }
+  if (id === 'kcClearBtn') kcClearKeys();
+  if (id === 'kcRevealBtn') kcReveal();
+  if (id === 'kcSkipBtn') kcSkip();
+  if (id === 'kcMidiBtn' && !kcState.midi.access) kcConnectMidi();
+});
+document.getElementById('kcWrap').addEventListener('change', e => {
+  if (e.target.id === 'kcKeySel') { rootIdx = parseInt(e.target.value, 10); render(); }
+});
+
+function kcClearKeys() {
+  const d = kcState.drill;
+  if (d.solved) return;
+  d.pressed.clear();
+  d.msg = '';
+  renderKcDrill();
+}
+function kcReveal() {
+  const d = kcState.drill;
+  if (d.solved) return;
+  d.revealed = true;
+  initAudio(); resumeAudio();
+  playKeysChord(d.target.reveal, audioCtx.currentTime + 0.02);
+  renderKcDrill();
+}
+function kcSkip() {
+  if (kcLesson().drill.kind === 'prog') kcState.drill.progIdx++;
+  kcNewTarget();
+  renderKcDrill();
+}
+
+// Computer keyboard: hold keys like a real piano; Z/X shift the octave.
+const kcPcHeld = new Map(); // code → midi
+function kcPcActive(e) {
+  return activeTab === 'piano' && kcState.step === 'practice' && !e.metaKey && !e.ctrlKey && !e.altKey
+    && !e.target.closest?.('input, textarea, select');
+}
+document.addEventListener('keydown', e => {
+  if (!kcPcActive(e)) return;
+  const i = KC_PC_KEYS.indexOf(e.code);
+  if (i >= 0) {
+    e.preventDefault();
+    if (e.repeat || kcPcHeld.has(e.code)) return;
+    const midi = kcState.pcBase + i;
+    kcPcHeld.set(e.code, midi);
+    kcToggleKey(midi, true);
+    return;
+  }
+  if (e.code === 'KeyZ' || e.code === 'KeyX') {
+    kcState.pcBase = Math.max(KC_LOW, Math.min(KC_HIGH - 16, kcState.pcBase + (e.code === 'KeyZ' ? -12 : 12)));
+    renderKcDrill();
+  }
+  if (e.key === 'Escape') kcClearKeys();
+  if (e.key === 'Enter' && !e.target.closest?.('button')) { e.preventDefault(); kcSkip(); }
+});
+document.addEventListener('keyup', e => {
+  const midi = kcPcHeld.get(e.code);
+  if (midi === undefined) return;
+  kcPcHeld.delete(e.code);
+  if (activeTab === 'piano' && !kcState.drill.solved && kcState.drill.pressed.has(midi)) kcToggleKey(midi, false);
+});
+window.addEventListener('blur', () => kcPcHeld.clear());
+
 
 // ══════════════════════════════════════════════
 // CIRCLE TAB + INTERVAL GUIDE
@@ -8312,7 +9080,7 @@ document.getElementById('tab-panel-course').addEventListener('click', e => {
 })();
 (function initTab() {
   const t = localStorage.getItem(ACTIVE_TAB_KEY);
-  if (t === 'guitar' || t === 'circle' || t === 'ref' || t === 'trainer' || t === 'builder' || t === 'minors' || t === 'harm' || t === 'listener' || t === 'practice' || t === 'course') setTab(t);
+  if (t === 'guitar' || t === 'circle' || t === 'ref' || t === 'trainer' || t === 'builder' || t === 'minors' || t === 'harm' || t === 'listener' || t === 'practice' || t === 'course' || t === 'piano') setTab(t);
   else setTab('ref');
 })();
 

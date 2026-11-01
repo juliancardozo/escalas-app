@@ -57,6 +57,13 @@ Cada lección prepara su backing y el micrófono evalúa **decisiones**: termina
 - **Diagramas de acordes** generados en cualquier tonalidad, en tres tipos de forma: cejilla E/A, tríadas en cuerdas 3-2-1 y *shells* (raíz + 3ª + 7ª). Cada forma se elige lo más cerca posible de la anterior, así se ve cómo conectar los acordes moviendo la mano lo mínimo.
 - Escuchá la progresión con esas formas, tocala con la banda y **verificá con el micrófono** que cada acorde que rasgueás coincida con el que suena.
 
+### 🎹 Piano: acordes básicos en el teclado
+8 lecciones para tocar acordes en piano o teclado: la tríada mayor, la menor, disminuida y aumentada, los acordes de la tonalidad, inversiones, conducción de voces (I–IV–V–I sin saltar), las dos manos (bajo + acorde) y acordes de séptima.
+
+- Cada acorde se muestra en un **mini teclado** con los intervalos y la **digitación** (1 = pulgar); tocá la tarjeta para escucharlo.
+- **Practicá armando acordes** en el teclado en pantalla o con un **teclado MIDI** (Chrome/Edge): la app te dice qué nota falta o sobra, y en las lecciones de inversiones y de dos manos también controla la nota más grave. La lección se completa con 8 aciertos sin ayuda.
+- Las progresiones se pueden tocar **con la banda**, y todo se transpone con la tónica del panel lateral.
+
 ### Práctica
 - **Afinador** cromático: aguja en cents, Hz, cuerda detectada y notas de referencia.
 - **Entrenador de velocidad**: sube el BPM cada N vueltas hasta tu objetivo, con botón "Me trabé" y récord de BPM limpio por escala y progresión.
